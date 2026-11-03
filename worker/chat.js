@@ -7,7 +7,7 @@ import { deliverLead, clean, isEmail, json, sameOrigin } from './lead.js';
 const KNOWLEDGE = `
 ABOUT
 Waterproofmedia is a growth studio in Amsterdam, led by Pieter Vijgeboom (10+ years as a digital marketing strategist). Small core team: Pieter (strategy, marketing) and Ilja (content, communication), extended with a freelance network for animation and design, visuals, web design, green marketing, 3D/VR and TikTok. Clients work directly with senior people, no account managers in between.
-Positioning: "We build growth. For clients, and for ourselves." The studio uses the same approach for its own products as for clients.
+Positioning: "Good ideas deserve results." (NL: "Goede ideeën verdienen resultaat.") Creativity combined with data: we think up, build, test and improve, for clients and for our own products. The studio uses the same approach for its own products as for clients.
 
 SERVICES (five capabilities)
 1. Campaigns: social and paid campaigns on Meta, TikTok and LinkedIn, run as growth experiments with daily monitoring and budget shifts.
@@ -19,9 +19,8 @@ SERVICES (five capabilities)
 OFFER (how to start)
 - Growth Scan: free, self-service analysis of a website at /en/growth-scan/. Shows opportunities in brand, content, search and conversion.
 - Quick wins: fixed scope, price agreed upfront. Examples: CRO audit, campaign setup, dashboard setup.
-- Campaign Sprint: 2 to 6 weeks, fixed setup fee plus media budget, steered daily.
-- Growth Sprint: 4 to 6 weeks, turn the strongest opportunity into one measurable experiment.
-- Growth Program: ongoing monthly campaigns, CRO, automation and dashboards.
+- Growth Sprint: a short sprint of 2 to 6 weeks on one clear challenge, with measurable results and concrete lessons for the next step.
+- Growth Program: ongoing collaboration on campaigns, conversion, automation and insight into results, with one fixed point of contact.
 - Campaign work can be done on agreed hours, invoiced via a prepaid hour card (strippenkaart). The client can stop at any time.
 PRICES: never give amounts, rates or estimates. Say that scope and price are agreed upfront after a short intro call, and that the Growth Scan is free.
 

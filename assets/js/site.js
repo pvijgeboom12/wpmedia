@@ -39,17 +39,73 @@
     mb.addEventListener('click', function () {
       var o = mm.classList.toggle('open');
       mb.setAttribute('aria-expanded', o ? 'true' : 'false');
-      mb.innerHTML = o ? '&times;' : '&#9776;';
     });
-    mm.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { mm.classList.remove('open'); mb.setAttribute('aria-expanded', 'false'); mb.innerHTML = '&#9776;'; }); });
+    mm.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { mm.classList.remove('open'); mb.setAttribute('aria-expanded', 'false'); }); });
   }
 
-  /* Reveal (content is visible without JS; this only adds motion) */
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .08, rootMargin: '0px 0px -5% 0px' });
-    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
-    setTimeout(function () { document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); }); }, 2500);
-  } else { document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); }); }
+  /* Hero load: the one orchestrated entrance */
+  var hero = document.querySelector('.hero');
+  if (hero) requestAnimationFrame(function () { requestAnimationFrame(function () { hero.classList.add('ready'); }); });
+
+  /* The living wave: layered contour lines that drift and answer the pointer */
+  var cv = document.getElementById('wave');
+  if (cv && cv.getContext) {
+    var ctx = cv.getContext('2d'), W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var mx = .5, my = .5, tmx = .5, tmy = .5, energy = 0, tm = 0, running = true, visible = true;
+    var LINES = innerWidth < 640 ? 26 : 44;
+    function size() {
+      var r = cv.getBoundingClientRect(); W = r.width; H = r.height;
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      LINES = W < 640 ? 26 : 44;
+    }
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      mx += (tmx - mx) * .05; my += (tmy - my) * .05; energy *= .96;
+      var step = W < 640 ? 10 : 7;
+      for (var i = 0; i < LINES; i++) {
+        var d = i / (LINES - 1);                 // 0 = horizon, 1 = foreground
+        var base = H * (.1 + d * .66);
+        var amp = 4 + d * d * (H * .12);
+        var spd = .35 + d * .5;
+        var a = (.1 + d * .42) * (d > .82 ? Math.max(0, (1 - d) / .18) : 1);
+        var g = ctx.createLinearGradient(0, 0, W, 0);
+        g.addColorStop(0, 'rgba(77,141,255,' + a * .55 + ')');
+        g.addColorStop(.55, 'rgba(92,242,214,' + a + ')');
+        g.addColorStop(1, 'rgba(77,141,255,' + a * .4 + ')');
+        ctx.strokeStyle = g; ctx.lineWidth = .7 + d * 1.1;
+        ctx.beginPath();
+        for (var x = -step; x <= W + step; x += step) {
+          var u = x / W;
+          var y = base
+            + Math.sin(u * 5.2 + tm * spd + i * .33) * amp * .55
+            + Math.sin(u * 11.7 - tm * spd * .8 + i * .21) * amp * .22
+            + Math.sin(u * 2.1 + tm * .18) * amp * .5;
+          y -= Math.exp(-(u - .56) * (u - .56) * 7) * H * .16 * d * (1 + .08 * Math.sin(tm * .4));
+          var dx = u - mx, swell = Math.exp(-dx * dx * 28) * (18 + energy * 40) * d;
+          y -= swell * Math.sin(tm * 1.6 - Math.abs(dx) * 18);
+          if (x === -step) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+    }
+    function loop() { if (!running) return; tm += .012; draw(); requestAnimationFrame(loop); }
+    size(); addEventListener('resize', size, { passive: true });
+    if (!still) {
+      addEventListener('pointermove', function (e) {
+        var r = cv.getBoundingClientRect();
+        var nx = (e.clientX - r.left) / r.width, ny = (e.clientY - r.top) / r.height;
+        if (Math.abs(nx - tmx) > .002) energy = Math.min(1, energy + .04);
+        tmx = nx; tmy = ny;
+      }, { passive: true });
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (es) {
+        visible = es[0].isIntersecting;
+        if (visible && !running) { running = true; loop(); } else if (!visible) running = false;
+      }).observe(cv);
+      document.addEventListener('visibilitychange', function () { if (document.hidden) running = false; else if (visible && !running) { running = true; loop(); } });
+      loop();
+    } else { tm = 2; draw(); }
+  }
 
   /* Track primary CTAs */
   document.querySelectorAll('[data-track]').forEach(function (el) {
@@ -86,13 +142,13 @@
   var history = [], busy = false;
   var fab = document.createElement('button');
   fab.className = 'agent-fab'; fab.type = 'button'; fab.setAttribute('aria-haspopup', 'dialog');
-  fab.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg><span>' + t.open + '</span>';
+  fab.innerHTML = '<span class="dot" aria-hidden="true"></span><span class="lbl">' + t.open + '</span>';
   fab.setAttribute('aria-label', t.open);
   var box = document.createElement('div');
   box.className = 'agent'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', t.agentTitle);
   box.innerHTML = '<div class="agent-head"><div><b>' + t.agentTitle + '</b><small>' + t.agentSub + '</small></div><button type="button" aria-label="' + t.close + '">&times;</button></div>' +
     '<div class="agent-log" aria-live="polite"></div><div class="agent-quick"></div>' +
-    '<form class="agent-form"><input type="text" maxlength="600" autocomplete="off" aria-label="' + t.placeholder + '" placeholder="' + t.placeholder + '"><button type="submit" aria-label="Send">&rarr;</button></form>' +
+    '<form class="agent-form"><input type="text" maxlength="600" autocomplete="off" aria-label="' + t.placeholder + '" placeholder="' + t.placeholder + '"><button type="submit" aria-label="Send">&uarr;</button></form>' +
     '<div class="agent-foot">' + t.foot + '</div>';
   document.body.appendChild(fab); document.body.appendChild(box);
   var log = box.querySelector('.agent-log'), quick = box.querySelector('.agent-quick'), inp = box.querySelector('input');
