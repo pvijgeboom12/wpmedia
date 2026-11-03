@@ -1,4 +1,4 @@
-import { deliverLead, clean, isEmail, json, sameOrigin } from '../_lead.js';
+import { deliverLead, clean, isEmail, json, sameOrigin } from './lead.js';
 
 const TOPICS = ['campagne', 'cro', 'content', 'automation', 'dashboard', 'growth-scan', 'anders'];
 const TIMING = ['asap', 'month', 'quarter', 'exploring'];

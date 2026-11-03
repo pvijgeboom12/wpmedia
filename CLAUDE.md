@@ -1,6 +1,6 @@
 # waterproofmedia.com
 
-Statische site op Cloudflare Pages. Elke push naar `main` deployt automatisch. Elke andere branch krijgt een eigen preview-URL op `*.pages.dev`. Er is geen build-stap: wat in de repo staat, is wat live staat.
+Statische site op een Cloudflare Worker (project `wpmedia`, config in `wrangler.jsonc`). De hele repo is de asset-root; `.assetsignore` houdt config en docs privé. Elke push naar `main` deployt naar https://wpmedia.pieter-75f.workers.dev. Andere branches krijgen een preview-URL in de vorm `<branch>-wpmedia.pieter-75f.workers.dev`. Er is geen build-stap.
 
 ## Werkafspraken met Pieter
 
@@ -20,11 +20,12 @@ Statische site op Cloudflare Pages. Elke push naar `main` deployt automatisch. E
 /assets/css/site.css   gedeeld design system (nieuwe pagina's)
 /assets/js/site.js     nav, reveal, contactformulier, AI-assistent
 /assets/img/      alle afbeeldingen (oude WordPress-uploads, platte map)
-/functions/api/contact.js   contactformulier → lead
-/functions/api/chat.js      AI-assistent (Claude API), kennisblok staat bovenin
-/functions/_lead.js         gedeelde lead-aflevering (webhook, e-mail, KV)
+/worker/index.js     Worker-entry: /api/* hier, de rest uit static assets
+/worker/contact.js   contactformulier → lead
+/worker/chat.js      AI-assistent (Claude API), kennisblok staat bovenin
+/worker/lead.js      gedeelde lead-aflevering (webhook, e-mail, KV)
 _redirects        301's van oude WordPress-URL's + tijdelijke root-redirect
-_headers          security headers, cache, noindex op *.pages.dev
+_headers          security headers, cache, noindex op workers.dev
 sitemap.xml       handmatig bijhouden bij elke nieuwe pagina
 ```
 
@@ -42,7 +43,7 @@ Elke pagina is één `index.html` in een eigen map, zodat de URL eindigt op `/`.
 
 ## Contactflow en assistent
 
-Beide sturen leads via `functions/_lead.js`. Instellen in Cloudflare Pages → Settings → Variables and Secrets (Production én Preview):
+Beide sturen leads via `worker/lead.js`. Instellen in Cloudflare → Workers & Pages → wpmedia → Settings → Variables and Secrets. KV-bindings (`LEADS`, `RATE`) gaan in `wrangler.jsonc`.
 
 - `LEAD_WEBHOOK_URL`: Make-webhook die de lead doorzet naar Gmail, Sheet of HubSpot. Minimaal één kanaal is nodig, anders toont het formulier de mail-fallback.
 - `RESEND_API_KEY` + `LEAD_EMAIL_TO` (+ `LEAD_EMAIL_FROM` op een geverifieerd domein): optioneel, directe e-mail.
@@ -50,7 +51,7 @@ Beide sturen leads via `functions/_lead.js`. Instellen in Cloudflare Pages → S
 - `ANTHROPIC_API_KEY` (secret): zet de assistent aan. `AGENT_MODEL` optioneel, standaard `claude-haiku-5-5`.
 - `RATE`: optionele KV-binding voor een globale rate limit op de assistent (30 berichten per IP per 10 min).
 
-Feiten in de assistent staan in het `KNOWLEDGE`-blok in `functions/api/chat.js`. Houd dat gelijk met de site. Geen prijzen.
+Feiten in de assistent staan in het `KNOWLEDGE`-blok in `worker/chat.js`. Houd dat gelijk met de site. Geen prijzen.
 
 ## Integraties
 

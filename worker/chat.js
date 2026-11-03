@@ -1,6 +1,6 @@
-import { deliverLead, clean, isEmail, json, sameOrigin } from '../_lead.js';
+import { deliverLead, clean, isEmail, json, sameOrigin } from './lead.js';
 
-// Site assistant. Needs ANTHROPIC_API_KEY as a secret in Cloudflare Pages.
+// Site assistant. Needs ANTHROPIC_API_KEY as a secret on the wpmedia Worker.
 // Optional: AGENT_MODEL (default claude-haiku-5-5).
 // Knowledge below is the single source of truth for the assistant — keep it in sync with the site.
 

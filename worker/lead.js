@@ -1,5 +1,5 @@
 // Shared lead delivery for /api/contact and /api/chat.
-// Configure at least one channel in Cloudflare Pages → Settings → Variables and Secrets:
+// Configure at least one channel in Cloudflare → Workers & Pages → wpmedia → Settings → Variables and Secrets:
 //   LEAD_WEBHOOK_URL  e.g. a Make.com custom webhook (→ Gmail, Sheet, HubSpot…)
 //   RESEND_API_KEY + LEAD_EMAIL_TO (+ LEAD_EMAIL_FROM on a verified domain)
 //   LEADS             optional KV namespace binding, keeps a copy of every lead
@@ -60,12 +60,10 @@ export function json(body, status = 200) {
   });
 }
 
-// Only accept browser posts from our own site (plus Pages previews and local dev).
+// Only accept browser posts sent from the page that served them (same host),
+// which covers waterproofmedia.com, workers.dev previews and local dev.
 export function sameOrigin(request) {
   const o = request.headers.get('Origin');
   if (!o) return false;
-  try {
-    const h = new URL(o).hostname;
-    return h === 'waterproofmedia.com' || h === 'www.waterproofmedia.com' || h.endsWith('.pages.dev') || h === 'localhost' || h === '127.0.0.1';
-  } catch { return false; }
+  try { return new URL(o).host === new URL(request.url).host; } catch { return false; }
 }
