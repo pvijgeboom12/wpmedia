@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://waterproofmedia.com/sitemap.xml
+
