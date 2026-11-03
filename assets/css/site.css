@@ -288,3 +288,28 @@ section{position:relative;padding-block:clamp(64px,8vw,112px)}
   .agent{right:12px;bottom:12px}
   .logos img{height:28px;max-width:120px}
 }
+
+/* Hero visual: real-work image with the BooyaKa result card floating over it */
+.brand .tag{display:block;font:500 9.5px var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--mist-dim);margin-top:2px}
+@media(min-width:881px){.hero-grid{grid-template-columns:.9fr 1.1fr}.hero h1{font-size:clamp(44px,5vw,72px)}}
+.hero-visual{position:relative;padding-bottom:150px}
+.hero-img{width:100%;height:auto;aspect-ratio:1444/1089;object-fit:cover;border-radius:20px;border:1px solid var(--line);box-shadow:0 50px 100px -60px rgba(0,0,0,.85)}
+.hero-visual .result-card{position:absolute;left:-28px;bottom:0;width:min(300px,62%);padding:20px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(16,27,42,.92),rgba(10,15,24,.94))}
+.hero-visual .result-card h3{font-size:16px;margin-top:12px}
+.hero-visual .funnel{gap:7px;margin-top:14px}
+.hero-visual .funnel .row{font-size:13px}.hero-visual .funnel .row b{font-size:15px}
+.hero-visual .result-card .kpi{margin-top:14px;padding-top:12px}
+.hero-visual .result-card .kpi strong{font-size:30px}
+.hero-visual .result-card a{margin-top:10px;font-size:13px}
+.flow-strip{position:absolute;left:0;right:0;bottom:22px;text-align:right;font:500 12px var(--f-mono);letter-spacing:.22em;text-transform:uppercase;color:#c6d3dc}
+.flow-strip i{font-style:normal;color:var(--mist-dim);margin:0 10px}
+@media(max-width:880px){
+  .hero-visual{padding-bottom:0}
+  .hero-visual .result-card{position:relative;left:auto;bottom:auto;width:auto;margin:-48px 14px 0}
+  .flow-strip{text-align:center;font-size:10.5px;letter-spacing:.14em}.flow-strip i{margin:0 5px}
+}
+
+/* The wave: larger and more present, like the original hero */
+.hero{padding-bottom:clamp(170px,19vw,300px)}
+.hero-wave{height:clamp(150px,17vw,280px);opacity:1;-webkit-mask-image:linear-gradient(180deg,transparent,#000 35%);mask-image:linear-gradient(180deg,transparent,#000 35%)}
+@media(max-width:640px){.hero{padding-bottom:150px}.hero-wave{height:130px}}
