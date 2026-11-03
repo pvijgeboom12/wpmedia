@@ -7,8 +7,12 @@
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Preview-deploys (*.pages.dev) niet laten indexeren
+# Preview-deploys niet laten indexeren
 https://:project.pages.dev/*
   X-Robots-Tag: noindex
 https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex
+https://:project.:account.workers.dev/*
+  X-Robots-Tag: noindex
+https://:version-:project.:account.workers.dev/*
   X-Robots-Tag: noindex
