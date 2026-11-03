@@ -1,6 +1,6 @@
 # Cloudflare Pages redirects. Format: <from> <to> <status>
-# Root: tijdelijk 302 naar /en/ tot de NL-homepage is goedgekeurd. Daarna: "/ /nl/ 301".
-/ /en/ 302
+# Root naar de hoofdtaal NL
+/ /nl/ 301
 
 # Oude WordPress-URL's -> nieuwe taalmappen (301, behoudt SEO-waarde)
 /growth-scan /en/growth-scan/ 301
