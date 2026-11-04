@@ -13,8 +13,8 @@ Statische site op een Cloudflare Worker (project `wpmedia`, config in `wrangler.
 ## Structuur
 
 ```
-/nl/   hoofdtaal: homepage en /nl/contact/
-/en/   Engels: homepage, /en/contact/ en de gemigreerde pagina's (growth-scan, growth-dashboard, disclaimer, cases/booyaka)
+/nl/   hoofdtaal: homepage, /nl/contact/, /nl/campagnes/, /nl/cases/
+/en/   Engels: homepage, /en/contact/, /en/cases/, /en/cases/booyaka/ (nieuw design) en de gemigreerde pagina's (growth-scan, growth-dashboard, disclaimer)
 /de/   Duits  — pas na akkoord op NL en EN
 /es/   Spaans — pas na akkoord op NL en EN
 /assets/css/site.css   gedeeld design system (nieuwe pagina's)
