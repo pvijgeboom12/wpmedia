@@ -401,3 +401,19 @@ section{position:relative;padding-block:clamp(88px,11vw,168px)}
 .final p{max-width:56ch}
 @media(max-width:900px){.flex-note{grid-template-columns:1fr}.network[style]{grid-template-columns:repeat(3,1fr)!important}}
 @media(max-width:640px){.network[style]{grid-template-columns:repeat(2,1fr)!important}}
+
+/* Logo band on tablet/mobile: label on top, logos in equal centred slots */
+@media(max-width:900px){
+  .logos-band{padding-block:36px}
+  .logos-band .wrap{flex-direction:column;align-items:stretch;gap:24px}
+  .logos-band p{text-align:center;max-width:none}
+  .logos{display:flex;flex-wrap:wrap;justify-content:center;gap:28px 0}
+  .logos>*{flex:0 0 25%;display:flex;justify-content:center;align-items:center}
+  .logos img{height:26px;max-width:80%}
+  .logos .word{font-size:17px}
+}
+@media(max-width:520px){
+  .logos>*{flex-basis:33.333%}
+  .logos img{height:22px;max-width:84%}
+  .logos .word{font-size:15px}
+}
