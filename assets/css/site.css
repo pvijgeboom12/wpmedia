@@ -513,3 +513,20 @@ section{position:relative;padding-block:clamp(88px,11vw,168px)}
   .figure:nth-child(even){padding:18px 0 18px 14px}
   .figure b{font-size:clamp(30px,9vw,40px)}
 }
+.form-msg.fallback{display:grid;gap:16px;color:var(--spray);max-width:60ch}
+.form-msg .fb-row{display:flex;flex-wrap:wrap;gap:10px}
+.form-msg .fb-row .btn{min-height:46px;padding:13px 20px;font-size:15px}
+
+/* BooyaKa illustration */
+.cl-visual.bk-ill{background:#ffdd00}
+.cl-visual.bk-ill img{object-fit:cover;object-position:center}
+.case-page .page-hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.62fr);column-gap:clamp(32px,5vw,72px);align-items:start}
+.case-page .page-hero .wrap>*{grid-column:1}
+.case-page .page-hero h1{font-size:clamp(44px,5.6vw,92px)}
+.case-ill{grid-column:2!important;grid-row:1/span 7;margin-top:8px;border-radius:24px;overflow:hidden;box-shadow:0 50px 100px -50px rgba(0,0,0,.9);aspect-ratio:1}
+.case-ill img{width:100%;height:100%;object-fit:cover}
+.case-page .case-meta{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:900px){
+  .case-page .page-hero .wrap{grid-template-columns:1fr}
+  .case-ill{grid-column:1!important;grid-row:auto;margin-top:36px;max-width:520px}
+}

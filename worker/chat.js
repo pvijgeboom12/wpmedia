@@ -25,7 +25,7 @@ OFFER (how to start)
 PRICES: never give amounts, rates or estimates. Say that scope and price are agreed upfront after a short intro call, and that the Growth Scan is free.
 
 PROOF (only use these facts)
-- BooyaKa Festival (Amsterdam, Nov 2026): six days of paid delivery, €422.87 total media, 159,132 impressions, 66 registrations, 54 people in the room, €7.83 media cost per attendee. Case: /en/cases/booyaka/ (all cases: /nl/cases/ or /en/cases/)
+- BooyaKa Festival (Amsterdam, Nov 2026): six days of paid delivery, €422.87 total media, 159,132 impressions, 66 registrations, 54 people in the room, €7.83 media cost per attendee. Case: /nl/cases/booyaka/ (Dutch) or /en/cases/booyaka/ (English); all cases: /nl/cases/ or /en/cases/. Campaign page: /nl/campagnes/ or /en/campaigns/
 - nlgroeit: 2× reach and conversion in 18 months.
 - ITYM: 640 Dutch organisations screened; research turned into positioning, content and campaigns for a complex B2B cybersecurity proposition.
 - Other clients: KVK (CRO and experimentation), Nyenrode (content and SEO), Interpolis (customer journeys), I amsterdam (content and platform growth), Ziggo, Delta Fiber.

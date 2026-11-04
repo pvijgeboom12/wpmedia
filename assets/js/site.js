@@ -7,7 +7,15 @@
     nl: {
       sending: 'Versturen…', send: 'Verstuur je bericht',
       required: 'Vul je naam, e-mailadres en een korte vraag in.',
-      failed: 'Versturen lukte niet. Mail ons direct op info@waterproofmedia.com, dan reageren we net zo snel.',
+      failed: 'Versturen via het formulier lukte niet. Je bericht staat klaar in een e-mail aan info@waterproofmedia.com. Of plan direct een moment in de agenda.',
+      mailBtn: 'Open de e-mail met je bericht', calBtn: 'Plan direct een gesprek', mailSubj: 'Aanvraag via waterproofmedia.com',
+      canned: [
+        'Mooi! We zetten campagnes op Meta, TikTok en LinkedIn op als experiment en sturen elke dag bij. Lees meer op /nl/campagnes/ of plan direct een kennismaking: https://calendar.app.google/ik7M5hQBU9G499wD6',
+        'Dat hangt af van je doel en de omvang. Je krijgt vooraf een vaste scope en prijs, na een korte kennismaking. De Growth Scan is gratis. Plan een gesprek: https://calendar.app.google/ik7M5hQBU9G499wD6',
+        'De Growth Scan is een gratis analyse van je website. Je ziet waar kansen liggen in merk, content, vindbaarheid en conversie. Probeer hem op /en/growth-scan/',
+        'Kies zelf een moment in de agenda: https://calendar.app.google/ik7M5hQBU9G499wD6 Of laat je gegevens achter via /nl/contact/'
+      ],
+      offline: 'Goede vraag. Die beantwoorden we graag persoonlijk. Plan een kennismaking via https://calendar.app.google/ik7M5hQBU9G499wD6 of mail naar info@waterproofmedia.com. Je vindt ook alles over onze diensten en cases op /nl/cases/',
       agentTitle: 'Growth-assistent', agentSub: 'AI-assistent · antwoordt namens Waterproofmedia',
       hello: 'Hoi! Ik beantwoord vragen over onze diensten, cases en producten. Waar ben je naar op zoek?',
       quick: ['Ik wil een campagne starten', 'Wat kost een traject?', 'Wat is de Growth Scan?', 'Ik wil een gesprek plannen'],
@@ -18,7 +26,15 @@
     en: {
       sending: 'Sending…', send: 'Send your message',
       required: 'Please add your name, email and a short question.',
-      failed: 'Sending failed. Email us directly at info@waterproofmedia.com and we will reply just as fast.',
+      failed: 'The form could not send your message. It is ready for you in an email to info@waterproofmedia.com. Or pick a time in the calendar right away.',
+      mailBtn: 'Open the email with your message', calBtn: 'Book a call now', mailSubj: 'Request via waterproofmedia.com',
+      canned: [
+        'Great! We run campaigns on Meta, TikTok and LinkedIn as experiments and steer them every day. Book an intro call: https://calendar.app.google/ik7M5hQBU9G499wD6',
+        'That depends on your goal and scope. You get a fixed scope and price upfront, after a short intro call. The Growth Scan is free. Book a call: https://calendar.app.google/ik7M5hQBU9G499wD6',
+        'The Growth Scan is a free analysis of your website. It shows opportunities in brand, content, search and conversion. Try it at /en/growth-scan/',
+        'Pick a time in the calendar: https://calendar.app.google/ik7M5hQBU9G499wD6 Or leave your details at /en/contact/'
+      ],
+      offline: 'Good question. We are happy to answer that personally. Book an intro call via https://calendar.app.google/ik7M5hQBU9G499wD6 or email info@waterproofmedia.com. You can also find our services and cases at /en/cases/',
       agentTitle: 'Growth assistant', agentSub: 'AI assistant · answers on behalf of Waterproofmedia',
       hello: 'Hi! I answer questions about our services, cases and products. What are you looking for?',
       quick: ['I want to start a campaign', 'What does a project cost?', 'What is the Growth Scan?', 'I want to book a call'],
@@ -133,7 +149,14 @@
           form.hidden = true; document.getElementById('formDone').classList.add('show');
           document.getElementById('formDone').focus();
         })
-        .catch(function () { msg.textContent = t.failed; msg.className = 'form-msg err'; btn.disabled = false; btn.textContent = t.send; });
+        .catch(function () {
+          var body = [data.message, '', data.name, data.company, data.website, data.phone, data.topic ? 'Onderwerp/topic: ' + data.topic : '', data.timing ? 'Start: ' + data.timing : ''].filter(function (x) { return x !== undefined; }).join('\n');
+          var href = 'mailto:info@waterproofmedia.com?subject=' + encodeURIComponent(t.mailSubj) + '&body=' + encodeURIComponent(body);
+          msg.className = 'form-msg fallback';
+          msg.innerHTML = '<span>' + t.failed + '</span><span class="fb-row"><a class="btn btn-primary" href="' + href + '">' + t.mailBtn + '</a><a class="btn btn-ghost" href="https://calendar.app.google/ik7M5hQBU9G499wD6" target="_blank" rel="noopener">' + t.calBtn + '</a></span>';
+          track('contact_fallback', { lang: LANG });
+          btn.disabled = false; btn.textContent = t.send;
+        });
     });
   }
 
@@ -178,11 +201,16 @@
     fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: history.slice(-12), lang: LANG, page: location.pathname }) })
       .then(function (r) { return r.json(); })
       .then(function (j) {
-        ty.remove(); if (!j.reply) throw new Error('x');
+        if (!j.reply) throw new Error('x');
+        ty.remove();
         add('bot', j.reply); history.push({ role: 'assistant', content: j.reply });
         if (j.lead) track('generate_lead', { method: 'assistant', lang: LANG });
       })
-      .catch(function () { ty.remove(); add('bot', t.agentErr); })
+      .catch(function () {
+        ty.remove();
+        var i = t.quick.indexOf(q), a = i > -1 ? t.canned[i] : t.offline;
+        add('bot', a); history.push({ role: 'assistant', content: a });
+      })
       .then(function () { busy = false; });
   }
   fab.addEventListener('click', openBox);

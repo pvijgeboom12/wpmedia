@@ -1,43 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url><loc>https://waterproofmedia.com/nl/</loc><lastmod>2026-11-03</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/"/>
+  <url><loc>https://waterproofmedia.com/nl/</loc><lastmod>2026-11-04</lastmod>
     <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/"/>
   </url>
-  <url><loc>https://waterproofmedia.com/en/</loc><lastmod>2026-11-03</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/"/>
+  <url><loc>https://waterproofmedia.com/en/</loc><lastmod>2026-11-04</lastmod>
     <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/"/>
   </url>
-  <url><loc>https://waterproofmedia.com/nl/contact/</loc><lastmod>2026-11-03</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/contact/"/>
+  <url><loc>https://waterproofmedia.com/nl/contact/</loc><lastmod>2026-11-04</lastmod>
     <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/contact/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/contact/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/contact/"/>
   </url>
-  <url><loc>https://waterproofmedia.com/en/contact/</loc><lastmod>2026-11-03</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/contact/"/>
+  <url><loc>https://waterproofmedia.com/en/contact/</loc><lastmod>2026-11-04</lastmod>
     <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/contact/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/contact/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/contact/"/>
-  </url>
-  <url><loc>https://waterproofmedia.com/nl/campagnes/</loc><lastmod>2026-11-03</lastmod>
-  </url>
-  <url><loc>https://waterproofmedia.com/en/growth-scan/</loc><lastmod>2026-11-03</lastmod>
-  </url>
-  <url><loc>https://waterproofmedia.com/en/growth-dashboard/</loc><lastmod>2026-11-03</lastmod>
-  </url>
-  <url><loc>https://waterproofmedia.com/en/cases/booyaka/</loc><lastmod>2026-11-03</lastmod>
-  </url>
-  <url><loc>https://waterproofmedia.com/en/disclaimer/</loc><lastmod>2026-11-03</lastmod>
   </url>
   <url><loc>https://waterproofmedia.com/nl/cases/</loc><lastmod>2026-11-04</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/cases/"/>
     <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/cases/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/cases/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/cases/"/>
   </url>
   <url><loc>https://waterproofmedia.com/en/cases/</loc><lastmod>2026-11-04</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/cases/"/>
     <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/cases/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/cases/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/cases/"/>
   </url>
+  <url><loc>https://waterproofmedia.com/nl/campagnes/</loc><lastmod>2026-11-04</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/campagnes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/campaigns/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/campagnes/"/>
+  </url>
+  <url><loc>https://waterproofmedia.com/en/campaigns/</loc><lastmod>2026-11-04</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/campagnes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/campaigns/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/campagnes/"/>
+  </url>
+  <url><loc>https://waterproofmedia.com/nl/cases/booyaka/</loc><lastmod>2026-11-04</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/cases/booyaka/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/cases/booyaka/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/cases/booyaka/"/>
+  </url>
+  <url><loc>https://waterproofmedia.com/en/cases/booyaka/</loc><lastmod>2026-11-04</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/cases/booyaka/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/cases/booyaka/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/cases/booyaka/"/>
+  </url>
+  <url><loc>https://waterproofmedia.com/en/growth-scan/</loc><lastmod>2026-11-04</lastmod></url>
+  <url><loc>https://waterproofmedia.com/en/growth-dashboard/</loc><lastmod>2026-11-04</lastmod></url>
+  <url><loc>https://waterproofmedia.com/en/disclaimer/</loc><lastmod>2026-11-04</lastmod></url>
 </urlset>
