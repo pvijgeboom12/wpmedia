@@ -1,6 +1,6 @@
 # waterproofmedia.com
 
-Statische site op Cloudflare Pages. Elke push naar `main` deployt automatisch. Elke andere branch krijgt een eigen preview-URL op `*.pages.dev`. Er is geen build-stap: wat in de repo staat, is wat live staat.
+Statische site op Cloudflare Pages. Elke push naar `main` deployt automatisch. Elke andere branch krijgt een eigen preview-URL: `https://<branch>-wpmedia.pieter-75f.workers.dev`. Daarvoor is het lege `previews`-blok in `wrangler.jsonc` nodig; niet verwijderen. Er is geen build-stap: wat in de repo staat, is wat live staat.
 
 ## Werkafspraken met Pieter
 
@@ -47,7 +47,7 @@ Elke pagina is één `index.html` in een eigen map, zodat de URL eindigt op `/`.
 - [x] Redirects, headers, sitemap, 404
 - [ ] Herorichting kiezen (Pieter)
 - [ ] NL- en EN-homepage herschrijven volgens de overdracht, ter goedkeuring
-- [ ] Campagnes-pagina (`/nl/campagnes/`) in het nieuwe systeem
+- [x] Campagnes-pagina (`/nl/campagnes/`) live (5 november 2026)
 - [ ] Root-redirect omzetten naar `/ /nl/ 301` zodra NL bestaat
 - [ ] DE en ES na akkoord
 - [ ] DNS-wissel, Search Console, WordPress read-only op subdomein
