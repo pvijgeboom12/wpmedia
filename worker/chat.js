@@ -96,7 +96,11 @@ async function callClaude(env, body) {
     headers: { 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
     body: JSON.stringify(body),
   });
-  if (!r.ok) throw new Error(`anthropic ${r.status}`);
+  if (!r.ok) {
+    let type = '';
+    try { type = (await r.json())?.error?.type || ''; } catch {}
+    throw new Error(`anthropic ${r.status} ${type}`.trim());
+  }
   return r.json();
 }
 
@@ -153,6 +157,9 @@ export async function onRequestPost({ request, env }) {
     const reply = (res.content || []).filter((c) => c.type === 'text').map((c) => c.text).join('\n').trim();
     return json({ reply: reply || (lang === 'en' ? 'Could you rephrase that?' : 'Kun je dat anders formuleren?'), lead });
   } catch (e) {
-    return json({ error: 'upstream' }, 502);
+    // Status and error type only (e.g. "anthropic 401 authentication_error"); never the key or the prompt.
+    const detail = String(e && e.message || '').slice(0, 80);
+    console.log('chat upstream error', detail);
+    return json({ error: 'upstream', detail }, 502);
   }
 }
