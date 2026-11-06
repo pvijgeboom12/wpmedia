@@ -37,7 +37,7 @@ LAB (own products)
 
 CONTACT
 - Contact form: /nl/contact/ (Dutch) or /en/contact/ (English). Usually a reply within one working day.
-- Book an intro call directly: https://calendar.app.google/ik7M5hQBU9G499wD6
+- Book an intro call directly: /plan (always give exactly this link for booking; it opens the calendar)
 - Email: info@waterproofmedia.com
 `;
 

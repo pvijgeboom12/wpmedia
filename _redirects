@@ -2,6 +2,11 @@
 # Root naar de hoofdtaal NL
 / /nl/ 301
 
+# Eén vast boekingsadres: wijzig alleen hier als de agendalink verandert
+/plan https://calendar.app.google/c4zdwhMdCHk2cWJF7 302
+/plan/ https://calendar.app.google/c4zdwhMdCHk2cWJF7 302
+/afspraak https://calendar.app.google/c4zdwhMdCHk2cWJF7 302
+
 # Oude WordPress-URL's -> nieuwe taalmappen (301, behoudt SEO-waarde)
 # Nog geen NL-versie: tijdelijk naar EN (302, omzetten zodra NL bestaat)
 /nl/growth-scan /en/growth-scan/ 302

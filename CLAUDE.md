@@ -62,7 +62,7 @@ Feiten in de assistent staan in het `KNOWLEDGE`-blok in `worker/chat.js`. Houd d
 ## Integraties
 
 - Growth Scan-backend: https://growth-scan-tool.vercel.app (`/api/analyse`, `/api/retrieve`, `/api/lead`). Los van deze site.
-- Agenda: https://calendar.app.google/ik7M5hQBU9G499wD6
+- Agenda: altijd linken via `/plan` (302 naar de Google-agenda in `_redirects`). Verandert de agendalink, pas dan alleen die regel aan.
 - Contact: info@waterproofmedia.com
 
 ## Status (3 november 2026)
