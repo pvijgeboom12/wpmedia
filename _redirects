@@ -3,6 +3,11 @@
 / /nl/ 301
 
 # Oude WordPress-URL's -> nieuwe taalmappen (301, behoudt SEO-waarde)
+# Nog geen NL-versie: tijdelijk naar EN (302, omzetten zodra NL bestaat)
+/nl/growth-scan /en/growth-scan/ 302
+/nl/growth-scan/ /en/growth-scan/ 302
+/nl/growth-dashboard /en/growth-dashboard/ 302
+/nl/growth-dashboard/ /en/growth-dashboard/ 302
 /growth-scan /en/growth-scan/ 301
 /growth-scan/ /en/growth-scan/ 301
 /growth-dashboard /en/growth-dashboard/ 301

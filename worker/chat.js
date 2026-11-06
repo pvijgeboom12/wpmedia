@@ -17,7 +17,7 @@ SERVICES (five capabilities)
 5. Dashboards: one view from reach and content to leads, customers and revenue.
 
 OFFER (how to start)
-- Growth Scan: free, self-service analysis of a website at /en/growth-scan/. Shows opportunities in brand, content, search and conversion.
+- Growth Scan: free, self-service analysis of a website at /en/growth-scan/ (English only; there is no Dutch version, so always link /en/growth-scan/, also when answering in Dutch). Shows opportunities in brand, content, search and conversion.
 - Quick wins: fixed scope, price agreed upfront. Examples: CRO audit, campaign setup, dashboard setup.
 - Growth Sprint: a short sprint of 2 to 6 weeks on one clear challenge, with measurable results and concrete lessons for the next step.
 - Growth Program: ongoing collaboration on campaigns, conversion, automation and insight into results, with one fixed point of contact.
