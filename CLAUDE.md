@@ -36,7 +36,7 @@ Elke pagina is één `index.html` in een eigen map, zodat de URL eindigt op `/`.
 1. Eigen `<title>` en meta description. Bij gemigreerde pagina's één op één uit Yoast.
 2. `<link rel="canonical">` naar de absolute URL op waterproofmedia.com.
 3. Hreflang-links naar alle bestaande taalversies plus `x-default` naar NL, zodra een tweede taal van die pagina bestaat. Geen automatische taal-redirect.
-4. Analytics-snippet `GT-TXZ6TW6` met consent mode, zoals in de bestaande pagina's. Laad `site.js` met een versie-query (`site.js?v=N`) en hoog N op bij elke wijziging: `/assets/*` heeft een cache van een jaar.
+4. Analytics-snippet `GT-TXZ6TW6` met consent mode, zoals in de bestaande pagina's. Laad `site.js` en `site.css` met een versie-query (`?v=N`) en hoog N op bij elke wijziging: `/assets/*` heeft een cache van een jaar (immutable).
 5. Alle tekst staat direct in de HTML. Animaties mogen tekst nooit verbergen voor crawlers of zonder JavaScript (de oude proof-sectie bleef leeg in een headless browser).
 6. Contrast minimaal WCAG AA.
 7. Pagina toevoegen aan `sitemap.xml`.
