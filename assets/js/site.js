@@ -3,6 +3,38 @@
   var doc = document.documentElement;
   doc.classList.add('js');
   var LANG = (doc.lang || 'nl').slice(0, 2);
+
+  /* Attribution without cookies or storage: UTM tags and the external referrer host
+     travel along internal links as query parameters and are sent with a lead.
+     Nothing is written to the device, so no consent is needed for this. */
+  var ATTR_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'ref', 'lp'];
+  var ATTR = (function () {
+    var q = new URLSearchParams(location.search), a = {};
+    ATTR_KEYS.forEach(function (k) { var v = q.get(k); if (v) a[k] = v.slice(0, 120); });
+    if (!a.ref && document.referrer) {
+      try { var h = new URL(document.referrer).hostname.replace(/^www\./, ''); if (h && h !== location.hostname.replace(/^www\./, '')) a.ref = h; } catch (e) {}
+    }
+    if ((a.utm_source || a.ref) && !a.lp) a.lp = location.pathname;
+    return a;
+  })();
+  if (Object.keys(ATTR).length) {
+    document.querySelectorAll('a[href]').forEach(function (el) {
+      var u; try { u = new URL(el.getAttribute('href'), location.href); } catch (e) { return; }
+      if (u.origin !== location.origin || /\.(pdf|png|jpe?g|webp|svg|zip)$/i.test(u.pathname)) return;
+      Object.keys(ATTR).forEach(function (k) { if (!u.searchParams.has(k)) u.searchParams.set(k, ATTR[k]); });
+      el.setAttribute('href', u.pathname + u.search + u.hash);
+    });
+  }
+
+  /* Cloudflare Web Analytics: cookieless, no consent needed. Paste the site token from
+     Cloudflare → Analytics & Logs → Web Analytics. Empty = off. */
+  var CF_BEACON_TOKEN = '';
+  if (CF_BEACON_TOKEN) {
+    var bs = document.createElement('script');
+    bs.defer = true; bs.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    bs.setAttribute('data-cf-beacon', JSON.stringify({ token: CF_BEACON_TOKEN }));
+    document.head.appendChild(bs);
+  }
   var T = {
     nl: {
       sending: 'Versturen…', send: 'Verstuur je bericht',
@@ -138,7 +170,7 @@
       var msg = document.getElementById('formMsg'), btn = form.querySelector('button[type=submit]');
       var fd = new FormData(form), data = {};
       fd.forEach(function (v, k) { data[k] = v; });
-      data.lang = LANG; data.page = location.pathname;
+      data.lang = LANG; data.page = location.pathname; data.attribution = ATTR;
       if (!data.name || !data.email || !data.message) { msg.textContent = t.required; msg.className = 'form-msg err'; return; }
       btn.disabled = true; btn.textContent = t.sending; msg.textContent = '';
       fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
@@ -198,7 +230,7 @@
     q = (q || '').trim(); if (!q || busy) return;
     quick.innerHTML = ''; add('me', q); history.push({ role: 'user', content: q }); inp.value = '';
     busy = true; var ty = add('bot typing', t.typing);
-    fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: history.slice(-12), lang: LANG, page: location.pathname }) })
+    fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: history.slice(-12), lang: LANG, page: location.pathname, attribution: ATTR }) })
       .then(function (r) { return r.json(); })
       .then(function (j) {
         if (!j.reply) throw new Error('x');

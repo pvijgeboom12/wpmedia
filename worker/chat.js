@@ -1,4 +1,4 @@
-import { deliverLead, clean, isEmail, json, sameOrigin } from './lead.js';
+import { deliverLead, clean, isEmail, json, sameOrigin, attribution } from './lead.js';
 
 // Site assistant. Needs ANTHROPIC_API_KEY as a secret on the wpmedia Worker.
 // Optional: AGENT_MODEL (default claude-haiku-5-5).
@@ -138,6 +138,7 @@ export async function onRequestPost({ request, env }) {
             topic: '', timing: clean(i.timing, 120), message: clean(i.need, 1000), lang,
             page: clean(d.page, 200), consent: true, country: request.cf?.country || '',
             transcript: transcript.slice(-6000),
+            ...attribution(d.attribution),
           });
           result = lead ? 'Saved. The team will reply within one working day.' : 'Saving failed. Ask the visitor to email info@waterproofmedia.com or book via the calendar link.';
         }

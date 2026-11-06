@@ -67,3 +67,12 @@ export function sameOrigin(request) {
   if (!o) return false;
   try { return new URL(o).host === new URL(request.url).host; } catch { return false; }
 }
+
+// Campaign attribution sent by site.js (UTM tags, referrer host, landing page).
+// Flattened into the lead so Make, the data store and the mail get plain fields.
+const ATTR_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'ref', 'lp'];
+export function attribution(a) {
+  const out = {};
+  for (const k of ATTR_KEYS) out[k === 'lp' ? 'landing_page' : k === 'ref' ? 'referrer' : k] = clean(a && a[k], 120);
+  return out;
+}

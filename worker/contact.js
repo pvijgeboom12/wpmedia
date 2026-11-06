@@ -1,4 +1,4 @@
-import { deliverLead, clean, isEmail, json, sameOrigin } from './lead.js';
+import { deliverLead, clean, isEmail, json, sameOrigin, attribution } from './lead.js';
 
 const TOPICS = ['campagne', 'cro', 'content', 'automation', 'dashboard', 'growth-scan', 'anders'];
 const TIMING = ['asap', 'month', 'quarter', 'exploring'];
@@ -26,6 +26,7 @@ export async function onRequestPost({ request, env }) {
     page: clean(d.page, 200),
     consent: d.consent === 'on' || d.consent === true,
     country: request.cf?.country || '',
+    ...attribution(d.attribution),
   };
 
   if (!lead.name || !isEmail(lead.email) || !lead.message) return json({ ok: false, error: 'invalid' }, 422);
