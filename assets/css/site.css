@@ -530,3 +530,10 @@ section{position:relative;padding-block:clamp(88px,11vw,168px)}
   .case-page .page-hero .wrap{grid-template-columns:1fr}
   .case-ill{grid-column:1!important;grid-row:auto;margin-top:36px;max-width:520px}
 }
+
+/* Real photos */
+.step-img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:14px;margin-bottom:24px;box-shadow:0 18px 40px -26px rgba(0,0,0,.55)}
+.side-photo{margin:0}
+.side-photo img{display:block;width:100%;height:auto;aspect-ratio:8/7;max-height:320px;object-fit:cover;border-radius:14px}
+.side-photo figcaption{font-size:13.5px;margin-top:10px;opacity:.75}
+.final .sea-bg.ij img{object-position:center 62%}
