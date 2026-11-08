@@ -567,3 +567,11 @@ section{position:relative;padding-block:clamp(88px,11vw,168px)}
 .itym-word{background:#4A70F0;color:#fff;letter-spacing:.02em}
 .case-ill svg text{font-family:var(--f-body)}
 .case-sm .textlink{display:inline-block;margin-top:16px}
+.page-hero .lede-2{margin-top:18px;font-size:clamp(16px,1.25vw,18px);line-height:1.65;color:var(--mist);max-width:60ch}
+.kpi-group{font:600 15px/1.2 var(--f-body);letter-spacing:.02em;color:var(--mist);margin:40px 0 0;padding-bottom:12px}
+.kpi-group:first-of-type{margin-top:8px}
+.learned.dark .essay p{color:var(--spray)}
+.learned.dark .essay p:first-child::first-line{color:var(--foam)}
+.essay a{text-decoration:underline;text-underline-offset:3px}
+.final h2.final-q{font-size:clamp(34px,4.6vw,64px);max-width:20ch;line-height:1.05}
+.case-page .learned h2{font-size:clamp(34px,3.6vw,54px);line-height:1.02;hyphens:manual}
