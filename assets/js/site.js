@@ -95,56 +95,106 @@
   var hero = document.querySelector('.hero');
   if (hero) requestAnimationFrame(function () { requestAnimationFrame(function () { hero.classList.add('ready'); }); });
 
-  /* The living wave: layered contour lines that drift and answer the pointer */
+  /* The living wave: layered contour lines that drift, sparkle on the crests
+     and answer pointer, touch and scroll. Same code on desktop and mobile. */
   var cv = document.getElementById('wave');
   if (cv && cv.getContext) {
     var ctx = cv.getContext('2d'), W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
     var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var mx = .5, my = .5, tmx = .5, tmy = .5, energy = 0, tm = 0, running = true, visible = true;
-    var LINES = innerWidth < 640 ? 26 : 44;
+    var mx = .56, tmx = .56, energy = 0, tm = 0, running = true, visible = true, lastInput = -99;
+    var LINES = 44, small = false, glints = [], GL = 34;
+    /* One pre-rendered glint sprite: soft cyan halo, white core, thin flare */
+    var spr = document.createElement('canvas'), S = 64; spr.width = spr.height = S;
+    (function () {
+      var c = spr.getContext('2d'), h = S / 2;
+      var rg = c.createRadialGradient(h, h, 0, h, h, h);
+      rg.addColorStop(0, 'rgba(255,255,255,1)'); rg.addColorStop(.12, 'rgba(210,255,248,.9)');
+      rg.addColorStop(.35, 'rgba(92,242,214,.28)'); rg.addColorStop(1, 'rgba(92,242,214,0)');
+      c.fillStyle = rg; c.fillRect(0, 0, S, S);
+      var lg = c.createLinearGradient(0, 0, S, 0);
+      lg.addColorStop(0, 'rgba(255,255,255,0)'); lg.addColorStop(.5, 'rgba(255,255,255,.85)'); lg.addColorStop(1, 'rgba(255,255,255,0)');
+      c.fillStyle = lg; c.fillRect(0, h - .6, S, 1.2);
+      var vg = c.createLinearGradient(0, h - 14, 0, h + 14);
+      vg.addColorStop(0, 'rgba(255,255,255,0)'); vg.addColorStop(.5, 'rgba(255,255,255,.6)'); vg.addColorStop(1, 'rgba(255,255,255,0)');
+      c.fillStyle = vg; c.fillRect(h - .5, h - 14, 1, 28);
+    })();
     function size() {
       var r = cv.getBoundingClientRect(); W = r.width; H = r.height;
       cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      LINES = W < 640 ? 26 : 44;
+      small = W < 640; LINES = small ? 32 : 44; GL = small ? 26 : 34;
+    }
+    function wy(i, u) {
+      var d = i / (LINES - 1), base = H * (.1 + d * .66), amp = 4 + d * d * (H * .12), spd = .35 + d * .5;
+      var y = base
+        + Math.sin(u * 5.2 + tm * spd + i * .33) * amp * .55
+        + Math.sin(u * 11.7 - tm * spd * .8 + i * .21) * amp * .22
+        + Math.sin(u * 2.1 + tm * .18) * amp * .5;
+      y -= Math.exp(-(u - .56) * (u - .56) * 7) * H * .16 * d * (1 + .08 * Math.sin(tm * .4));
+      var dx = u - mx, swell = Math.exp(-dx * dx * 28) * (18 + energy * 40) * d;
+      return y - swell * Math.sin(tm * 1.6 - Math.abs(dx) * 18);
+    }
+    /* New glint: pick the highest crest out of a few candidates, biased to the swell */
+    function spawn(g, fresh) {
+      var i = Math.round(LINES * (.3 + Math.random() * .5)), best = 0, by = 1e9;
+      for (var k = 0; k < 5; k++) {
+        var u = Math.random() < .55 ? mx + (Math.random() - .5) * .5 : Math.random();
+        var y = wy(i, u) - wy(i, u - .015) * .5 - wy(i, u + .015) * .5;   // negative = crest
+        if (y < by) { by = y; best = u; }
+      }
+      g.i = i; g.u = best; g.t = fresh ? Math.random() * 2.4 : 0;
+      g.life = 1.4 + Math.random() * 2.2; g.s = .45 + Math.random() * .75; g.v = (Math.random() - .3) * .004;
     }
     function draw() {
       ctx.clearRect(0, 0, W, H);
-      mx += (tmx - mx) * .05; my += (tmy - my) * .05; energy *= .96;
-      var step = W < 640 ? 10 : 7;
+      /* With no pointer the swell wanders by itself, so phones see it breathe */
+      if (tm - lastInput > 2.5) tmx = .56 + Math.sin(tm * .21) * .26 + Math.sin(tm * .53) * .08;
+      mx += (tmx - mx) * .04; energy *= .965;
+      var step = small ? 8 : 7;
       for (var i = 0; i < LINES; i++) {
-        var d = i / (LINES - 1);                 // 0 = horizon, 1 = foreground
-        var base = H * (.1 + d * .66);
-        var amp = 4 + d * d * (H * .12);
-        var spd = .35 + d * .5;
+        var d = i / (LINES - 1);
         var a = (.1 + d * .42) * (d > .82 ? Math.max(0, (1 - d) / .18) : 1);
         var g = ctx.createLinearGradient(0, 0, W, 0);
         g.addColorStop(0, 'rgba(77,141,255,' + a * .55 + ')');
         g.addColorStop(.55, 'rgba(92,242,214,' + a + ')');
         g.addColorStop(1, 'rgba(77,141,255,' + a * .4 + ')');
-        ctx.strokeStyle = g; ctx.lineWidth = .7 + d * 1.1;
+        ctx.strokeStyle = g; ctx.lineWidth = (small ? .9 : .7) + d * 1.1;
         ctx.beginPath();
         for (var x = -step; x <= W + step; x += step) {
-          var u = x / W;
-          var y = base
-            + Math.sin(u * 5.2 + tm * spd + i * .33) * amp * .55
-            + Math.sin(u * 11.7 - tm * spd * .8 + i * .21) * amp * .22
-            + Math.sin(u * 2.1 + tm * .18) * amp * .5;
-          y -= Math.exp(-(u - .56) * (u - .56) * 7) * H * .16 * d * (1 + .08 * Math.sin(tm * .4));
-          var dx = u - mx, swell = Math.exp(-dx * dx * 28) * (18 + energy * 40) * d;
-          y -= swell * Math.sin(tm * 1.6 - Math.abs(dx) * 18);
+          var y = wy(i, x / W);
           if (x === -step) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
         ctx.stroke();
       }
+      /* Sparkle: glints ride the crests and flare up with energy */
+      while (glints.length < GL) { var n = {}; spawn(n, true); glints.push(n); }
+      ctx.globalCompositeOperation = 'lighter';
+      for (var j = 0; j < GL; j++) {
+        var gl = glints[j]; gl.t += .016; gl.u += gl.v * .1;
+        if (gl.t > gl.life || gl.u < -.02 || gl.u > 1.02) { spawn(gl); continue; }
+        var p = gl.t / gl.life, tw = Math.sin(Math.PI * p); tw *= tw;
+        var flick = .75 + .25 * Math.sin(tm * 9 + j * 1.7);
+        var al = Math.min(1, tw * flick * ((small ? .8 : .6) + energy * .6));
+        if (al < .02) continue;
+        var sz = S * gl.s * (small ? .55 : .5) * (1 + energy * .5);
+        ctx.globalAlpha = al;
+        ctx.drawImage(spr, gl.u * W - sz / 2, wy(gl.i, gl.u) - sz / 2, sz, sz);
+      }
+      ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
     }
     function loop() { if (!running) return; tm += .012; draw(); requestAnimationFrame(loop); }
     size(); addEventListener('resize', size, { passive: true });
+    function nudge(clientX, amt) {
+      var r = cv.getBoundingClientRect();
+      tmx = (clientX - r.left) / r.width; lastInput = tm; energy = Math.min(1, energy + amt);
+    }
     if (!still) {
-      addEventListener('pointermove', function (e) {
-        var r = cv.getBoundingClientRect();
-        var nx = (e.clientX - r.left) / r.width, ny = (e.clientY - r.top) / r.height;
-        if (Math.abs(nx - tmx) > .002) energy = Math.min(1, energy + .04);
-        tmx = nx; tmy = ny;
+      addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse') nudge(e.clientX, .04); }, { passive: true });
+      addEventListener('touchstart', function (e) { if (e.touches[0]) nudge(e.touches[0].clientX, .35); }, { passive: true });
+      addEventListener('touchmove', function (e) { if (e.touches[0]) nudge(e.touches[0].clientX, .05); }, { passive: true });
+      var sy = scrollY;
+      addEventListener('scroll', function () {
+        var dy = Math.abs(scrollY - sy); sy = scrollY;
+        energy = Math.min(1, energy + Math.min(.25, dy * .006));
       }, { passive: true });
       if ('IntersectionObserver' in window) new IntersectionObserver(function (es) {
         visible = es[0].isIntersecting;
@@ -152,7 +202,7 @@
       }).observe(cv);
       document.addEventListener('visibilitychange', function () { if (document.hidden) running = false; else if (visible && !running) { running = true; loop(); } });
       loop();
-    } else { tm = 2; draw(); }
+    } else { tm = 2; for (var q = 0; q < GL; q++) { var z = {}; spawn(z); z.t = z.life / 2; glints.push(z); } draw(); }
   }
 
   /* Track primary CTAs */

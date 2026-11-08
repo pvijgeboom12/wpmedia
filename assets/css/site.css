@@ -531,6 +531,29 @@ section{position:relative;padding-block:clamp(88px,11vw,168px)}
   .case-ill{grid-column:1!important;grid-row:auto;margin-top:36px;max-width:520px}
 }
 
+/* Mobile hero: the headline stands on the water.
+   The wave moves up from below the proof card to directly under the h1,
+   so the one loud element is in the first screen. Source order unchanged. */
+@media(max-width:640px){
+  .hero{min-height:0;padding-top:116px}
+  .hero-copy{display:contents}
+  .hero-copy>.kicker{order:1}
+  .hero-copy>h1{order:2}
+  .hero .sea{order:3}
+  .hero .flow-strip{order:4}
+  .hero-copy>.hero-row{order:5}
+  .hero-copy>.kicker,.hero-copy>h1,.hero-copy>.hero-row,.hero .flow-strip{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad)}
+  .hero h1{position:relative;z-index:2;font-size:clamp(54px,15.5vw,72px);max-width:none;text-shadow:0 2px 30px rgba(4,10,18,.55)}
+  .hero h1 .soft{color:#c4d6de}
+  .hero .sea{flex:none;min-height:0;height:clamp(230px,66vw,300px);margin-top:-64px;z-index:1}
+  .hero .sea img{-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 42%,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 42%,#000 74%,transparent 100%)}
+  .hero .sea::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 45% at 58% 46%,rgba(92,242,214,.10),transparent 70%)}
+  .hero .flow-strip{position:relative;inset:auto;z-index:2;margin-top:-30px;flex-wrap:wrap;gap:6px 10px;font-size:11.5px;color:var(--spray)}
+  .hero-copy>.hero-row{margin-top:30px;padding-bottom:clamp(56px,14vw,80px)}
+  .hero .lede{font-size:18px;color:var(--foam)}
+  .hero-text .lede-2{font-size:16.5px}
+}
+
 /* Real photos */
 .step-img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:14px;margin-bottom:24px;box-shadow:0 18px 40px -26px rgba(0,0,0,.55)}
 .side-photo{margin:0}
