@@ -18,7 +18,7 @@ Statische site op een Cloudflare Worker (project `wpmedia`, config in `wrangler.
 /de/   Duits  — pas na akkoord op NL en EN
 /es/   Spaans — pas na akkoord op NL en EN
 /assets/css/site.css   gedeeld design system (nieuwe pagina's)
-/assets/js/site.js     nav, hero-golf, contactformulier, AI-assistent
+/assets/js/site.js     nav, hero-golf (sparkles + bliksem), contactformulier, AI-assistent
 /assets/js/motion.js   scroll-animaties (GSAP): reveals, parallax, count-up, stappen-flow ([data-flow-steps])
 /assets/js/vendor/     GSAP 3.15.1 + ScrollTrigger, zelf gehost (geen CDN)
 /assets/img/      alle afbeeldingen (oude WordPress-uploads, platte map)

@@ -144,6 +144,59 @@
       g.i = i; g.u = best; g.t = fresh ? Math.random() * 2.4 : 0;
       g.life = 1.4 + Math.random() * 2.2; g.s = .45 + Math.random() * .75; g.v = (Math.random() - .3) * .004;
     }
+    /* Lightning: a spark of an idea strikes the water. Rare, short, never on reduced motion. */
+    var bolt = null, lastStrike = -99;
+    function jag(x0, y0, x1, y1, rough, depth, out) {
+      if (depth === 0) { out.push([x1, y1]); return; }
+      var mx2 = (x0 + x1) / 2 + (Math.random() - .5) * rough, my2 = (y0 + y1) / 2 + (Math.random() - .5) * rough * .25;
+      jag(x0, y0, mx2, my2, rough / 2, depth - 1, out); jag(mx2, my2, x1, y1, rough / 2, depth - 1, out);
+    }
+    function strike(u) {
+      if (still || !W || tm - lastStrike < 1.4) return;
+      lastStrike = tm;
+      if (u == null) u = Math.min(.9, Math.max(.1, mx + (Math.random() - .5) * .3));
+      var li = Math.round(LINES * .42), tx = u * W, ty = wy(li, u);
+      var sx = tx + (Math.random() - .5) * W * .12, main = [[sx, -8]];
+      jag(sx, -8, tx, ty, Math.max(60, ty * .5), 6, main);
+      var forks = [];
+      for (var f = 0; f < 3; f++) {
+        var k = 8 + Math.floor(Math.random() * (main.length - 20)), a = main[k], br = [a];
+        jag(a[0], a[1], a[0] + (Math.random() - .5) * W * .16, a[1] + (ty - a[1]) * (.35 + Math.random() * .4), 40, 4, br);
+        forks.push(br);
+      }
+      bolt = { main: main, forks: forks, t: 0, x: tx, y: ty };
+      tmx = u; lastInput = tm; energy = 1;
+      for (var g2 = 0; g2 < 10 && g2 < glints.length; g2++) { var gg = glints[g2]; gg.u = u + (Math.random() - .5) * .14; gg.i = Math.round(LINES * (.32 + Math.random() * .3)); gg.t = 0; gg.life = .8 + Math.random() * 1.4; gg.s = .7 + Math.random() * .8; }
+    }
+    function boltLevel(t) {   // three quick flickers, then a fading afterglow
+      if (t < .05) return 1; if (t < .09) return .25; if (t < .14) return .95; if (t < .18) return .35; if (t < .24) return .85;
+      return Math.max(0, .85 * (1 - (t - .24) / .5));
+    }
+    function path(pts) { ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]); for (var q2 = 1; q2 < pts.length; q2++) ctx.lineTo(pts[q2][0], pts[q2][1]); ctx.stroke(); }
+    function drawBolt() {
+      if (!bolt) return;
+      bolt.t += .016; var lv = boltLevel(bolt.t);
+      if (lv <= 0) { bolt = null; return; }
+      ctx.save(); ctx.globalCompositeOperation = 'lighter';
+      /* the sea lights up around the impact */
+      var fr = ctx.createRadialGradient(bolt.x, bolt.y, 0, bolt.x, bolt.y, Math.min(W * .45, bolt.y * .95));
+      fr.addColorStop(0, 'rgba(190,250,255,' + .32 * lv + ')'); fr.addColorStop(.35, 'rgba(92,242,214,' + .12 * lv + ')'); fr.addColorStop(1, 'rgba(92,242,214,0)');
+      ctx.fillStyle = fr; ctx.fillRect(0, 0, W, H);
+      ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+      var core = bolt.t < .24;
+      ctx.shadowColor = 'rgba(120,240,255,.9)'; ctx.shadowBlur = 18;
+      /* strokes fade in from the canvas top, so the bolt comes out of the dark instead of a hard edge */
+      function fade(r, g, bl, a) { var lg = ctx.createLinearGradient(0, 0, 0, bolt.y); lg.addColorStop(0, 'rgba(' + r + ',' + g + ',' + bl + ',0)'); lg.addColorStop(.4, 'rgba(' + r + ',' + g + ',' + bl + ',' + a + ')'); lg.addColorStop(1, 'rgba(' + r + ',' + g + ',' + bl + ',' + a + ')'); return lg; }
+      ctx.strokeStyle = fade(140, 235, 255, .55 * lv); ctx.lineWidth = small ? 4 : 5; path(bolt.main);
+      ctx.strokeStyle = fade(255, 255, 255, core ? lv : lv * .5); ctx.lineWidth = small ? 1.6 : 2; path(bolt.main);
+      ctx.lineWidth = 1; ctx.strokeStyle = fade(200, 248, 255, .6 * lv);
+      for (var b = 0; b < bolt.forks.length; b++) path(bolt.forks[b]);
+      /* impact flare on the crest */
+      ctx.shadowBlur = 0; ctx.globalAlpha = Math.min(1, lv * 1.2);
+      var fs = S * (small ? 1.6 : 2) * (.8 + lv * .4);
+      ctx.drawImage(spr, bolt.x - fs / 2, bolt.y - fs / 2, fs, fs);
+      ctx.restore();
+    }
     function draw() {
       ctx.clearRect(0, 0, W, H);
       /* With no pointer the swell wanders by itself, so phones see it breathe */
@@ -180,6 +233,7 @@
         ctx.drawImage(spr, gl.u * W - sz / 2, wy(gl.i, gl.u) - sz / 2, sz, sz);
       }
       ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+      drawBolt();
     }
     function loop() { if (!running) return; tm += .012; draw(); requestAnimationFrame(loop); }
     size(); addEventListener('resize', size, { passive: true });
@@ -196,6 +250,16 @@
         var dy = Math.abs(scrollY - sy); sy = scrollY;
         energy = Math.min(1, energy + Math.min(.25, dy * .006));
       }, { passive: true });
+      /* Strikes: a tap on the water, hover or focus on the hero CTA, and now and then by itself */
+      addEventListener('pointerdown', function (e) {
+        var r = cv.getBoundingClientRect();
+        if (e.clientY >= r.top && e.clientY <= r.bottom && e.clientX >= r.left && e.clientX <= r.right && !e.target.closest('a,button,input,textarea,select')) strike((e.clientX - r.left) / r.width);
+      }, { passive: true });
+      document.querySelectorAll('.hero .btn-primary').forEach(function (b) {
+        b.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') strike(); });
+        b.addEventListener('focus', function () { strike(); });
+      });
+      (function idle() { setTimeout(function () { if (running && visible && !document.hidden) strike(); idle(); }, lastStrike < 0 ? 1800 : 9000 + Math.random() * 7000); })();
       if ('IntersectionObserver' in window) new IntersectionObserver(function (es) {
         visible = es[0].isIntersecting;
         if (visible && !running) { running = true; loop(); } else if (!visible) running = false;
