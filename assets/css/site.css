@@ -560,3 +560,7 @@ section{position:relative;padding-block:clamp(88px,11vw,168px)}
 .side-photo img{display:block;width:100%;height:auto;aspect-ratio:8/7;max-height:320px;object-fit:cover;border-radius:14px}
 .side-photo figcaption{font-size:13.5px;margin-top:10px;opacity:.75}
 .final .sea-bg.ij img{object-position:center 62%}
+.foot h2.foot-h{font:500 14px var(--f-body);color:var(--mist);margin-bottom:16px;letter-spacing:normal}
+/* Final CTA over the IJ photo: keep body text readable (WCAG AA) */
+.final .sea-bg.ij::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,10,18,0) 0%,rgba(4,10,18,.45) 55%,rgba(4,10,18,.25) 100%);pointer-events:none}
+.final .wrap p{color:#dfe9ee;text-shadow:0 1px 18px rgba(4,10,18,.85),0 0 2px rgba(4,10,18,.6)}
