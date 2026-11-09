@@ -575,3 +575,9 @@ section{position:relative;padding-block:clamp(88px,11vw,168px)}
 .essay a{text-decoration:underline;text-underline-offset:3px}
 .final h2.final-q{font-size:clamp(34px,4.6vw,64px);max-width:20ch;line-height:1.05}
 .case-page .learned h2{font-size:clamp(34px,3.6vw,54px);line-height:1.02;hyphens:manual}
+
+.case-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2.5vw,32px);align-items:start;margin-top:clamp(48px,6vw,88px)}
+.case-photos figure{margin:0}
+.case-photos img{display:block;width:100%;height:auto;border-radius:18px;box-shadow:0 30px 60px -40px rgba(0,0,0,.8)}
+.case-photos .capt{margin-top:12px}
+@media (max-width:720px){.case-photos{grid-template-columns:1fr}}
