@@ -553,3 +553,11 @@ section{position:relative;padding-block:clamp(88px,11vw,168px)}
   .hero .lede{font-size:18px;color:var(--foam)}
   .hero-text .lede-2{font-size:16.5px}
 }
+
+/* Live photo wave: JS redraws the sea image on a canvas (.sea-photo) and adds .live.
+   The <img> stays in the HTML as the no-JS and reduced-motion fallback. */
+.sea .sea-photo{mix-blend-mode:normal;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 45%);mask-image:linear-gradient(180deg,transparent 0%,#000 45%)}
+.sea.live img{visibility:hidden}
+@media(max-width:640px){
+  .hero .sea .sea-photo{-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 42%,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 42%,#000 74%,transparent 100%)}
+}

@@ -123,6 +123,34 @@
       cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       small = W < 640; LINES = small ? 32 : 44; GL = small ? 26 : 34;
     }
+    /* The photo wave rolls too: the still image is redrawn in thin columns that ride a travelling swell */
+    var img = cv.parentNode.querySelector('img'), pv = null, pctx = null, pdpr = Math.min(dpr, 1.25);   // the photo is soft already; saves fill-rate on phones
+    function photoSize() {
+      if (!pv) return;
+      pv.width = Math.round(W * pdpr); pv.height = Math.round(H * pdpr); pctx.setTransform(pdpr, 0, 0, pdpr, 0, 0);
+    }
+    function photoSetup() {
+      if (still || pv || !img || !img.naturalWidth) return;
+      pv = document.createElement('canvas'); pv.className = 'sea-photo'; pv.setAttribute('aria-hidden', 'true');
+      pctx = pv.getContext('2d'); cv.parentNode.insertBefore(pv, cv); cv.parentNode.classList.add('live');
+      photoSize();
+    }
+    function drawPhoto() {
+      if (!pv) return;
+      var iw = img.naturalWidth, ih = img.naturalHeight, slack = 1.07;
+      var sc = Math.max(W / iw, H / ih) * slack, dw = iw * sc, dh = ih * sc, dx = (W - dw) / 2, dy = H - dh + dh * .035;
+      var amp = H * (small ? .022 : .016) * (1 + energy * 1.1), cw = small ? 3 : 4;
+      pctx.clearRect(0, 0, W, H);
+      for (var x = 0; x < W; x += cw) {
+        var u = x / W;
+        var off = Math.sin(u * 7.5 - tm * 1.25) * amp
+                + Math.sin(u * 15.3 + tm * .9) * amp * .35
+                + Math.sin(u * 2.4 - tm * .45) * amp * .6;
+        off += Math.exp(-(u - mx) * (u - mx) * 30) * amp * 1.6 * Math.sin(tm * 1.6);
+        var sx = (x - dx) / sc;
+        pctx.drawImage(img, sx, 0, cw / sc + .5, ih, x, dy + off, cw + .6, dh);
+      }
+    }
     function wy(i, u) {
       var d = i / (LINES - 1), base = H * (.1 + d * .66), amp = 4 + d * d * (H * .12), spd = .35 + d * .5;
       var y = base
@@ -198,6 +226,7 @@
       ctx.restore();
     }
     function draw() {
+      drawPhoto();
       ctx.clearRect(0, 0, W, H);
       /* With no pointer the swell wanders by itself, so phones see it breathe */
       if (tm - lastInput > 2.5) tmx = .56 + Math.sin(tm * .21) * .26 + Math.sin(tm * .53) * .08;
@@ -236,7 +265,8 @@
       drawBolt();
     }
     function loop() { if (!running) return; tm += .012; draw(); requestAnimationFrame(loop); }
-    size(); addEventListener('resize', size, { passive: true });
+    size(); addEventListener('resize', function () { size(); photoSize(); }, { passive: true });
+    if (img && !still) { if (img.complete && img.naturalWidth) photoSetup(); else img.addEventListener('load', photoSetup); }
     function nudge(clientX, amt) {
       var r = cv.getBoundingClientRect();
       tmx = (clientX - r.left) / r.width; lastInput = tm; energy = Math.min(1, energy + amt);
