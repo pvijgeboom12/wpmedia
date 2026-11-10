@@ -139,14 +139,14 @@
       if (!pv) return;
       var iw = img.naturalWidth, ih = img.naturalHeight, slack = 1.07;
       var sc = Math.max(W / iw, H / ih) * slack, dw = iw * sc, dh = ih * sc, dx = (W - dw) / 2, dy = H - dh + dh * .035;
-      var amp = H * (small ? .022 : .016) * (1 + energy * 1.1), cw = small ? 3 : 4;
+      var amp = H * (small ? .014 : .011) * (1 + energy * .6), cw = small ? 3 : 4;
       pctx.clearRect(0, 0, W, H);
       for (var x = 0; x < W; x += cw) {
         var u = x / W;
-        var off = Math.sin(u * 7.5 - tm * 1.25) * amp
-                + Math.sin(u * 15.3 + tm * .9) * amp * .35
+        var off = Math.sin(u * 6.2 - tm * .8) * amp
+                + Math.sin(u * 13.1 + tm * .5) * amp * .25
                 + Math.sin(u * 2.4 - tm * .45) * amp * .6;
-        off += Math.exp(-(u - mx) * (u - mx) * 30) * amp * 1.6 * Math.sin(tm * 1.6);
+        off += Math.exp(-(u - mx) * (u - mx) * 30) * amp * 1.1 * Math.sin(tm * 1.1);
         var sx = (x - dx) / sc;
         pctx.drawImage(img, sx, 0, cw / sc + .5, ih, x, dy + off, cw + .6, dh);
       }
@@ -187,13 +187,13 @@
       var sx = tx + (Math.random() - .5) * W * .12, main = [[sx, -8]];
       jag(sx, -8, tx, ty, Math.max(60, ty * .5), 6, main);
       var forks = [];
-      for (var f = 0; f < 3; f++) {
+      for (var f = 0; f < 2; f++) {
         var k = 8 + Math.floor(Math.random() * (main.length - 20)), a = main[k], br = [a];
         jag(a[0], a[1], a[0] + (Math.random() - .5) * W * .16, a[1] + (ty - a[1]) * (.35 + Math.random() * .4), 40, 4, br);
         forks.push(br);
       }
       bolt = { main: main, forks: forks, t: 0, x: tx, y: ty };
-      tmx = u; lastInput = tm; energy = 1;
+      tmx = u; lastInput = tm; energy = .6;
       for (var g2 = 0; g2 < 10 && g2 < glints.length; g2++) { var gg = glints[g2]; gg.u = u + (Math.random() - .5) * .14; gg.i = Math.round(LINES * (.32 + Math.random() * .3)); gg.t = 0; gg.life = .8 + Math.random() * 1.4; gg.s = .7 + Math.random() * .8; }
     }
     function boltLevel(t) {   // three quick flickers, then a fading afterglow
@@ -208,20 +208,20 @@
       ctx.save(); ctx.globalCompositeOperation = 'lighter';
       /* the sea lights up around the impact */
       var fr = ctx.createRadialGradient(bolt.x, bolt.y, 0, bolt.x, bolt.y, Math.min(W * .45, bolt.y * .95));
-      fr.addColorStop(0, 'rgba(190,250,255,' + .32 * lv + ')'); fr.addColorStop(.35, 'rgba(92,242,214,' + .12 * lv + ')'); fr.addColorStop(1, 'rgba(92,242,214,0)');
+      fr.addColorStop(0, 'rgba(190,250,255,' + .18 * lv + ')'); fr.addColorStop(.35, 'rgba(92,242,214,' + .06 * lv + ')'); fr.addColorStop(1, 'rgba(92,242,214,0)');
       ctx.fillStyle = fr; ctx.fillRect(0, 0, W, H);
       ctx.lineJoin = 'round'; ctx.lineCap = 'round';
       var core = bolt.t < .24;
-      ctx.shadowColor = 'rgba(120,240,255,.9)'; ctx.shadowBlur = 18;
+      ctx.shadowColor = 'rgba(120,240,255,.7)'; ctx.shadowBlur = 12;
       /* strokes fade in from the canvas top, so the bolt comes out of the dark instead of a hard edge */
       function fade(r, g, bl, a) { var lg = ctx.createLinearGradient(0, 0, 0, bolt.y); lg.addColorStop(0, 'rgba(' + r + ',' + g + ',' + bl + ',0)'); lg.addColorStop(.4, 'rgba(' + r + ',' + g + ',' + bl + ',' + a + ')'); lg.addColorStop(1, 'rgba(' + r + ',' + g + ',' + bl + ',' + a + ')'); return lg; }
-      ctx.strokeStyle = fade(140, 235, 255, .55 * lv); ctx.lineWidth = small ? 4 : 5; path(bolt.main);
+      ctx.strokeStyle = fade(140, 235, 255, .55 * lv); ctx.lineWidth = small ? 3 : 3.5; path(bolt.main);
       ctx.strokeStyle = fade(255, 255, 255, core ? lv : lv * .5); ctx.lineWidth = small ? 1.6 : 2; path(bolt.main);
       ctx.lineWidth = 1; ctx.strokeStyle = fade(200, 248, 255, .6 * lv);
       for (var b = 0; b < bolt.forks.length; b++) path(bolt.forks[b]);
       /* impact flare on the crest */
       ctx.shadowBlur = 0; ctx.globalAlpha = Math.min(1, lv * 1.2);
-      var fs = S * (small ? 1.6 : 2) * (.8 + lv * .4);
+      var fs = S * (small ? 1.2 : 1.5) * (.8 + lv * .4);
       ctx.drawImage(spr, bolt.x - fs / 2, bolt.y - fs / 2, fs, fs);
       ctx.restore();
     }
@@ -264,7 +264,7 @@
       ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
       drawBolt();
     }
-    function loop() { if (!running) return; tm += .012; draw(); requestAnimationFrame(loop); }
+    function loop() { if (!running) return; tm += .0085; draw(); requestAnimationFrame(loop); }
     size(); addEventListener('resize', function () { size(); photoSize(); }, { passive: true });
     if (img && !still) { if (img.complete && img.naturalWidth) photoSetup(); else img.addEventListener('load', photoSetup); }
     function nudge(clientX, amt) {
@@ -289,7 +289,7 @@
         b.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') strike(); });
         b.addEventListener('focus', function () { strike(); });
       });
-      (function idle() { setTimeout(function () { if (running && visible && !document.hidden) strike(); idle(); }, lastStrike < 0 ? 1800 : 9000 + Math.random() * 7000); })();
+      (function idle() { setTimeout(function () { if (running && visible && !document.hidden) strike(); idle(); }, lastStrike < 0 ? 2500 : 25000 + Math.random() * 20000); })();
       if ('IntersectionObserver' in window) new IntersectionObserver(function (es) {
         visible = es[0].isIntersecting;
         if (visible && !running) { running = true; loop(); } else if (!visible) running = false;

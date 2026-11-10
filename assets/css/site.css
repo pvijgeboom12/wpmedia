@@ -561,3 +561,17 @@ section{position:relative;padding-block:clamp(88px,11vw,168px)}
 @media(max-width:640px){
   .hero .sea .sea-photo{-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 42%,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 42%,#000 74%,transparent 100%)}
 }
+
+/* Sunrise in the closing block: after the storm at the top, the sun comes up at the end.
+   Pure CSS on the existing sea background. --rise (0..1) is scrubbed by motion.js on scroll;
+   without JS or with reduced motion it stays at 1, so the sun is simply up. */
+.final .sea-bg{--sx:83vw;--sy:30%;--rw:clamp(70px,8vw,150px)}
+.final .sea-bg::after{content:"";position:absolute;z-index:2;left:var(--sx);top:var(--sy);width:clamp(96px,10vw,170px);aspect-ratio:1;border-radius:50%;pointer-events:none;mix-blend-mode:screen;
+  background:radial-gradient(circle,#fff8ea 0 30%,#ffe1a8 40%,rgba(255,176,104,.7) 50%,rgba(255,128,96,.25) 62%,transparent 71%);
+  -webkit-mask-image:linear-gradient(180deg,#000 48%,transparent 74%);mask-image:linear-gradient(180deg,#000 48%,transparent 74%);
+  transform:translate(-50%,calc(-50% + (1 - var(--rise,1)) * 120%));opacity:calc(.35 + .65 * var(--rise,1))}
+.final .sea-bg::before{content:"";position:absolute;z-index:2;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:calc(.15 + .85 * var(--rise,1));
+  background:
+    radial-gradient(34% 26% at var(--sx) var(--sy),rgba(255,190,124,.4),rgba(255,128,112,.14) 50%,transparent 78%) no-repeat,
+    radial-gradient(closest-side,rgba(255,214,150,.42),rgba(255,170,110,.12) 55%,transparent) no-repeat calc(var(--sx) - var(--rw) / 2) 100% / var(--rw) calc(100% - var(--sy))}
+@media(max-width:640px){.final .sea-bg{--sx:84vw;--sy:34%}.final .sea-bg::after{width:82px}}

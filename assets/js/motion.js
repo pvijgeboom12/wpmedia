@@ -82,6 +82,11 @@
     document.querySelectorAll('.team-photo img').forEach(function (img) {
       gsap.fromTo(img, { yPercent: -7, scale: 1.14 }, { yPercent: 7, scale: 1.14, ease: 'none', scrollTrigger: { trigger: img.parentNode, start: 'top bottom', end: 'bottom top', scrub: true } });
     });
+    /* Sunrise: the sun climbs out of the sea as the closing block scrolls into view */
+    document.querySelectorAll('.final').forEach(function (fin) {
+      if (!fin.querySelector('.sea-bg')) return;
+      gsap.fromTo(fin, { '--rise': 0 }, { '--rise': 1, ease: 'none', scrollTrigger: { trigger: fin, start: 'top 85%', end: 'bottom bottom', scrub: .6 } });
+    });
     var sea = document.querySelector('.final .sea-bg img');
     if (sea) gsap.fromTo(sea, { yPercent: 10 }, { yPercent: -4, ease: 'none', scrollTrigger: { trigger: '.final', start: 'top bottom', end: 'bottom bottom', scrub: true } });
   }
