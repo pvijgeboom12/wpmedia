@@ -581,3 +581,26 @@ section{position:relative;padding-block:clamp(88px,11vw,168px)}
 .case-photos img{display:block;width:100%;height:auto;border-radius:18px;box-shadow:0 30px 60px -40px rgba(0,0,0,.8)}
 .case-photos .capt{margin-top:12px}
 @media (max-width:720px){.case-photos{flex-direction:column}.case-photos figure{flex:none;width:100%}}
+
+/* ---------- FAQ (details/summary, werkt zonder JavaScript) ---------- */
+.faq-grid{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:clamp(32px,6vw,96px);align-items:start}
+.faq-grid .sec-head{display:block;margin-bottom:0;position:sticky;top:120px}
+.faq-grid .sec-head h2{font-size:clamp(36px,4.4vw,64px)}
+.faq-grid .sec-head .lede{margin-top:20px}
+.faq-grid .sec-head .textlink{display:inline-block;margin-top:22px}
+.faq{border-top:1px solid var(--line-2)}
+.faq details{border-bottom:1px solid var(--line-2)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:24px 0;font:600 clamp(18px,1.7vw,22px)/1.3 var(--f-display);letter-spacing:-.015em;color:var(--foam)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{color:var(--glow)}
+.faq summary:focus-visible{outline:2px solid var(--glow);outline-offset:4px;border-radius:4px}
+.faq summary i{flex:none;position:relative;width:28px;height:28px;border:1px solid var(--line-2);border-radius:50%}
+.faq summary i::before,.faq summary i::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:1.5px;background:currentColor;transform:translate(-50%,-50%);transition:transform .3s var(--ease)}
+.faq summary i::after{transform:translate(-50%,-50%) rotate(90deg)}
+.faq details[open] summary i::after{transform:translate(-50%,-50%) rotate(0deg)}
+.faq details[open] summary{color:var(--glow)}
+.faq .a{padding:0 52px 26px 0;color:var(--spray);font-size:16.5px;line-height:1.65;max-width:62ch}
+.faq .a p+p{margin-top:12px}
+.faq .a a{color:var(--glow);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:940px){.faq-grid{grid-template-columns:1fr}.faq-grid .sec-head{position:static}.faq .a{padding-right:0}}
+.faq-grid .sec-head .lede a{color:var(--foam);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line-2)}.faq-grid .sec-head .lede a:hover{color:var(--glow)}
