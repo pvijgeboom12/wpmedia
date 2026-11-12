@@ -7,6 +7,12 @@
 /plan/ https://calendar.app.google/c4zdwhMdCHk2cWJF7 302
 /afspraak https://calendar.app.google/c4zdwhMdCHk2cWJF7 302
 
+# Oude privacy-URL's leiden naar de nieuwe verklaring
+/privacybeleid /nl/privacyverklaring/ 301
+/privacybeleid/ /nl/privacyverklaring/ 301
+/cookieverklaring /nl/privacyverklaring/ 301
+/cookieverklaring/ /nl/privacyverklaring/ 301
+
 # Oude WordPress-URL's -> nieuwe taalmappen (301, behoudt SEO-waarde)
 # Nog geen NL-versie: tijdelijk naar EN (302, omzetten zodra NL bestaat)
 /nl/growth-scan /en/growth-scan/ 302
