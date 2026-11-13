@@ -562,16 +562,49 @@ section{position:relative;padding-block:clamp(88px,11vw,168px)}
   .hero .sea .sea-photo{-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 42%,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 42%,#000 74%,transparent 100%)}
 }
 
-/* Sunrise in the closing block: after the storm at the top, the sun comes up at the end.
-   Pure CSS on the existing sea background. --rise (0..1) is scrubbed by motion.js on scroll;
-   without JS or with reduced motion it stays at 1, so the sun is simply up. */
-.final .sea-bg{--sx:83vw;--sy:30%;--rw:clamp(70px,8vw,150px)}
-.final .sea-bg::after{content:"";position:absolute;z-index:2;left:var(--sx);top:var(--sy);width:clamp(96px,10vw,170px);aspect-ratio:1;border-radius:50%;pointer-events:none;mix-blend-mode:screen;
+/* Real photos */
+.step-img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:14px;margin-bottom:24px;box-shadow:0 18px 40px -26px rgba(0,0,0,.55)}
+.side-photo{margin:0}
+.side-photo img{display:block;width:100%;height:auto;aspect-ratio:8/7;max-height:320px;object-fit:cover;border-radius:14px}
+.side-photo figcaption{font-size:13.5px;margin-top:10px;opacity:.75}
+.final .sea-bg.ij img{object-position:center 62%}
+.foot h2.foot-h{font:500 14px var(--f-body);color:var(--mist);margin-bottom:16px;letter-spacing:normal}
+/* Final CTA over the IJ photo: keep body text readable (WCAG AA) */
+.final .sea-bg.ij::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,10,18,0) 0%,rgba(4,10,18,.45) 55%,rgba(4,10,18,.25) 100%);pointer-events:none}
+.final .wrap p{color:#dfe9ee;text-shadow:0 1px 18px rgba(4,10,18,.85),0 0 2px rgba(4,10,18,.6)}
+.itym-word{background:#4A70F0;color:#fff;letter-spacing:.02em}
+.case-ill svg text{font-family:var(--f-body)}
+.case-sm .textlink{display:inline-block;margin-top:16px}
+.page-hero .lede-2{margin-top:18px;font-size:clamp(16px,1.25vw,18px);line-height:1.65;color:var(--mist);max-width:60ch}
+.kpi-group{font:600 15px/1.2 var(--f-body);letter-spacing:.02em;color:var(--mist);margin:40px 0 0;padding-bottom:12px}
+.kpi-group:first-of-type{margin-top:8px}
+.learned.dark .essay p{color:var(--spray)}
+.learned.dark .essay p:first-child::first-line{color:var(--foam)}
+.essay a{text-decoration:underline;text-underline-offset:3px}
+.final h2.final-q{font-size:clamp(34px,4.6vw,64px);max-width:20ch;line-height:1.05}
+.case-page .learned h2{font-size:clamp(34px,3.6vw,54px);line-height:1.02;hyphens:manual}
+
+.case-photos{display:flex;gap:clamp(16px,2.5vw,32px);align-items:flex-start;margin-top:clamp(48px,6vw,88px)}
+.case-photos figure{margin:0;flex:var(--ar,1) 1 0;min-width:0}
+.case-photos img{display:block;width:100%;height:auto;border-radius:18px;box-shadow:0 30px 60px -40px rgba(0,0,0,.8)}
+.case-photos .capt{margin-top:12px}
+@media (max-width:720px){.case-photos{flex-direction:column}.case-photos figure{flex:none;width:100%}}
+
+/* Sunrise in the closing block: after the storm at the top, the sun comes up at the end — on the left.
+   --rise (0..1) is scrubbed by motion.js on scroll; without JS or with reduced motion it stays at 1.
+   On the real IJ photo (.ij) there is no fake disc, only warm morning light from the left. */
+.final .sea-bg{--sx:17vw;--sy:30%;--rw:clamp(70px,8vw,150px)}
+.final .sea-bg::before{content:"";position:absolute;z-index:2;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:calc(.15 + .85 * var(--rise,1));
+  background:radial-gradient(48% 30% at var(--sx) var(--sy),rgba(255,170,84,.58),rgba(255,110,70,.26) 45%,rgba(214,80,96,.10) 70%,transparent 86%) no-repeat}
+.final .sea-bg:not(.ij)::before{background:
+    radial-gradient(48% 30% at var(--sx) var(--sy),rgba(255,170,84,.58),rgba(255,110,70,.26) 45%,rgba(214,80,96,.10) 70%,transparent 86%) no-repeat,
+    radial-gradient(closest-side,rgba(255,196,110,.6),rgba(255,140,70,.22) 55%,transparent) no-repeat calc(var(--sx) - var(--rw) / 2) 100% / var(--rw) calc(100% - var(--sy))}
+.final .sea-bg:not(.ij)::after{content:"";position:absolute;z-index:2;left:var(--sx);top:var(--sy);width:clamp(96px,10vw,170px);aspect-ratio:1;border-radius:50%;pointer-events:none;mix-blend-mode:screen;
   background:radial-gradient(circle,#fff3d6 0 28%,#ffd27a 38%,rgba(255,150,64,.85) 49%,rgba(255,98,60,.38) 61%,transparent 71%);
   -webkit-mask-image:linear-gradient(180deg,#000 48%,transparent 74%);mask-image:linear-gradient(180deg,#000 48%,transparent 74%);
   transform:translate(-50%,calc(-50% + (1 - var(--rise,1)) * 120%));opacity:calc(.35 + .65 * var(--rise,1))}
-.final .sea-bg::before{content:"";position:absolute;z-index:2;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:calc(.15 + .85 * var(--rise,1));
-  background:
-    radial-gradient(48% 30% at var(--sx) var(--sy),rgba(255,170,84,.58),rgba(255,110,70,.26) 45%,rgba(214,80,96,.10) 70%,transparent 86%) no-repeat,
-    radial-gradient(closest-side,rgba(255,196,110,.6),rgba(255,140,70,.22) 55%,transparent) no-repeat calc(var(--sx) - var(--rw) / 2) 100% / var(--rw) calc(100% - var(--sy))}
-@media(max-width:640px){.final .sea-bg{--sx:84vw;--sy:34%}.final .sea-bg::after{width:82px}}
+.final .sea-bg.ij{--sx:6vw;--sy:46%}
+.final .sea-bg.ij::before{mix-blend-mode:soft-light;opacity:calc(.1 + .9 * var(--rise,1));
+  background:radial-gradient(70% 60% at var(--sx) var(--sy),rgba(255,176,90,.9),rgba(255,130,80,.45) 40%,rgba(255,120,90,0) 75%) no-repeat,
+             linear-gradient(90deg,rgba(255,170,100,.35),rgba(255,170,100,0) 60%)}
+@media(max-width:640px){.final .sea-bg{--sx:16vw;--sy:34%}.final .sea-bg:not(.ij)::after{width:82px}.final .sea-bg.ij{--sx:4vw}}

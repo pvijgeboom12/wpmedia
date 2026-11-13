@@ -135,31 +135,36 @@
       pctx = pv.getContext('2d'); cv.parentNode.insertBefore(pv, cv); cv.parentNode.classList.add('live');
       photoSize();
     }
+    /* One sea for everything: directional travelling waves (all roll the same way, long ones faster
+       than short ones, like real water), peaked crests and flat troughs, arriving in sets,
+       rolling from the back (d=0, far) to the front (d=1, near). Lines and photo share it. */
+    function gw(th) { return Math.sin(th) - .22 * Math.cos(2 * th); }
+    function sea(u, d) {
+      var ph = d * 3.1, k1 = 6 - d * 2.6, k2 = 11 - d * 4.2, k3 = 19 - d * 6.5;
+      var y = gw(u * k1 - tm * .55 * Math.sqrt(k1) - ph)
+            + gw(u * k2 - tm * .55 * Math.sqrt(k2) - ph * 1.3 + 1.7) * .38
+            + Math.sin(u * k3 - tm * .55 * Math.sqrt(k3) - ph * 1.7 + 4.1) * .12;
+      var set = .72 + .28 * Math.sin(u * 2.2 - tm * .32 - ph * .5);          // waves come in sets
+      var near = 1 + energy * .45 * Math.exp(-(u - mx) * (u - mx) * 14);     // a touch lifts the water a little
+      return y * set * near;
+    }
+    function swell(u, d) { return Math.sin(u * 2.1 - tm * .26 - d * 1.2); }   // the long, slow groundswell
     function drawPhoto() {
       if (!pv) return;
       var iw = img.naturalWidth, ih = img.naturalHeight, slack = 1.07;
       var sc = Math.max(W / iw, H / ih) * slack, dw = iw * sc, dh = ih * sc, dx = (W - dw) / 2, dy = H - dh + dh * .035;
-      var amp = H * (small ? .014 : .011) * (1 + energy * .6), cw = small ? 3 : 4;
+      var amp = H * (small ? .012 : .0095), cw = small ? 3 : 4;
       pctx.clearRect(0, 0, W, H);
       for (var x = 0; x < W; x += cw) {
-        var u = x / W;
-        var off = Math.sin(u * 6.2 - tm * .8) * amp
-                + Math.sin(u * 13.1 + tm * .5) * amp * .25
-                + Math.sin(u * 2.4 - tm * .45) * amp * .6;
-        off += Math.exp(-(u - mx) * (u - mx) * 30) * amp * 1.1 * Math.sin(tm * 1.1);
-        var sx = (x - dx) / sc;
-        pctx.drawImage(img, sx, 0, cw / sc + .5, ih, x, dy + off, cw + .6, dh);
+        var u = x / W, off = -(sea(u, .85) * amp + swell(u, .85) * amp * .8);
+        pctx.drawImage(img, (x - dx) / sc, 0, cw / sc + .5, ih, x, dy + off, cw + .6, dh);
       }
     }
     function wy(i, u) {
-      var d = i / (LINES - 1), base = H * (.1 + d * .66), amp = 4 + d * d * (H * .12), spd = .35 + d * .5;
-      var y = base
-        + Math.sin(u * 5.2 + tm * spd + i * .33) * amp * .55
-        + Math.sin(u * 11.7 - tm * spd * .8 + i * .21) * amp * .22
-        + Math.sin(u * 2.1 + tm * .18) * amp * .5;
-      y -= Math.exp(-(u - .56) * (u - .56) * 7) * H * .16 * d * (1 + .08 * Math.sin(tm * .4));
-      var dx = u - mx, swell = Math.exp(-dx * dx * 28) * (18 + energy * 40) * d;
-      return y - swell * Math.sin(tm * 1.6 - Math.abs(dx) * 18);
+      var d = i / (LINES - 1), base = H * (.1 + d * .66), amp = 3 + d * d * (H * .1);
+      var y = base - sea(u, d) * amp * .62 - swell(u, d) * amp * .45;
+      var c = .56 + .03 * Math.sin(tm * .09);
+      return y - Math.exp(-(u - c) * (u - c) * 7) * H * .16 * d;
     }
     /* New glint: pick the highest crest out of a few candidates, biased to the swell */
     function spawn(g, fresh) {
@@ -170,9 +175,9 @@
         if (y < by) { by = y; best = u; }
       }
       g.i = i; g.u = best; g.t = fresh ? Math.random() * 2.4 : 0;
-      g.life = 1.4 + Math.random() * 2.2; g.s = .45 + Math.random() * .75; g.v = (Math.random() - .3) * .004;
+      g.life = 1.4 + Math.random() * 2.2; g.s = .45 + Math.random() * .75; g.v = .0015 + Math.random() * .0025;   // they drift with the flow
     }
-    /* Lightning: a spark of an idea strikes the water. Rare, short, never on reduced motion. */
+    /* Lightning: a far-off flash on the horizon, back right. Rare, short, never on reduced motion. */
     var bolt = null, lastStrike = -99;
     function jag(x0, y0, x1, y1, rough, depth, out) {
       if (depth === 0) { out.push([x1, y1]); return; }
@@ -182,19 +187,15 @@
     function strike(u) {
       if (still || !W || tm - lastStrike < 1.4) return;
       lastStrike = tm;
-      if (u == null) u = Math.min(.9, Math.max(.1, mx + (Math.random() - .5) * .3));
-      var li = Math.round(LINES * .42), tx = u * W, ty = wy(li, u);
-      var sx = tx + (Math.random() - .5) * W * .12, main = [[sx, -8]];
-      jag(sx, -8, tx, ty, Math.max(60, ty * .5), 6, main);
+      if (u == null) u = .76 + Math.random() * .16;                 // far away, at the back on the right
+      var li = Math.round(LINES * .2), tx = u * W, ty = wy(li, u);  // it hits the horizon, not the front
+      var sx = tx + (Math.random() - .5) * W * .05, main = [[sx, -8]];
+      jag(sx, -8, tx, ty, Math.max(24, ty * .35), 5, main);
       var forks = [];
-      for (var f = 0; f < 2; f++) {
-        var k = 8 + Math.floor(Math.random() * (main.length - 20)), a = main[k], br = [a];
-        jag(a[0], a[1], a[0] + (Math.random() - .5) * W * .16, a[1] + (ty - a[1]) * (.35 + Math.random() * .4), 40, 4, br);
-        forks.push(br);
-      }
+      if (main.length > 14) { var k = 6 + Math.floor(Math.random() * (main.length - 12)), a0 = main[k], br = [a0];
+        jag(a0[0], a0[1], a0[0] + (Math.random() - .5) * W * .06, a0[1] + (ty - a0[1]) * .4, 14, 3, br); forks.push(br); }
       bolt = { main: main, forks: forks, t: 0, x: tx, y: ty };
-      tmx = u; lastInput = tm; energy = .6;
-      for (var g2 = 0; g2 < 10 && g2 < glints.length; g2++) { var gg = glints[g2]; gg.u = u + (Math.random() - .5) * .14; gg.i = Math.round(LINES * (.32 + Math.random() * .3)); gg.t = 0; gg.life = .8 + Math.random() * 1.4; gg.s = .7 + Math.random() * .8; }
+      energy = Math.max(energy, .15);
     }
     function boltLevel(t) {   // three quick flickers, then a fading afterglow
       if (t < .05) return 1; if (t < .09) return .25; if (t < .14) return .95; if (t < .18) return .35; if (t < .24) return .85;
@@ -207,21 +208,22 @@
       if (lv <= 0) { bolt = null; return; }
       ctx.save(); ctx.globalCompositeOperation = 'lighter';
       /* the sea lights up around the impact */
-      var fr = ctx.createRadialGradient(bolt.x, bolt.y, 0, bolt.x, bolt.y, Math.min(W * .45, bolt.y * .95));
-      fr.addColorStop(0, 'rgba(190,250,255,' + .18 * lv + ')'); fr.addColorStop(.35, 'rgba(92,242,214,' + .06 * lv + ')'); fr.addColorStop(1, 'rgba(92,242,214,0)');
+      /* distant sheet light behind the horizon, no splash in the foreground */
+      var fr = ctx.createRadialGradient(bolt.x, bolt.y, 0, bolt.x, bolt.y, W * .22);
+      fr.addColorStop(0, 'rgba(170,220,255,' + .1 * lv + ')'); fr.addColorStop(1, 'rgba(170,220,255,0)');
       ctx.fillStyle = fr; ctx.fillRect(0, 0, W, H);
       ctx.lineJoin = 'round'; ctx.lineCap = 'round';
       var core = bolt.t < .24;
-      ctx.shadowColor = 'rgba(120,240,255,.7)'; ctx.shadowBlur = 12;
+      ctx.shadowColor = 'rgba(150,215,255,.5)'; ctx.shadowBlur = 6;
       /* strokes fade in from the canvas top, so the bolt comes out of the dark instead of a hard edge */
       function fade(r, g, bl, a) { var lg = ctx.createLinearGradient(0, 0, 0, bolt.y); lg.addColorStop(0, 'rgba(' + r + ',' + g + ',' + bl + ',0)'); lg.addColorStop(.4, 'rgba(' + r + ',' + g + ',' + bl + ',' + a + ')'); lg.addColorStop(1, 'rgba(' + r + ',' + g + ',' + bl + ',' + a + ')'); return lg; }
-      ctx.strokeStyle = fade(140, 235, 255, .55 * lv); ctx.lineWidth = small ? 3 : 3.5; path(bolt.main);
-      ctx.strokeStyle = fade(255, 255, 255, core ? lv : lv * .5); ctx.lineWidth = small ? 1.6 : 2; path(bolt.main);
-      ctx.lineWidth = 1; ctx.strokeStyle = fade(200, 248, 255, .6 * lv);
+      ctx.strokeStyle = fade(150, 210, 255, .3 * lv); ctx.lineWidth = 2; path(bolt.main);
+      ctx.strokeStyle = fade(235, 245, 255, (core ? .7 : .35) * lv); ctx.lineWidth = .9; path(bolt.main);
+      ctx.lineWidth = .6; ctx.strokeStyle = fade(200, 230, 255, .3 * lv);
       for (var b = 0; b < bolt.forks.length; b++) path(bolt.forks[b]);
       /* impact flare on the crest */
-      ctx.shadowBlur = 0; ctx.globalAlpha = Math.min(1, lv * 1.2);
-      var fs = S * (small ? 1.2 : 1.5) * (.8 + lv * .4);
+      ctx.shadowBlur = 0; ctx.globalAlpha = lv * .5;
+      var fs = S * .6;
       ctx.drawImage(spr, bolt.x - fs / 2, bolt.y - fs / 2, fs, fs);
       ctx.restore();
     }
@@ -283,13 +285,13 @@
       /* Strikes: a tap on the water, hover or focus on the hero CTA, and now and then by itself */
       addEventListener('pointerdown', function (e) {
         var r = cv.getBoundingClientRect();
-        if (e.clientY >= r.top && e.clientY <= r.bottom && e.clientX >= r.left && e.clientX <= r.right && !e.target.closest('a,button,input,textarea,select')) strike((e.clientX - r.left) / r.width);
+        if (e.clientY >= r.top && e.clientY <= r.bottom && e.clientX >= r.left && e.clientX <= r.right && !e.target.closest('a,button,input,textarea,select')) strike(Math.min(.95, Math.max(.05, (e.clientX - r.left) / r.width)));
       }, { passive: true });
       document.querySelectorAll('.hero .btn-primary').forEach(function (b) {
         b.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') strike(); });
         b.addEventListener('focus', function () { strike(); });
       });
-      (function idle() { setTimeout(function () { if (running && visible && !document.hidden) strike(); idle(); }, lastStrike < 0 ? 2500 : 25000 + Math.random() * 20000); })();
+      (function idle() { setTimeout(function () { if (running && visible && !document.hidden) strike(); idle(); }, lastStrike < 0 ? 3000 : 30000 + Math.random() * 25000); })();
       if ('IntersectionObserver' in window) new IntersectionObserver(function (es) {
         visible = es[0].isIntersecting;
         if (visible && !running) { running = true; loop(); } else if (!visible) running = false;

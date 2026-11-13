@@ -53,4 +53,24 @@
   <url><loc>https://waterproofmedia.com/en/growth-scan/</loc><lastmod>2026-11-04</lastmod></url>
   <url><loc>https://waterproofmedia.com/en/growth-dashboard/</loc><lastmod>2026-11-04</lastmod></url>
   <url><loc>https://waterproofmedia.com/en/disclaimer/</loc><lastmod>2026-11-04</lastmod></url>
+  <url><loc>https://waterproofmedia.com/nl/cases/itym/</loc><lastmod>2026-11-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/cases/itym/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/cases/itym/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/cases/itym/"/>
+  </url>
+  <url><loc>https://waterproofmedia.com/en/cases/itym/</loc><lastmod>2026-11-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/cases/itym/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/cases/itym/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/cases/itym/"/>
+  </url>
+  <url><loc>https://waterproofmedia.com/nl/cases/nlgroeit/</loc><lastmod>2026-11-10</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/cases/nlgroeit/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/cases/nlgroeit/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/cases/nlgroeit/"/>
+  </url>
+  <url><loc>https://waterproofmedia.com/en/cases/nlgroeit/</loc><lastmod>2026-11-10</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/cases/nlgroeit/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/cases/nlgroeit/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/cases/nlgroeit/"/>
+  </url>
 </urlset>
