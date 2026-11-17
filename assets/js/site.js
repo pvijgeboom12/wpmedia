@@ -28,7 +28,7 @@
 
   /* Cloudflare Web Analytics: cookieless, no consent needed. Paste the site token from
      Cloudflare → Analytics & Logs → Web Analytics. Empty = off. */
-  var CF_BEACON_TOKEN = '';
+  var CF_BEACON_TOKEN = '548d01a24a6046c89c62f4f9a34a919d';
   if (CF_BEACON_TOKEN) {
     var bs = document.createElement('script');
     bs.defer = true; bs.src = 'https://static.cloudflareinsights.com/beacon.min.js';
