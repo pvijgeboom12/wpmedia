@@ -10,6 +10,16 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/"/>
   </url>
+  <url><loc>https://waterproofmedia.com/nl/privacyverklaring/</loc><lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/privacyverklaring/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/privacy-notice/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/privacyverklaring/"/>
+  </url>
+  <url><loc>https://waterproofmedia.com/en/privacy-notice/</loc><lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/privacyverklaring/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/privacy-notice/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waterproofmedia.com/nl/privacyverklaring/"/>
+  </url>
   <url><loc>https://waterproofmedia.com/nl/contact/</loc><lastmod>2026-11-04</lastmod>
     <xhtml:link rel="alternate" hreflang="nl" href="https://waterproofmedia.com/nl/contact/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://waterproofmedia.com/en/contact/"/>
