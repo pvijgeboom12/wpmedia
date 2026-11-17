@@ -38,7 +38,7 @@ Elke pagina is één `index.html` in een eigen map, zodat de URL eindigt op `/`.
 1. Eigen `<title>` en meta description. Bij gemigreerde pagina's één op één uit Yoast.
 2. `<link rel="canonical">` naar de absolute URL op waterproofmedia.com.
 3. Hreflang-links naar alle bestaande taalversies plus `x-default` naar NL, zodra een tweede taal van die pagina bestaat. Geen automatische taal-redirect.
-4. Analytics-snippet `GT-TXZ6TW6` met consent mode, zoals in de bestaande pagina's. Laad `site.js` en `site.css` met een versie-query (`?v=N`) en hoog N op bij elke wijziging: `/assets/*` heeft een cache van een jaar (immutable).
+4. Geen Google Analytics: meten gaat via Cloudflare Web Analytics in `site.js` (cookieloos). Laad `site.js` en `site.css` met een versie-query (`?v=N`) en hoog N op bij elke wijziging: `/assets/*` heeft een cache van een jaar (immutable).
 5. Alle tekst staat direct in de HTML. Animaties mogen tekst nooit verbergen voor crawlers of zonder JavaScript (de oude proof-sectie bleef leeg in een headless browser).
 6. Contrast minimaal WCAG AA.
 7. Pagina toevoegen aan `sitemap.xml`.
@@ -59,7 +59,7 @@ Feiten in de assistent staan in het `KNOWLEDGE`-blok in `worker/chat.js`. Houd d
 
 - Cloudflare Web Analytics (cookieloos): zet de site-token in `CF_BEACON_TOKEN` bovenin `assets/js/site.js`. Leeg = uit.
 - Attributie zonder cookies of opslag: `site.js` neemt `utm_*`, de externe verwijzer (`ref`) en de landingspagina (`lp`) mee via interne links en stuurt ze met elke lead mee. De worker zet ze als `utm_source`… `referrer`, `landing_page` in de lead; Make bewaart ze in de data store en zet ze in de mail.
-- GA4 en de pixels van Meta, LinkedIn en TikTok alleen achter consent. Na de DNS-wissel bij voorkeur via Cloudflare Zaraz met de ingebouwde consentmodule.
+- GA4 is verwijderd (17 november 2026). Pixels van Meta, LinkedIn en TikTok alleen achter consent, bij voorkeur via Cloudflare Zaraz met de ingebouwde consentmodule.
 
 ## Integraties
 
