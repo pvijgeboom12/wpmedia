@@ -651,3 +651,8 @@ section{position:relative;padding-block:clamp(88px,11vw,168px)}
 @media(max-width:900px){.network-blocks{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.network-blocks .member img{width:104px;height:104px}.network-blocks{gap:12px}.network-blocks .member{padding:16px}}
 @media(prefers-reduced-motion:reduce){.network-blocks .member:hover{transform:none}}
+/* Pakketkaarten gelijk: zelfde hoogte en bovenkant, knoppen op één lijn, zelfde schaduw */
+.stairs{align-items:stretch}
+.tier,.tier:nth-child(2),.tier:nth-child(3){min-height:0;box-shadow:0 30px 60px -40px rgba(10,22,34,.35)}
+.tier .btn{margin-top:auto}
+@media(max-width:900px){.tier .btn{margin-top:28px}}
