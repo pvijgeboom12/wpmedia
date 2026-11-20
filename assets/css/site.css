@@ -627,3 +627,32 @@ section{position:relative;padding-block:clamp(88px,11vw,168px)}
 .legal-copy ul{padding-left:1.2em}
 .legal-copy li{margin-bottom:8px}
 .legal-copy .notice{margin-bottom:32px}
+
+/* ---------- Meer leven (nov 2026) ---------- */
+.studio-strip{margin-top:clamp(56px,7vw,96px)}
+.strip-viewport{margin-top:22px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.strip-track{display:flex;gap:18px;width:max-content;animation:stripRun 55s linear infinite}
+.strip-viewport:hover .strip-track{animation-play-state:paused}
+.snap{width:clamp(220px,24vw,320px);flex:none}
+.snap img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:16px;display:block}
+.snap figcaption{margin-top:10px;font-size:14px;color:var(--ink-3)}
+@keyframes stripRun{to{transform:translateX(calc(-50% - 9px))}}
+@media(prefers-reduced-motion:reduce){.strip-viewport{overflow-x:auto;-webkit-mask-image:none;mask-image:none}.strip-track{animation:none}.strip-track [aria-hidden]{display:none}}
+/* Netwerk als blokjes: grotere foto, eigen kleurvlak per persoon */
+.network-blocks{grid-template-columns:repeat(3,1fr);gap:18px}
+.network-blocks .member{position:relative;border-radius:22px;padding:22px 22px 24px;background:#fff;box-shadow:0 24px 50px -36px rgba(10,22,34,.35);transition:transform .45s var(--ease),box-shadow .45s var(--ease);overflow:hidden}
+.network-blocks .member::before{content:"";position:absolute;inset:0 0 auto 0;height:96px;background:var(--tint,#dbe9f2)}
+.network-blocks .member:nth-child(6n+1){--tint:#d9efe9}.network-blocks .member:nth-child(6n+2){--tint:#e4e1f4}.network-blocks .member:nth-child(6n+3){--tint:#f6e5d6}
+.network-blocks .member:nth-child(6n+4){--tint:#dcebd7}.network-blocks .member:nth-child(6n+5){--tint:#dbe6f6}.network-blocks .member:nth-child(6n+6){--tint:#f4dde4}
+.network-blocks .member img{position:relative;width:128px;height:128px;border-radius:50%;border:5px solid #fff;filter:none;box-shadow:0 12px 24px -14px rgba(10,22,34,.5)}
+.network-blocks .member b{font-size:20px;margin-top:16px}
+.network-blocks .member span{font-size:15px;margin-top:2px}
+.network-blocks .member:hover{transform:translateY(-4px) rotate(-.6deg);box-shadow:0 30px 60px -34px rgba(10,22,34,.45)}
+@media(max-width:900px){.network-blocks{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.network-blocks .member img{width:104px;height:104px}.network-blocks{gap:12px}.network-blocks .member{padding:16px}}
+@media(prefers-reduced-motion:reduce){.network-blocks .member:hover{transform:none}}
+/* Pakketkaarten gelijk: zelfde hoogte en bovenkant, knoppen op één lijn, zelfde schaduw */
+.stairs{align-items:stretch}
+.tier,.tier:nth-child(2),.tier:nth-child(3){min-height:0;box-shadow:0 30px 60px -40px rgba(10,22,34,.35)}
+.tier .btn{margin-top:auto}
+@media(max-width:900px){.tier .btn{margin-top:28px}}
