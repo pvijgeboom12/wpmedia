@@ -67,7 +67,7 @@ export async function start({ request, env, ctx }) {
   if (vraag.length < 12) return json({ ok: false, error: 'too_short' }, 422);
   if (email && !isEmail(email)) return json({ ok: false, error: 'email' }, 422);
 
-  if (!live(env)) return json({ ok: true, demo: true });
+  if (!live(env)) return json({ ok: true, demo: true, missing: ['FACTCHECK_WEBHOOK_URL', 'FACTCHECK_CALLBACK_TOKEN', 'TURNSTILE_SECRET', 'FACTCHECK'].filter((k) => !env[k]) });
 
   const ip = request.headers.get('CF-Connecting-IP') || '';
   if (!(await turnstileOk(env, d.token, ip))) return json({ ok: false, error: 'turnstile' }, 403);
