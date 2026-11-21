@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI-factchecker: drie modellen, één oordeel | Waterproofmedia</title>
+<meta name="description" content="Klopt die claim? Claude, GPT en Gemini checken hem los van elkaar op het web, reageren op elkaar en geven per claim een oordeel met bronnen. Vraag een gratis factcheck aan.">
+<link rel="canonical" href="https://waterproofmedia.com/nl/factchecker/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Waterproofmedia">
+<meta property="og:title" content="AI-factchecker: drie modellen, één oordeel | Waterproofmedia">
+<meta property="og:description" content="Claude, GPT en Gemini checken je claim los van elkaar, reageren op elkaar en geven per claim een oordeel met bronnen.">
+<meta property="og:url" content="https://waterproofmedia.com/nl/factchecker/">
+<meta property="og:image" content="https://waterproofmedia.com/assets/img/Codex-afbeelding-23-sep-2026-13_37_38.webp">
+<meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#040a12">
+<link rel="icon" href="/assets/img/cropped-Waterproof-Media-icon-32x32.gif" sizes="32x32">
+<link rel="icon" href="/assets/img/cropped-Waterproof-Media-icon-192x192.gif" sizes="192x192">
+<link rel="apple-touch-icon" href="/assets/img/cropped-Waterproof-Media-icon-180x180.gif">
+<link rel="preload" href="/assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css?v=15">
+<style>
+.fc-models{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.fc-models span{font:600 14px var(--f-body);border:1px solid var(--line-2);border-radius:999px;padding:8px 16px;color:var(--foam)}
+.fc-verdicts{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.fc-v{font:600 15px var(--f-body);border-radius:999px;padding:9px 16px;border:1px solid}
+.fc-v.ok{color:#05715f;border-color:#05715f}
+.fc-v.part{color:#7a5a00;border-color:#b08300}
+.fc-v.no{color:#a3262a;border-color:#a3262a}
+.fc-v.unk{color:var(--ink-2);border-color:var(--ink-3)}
+.fc-card{border:1px solid rgba(10,22,34,.15);border-radius:20px;padding:26px 26px 22px;background:#fff}
+.fc-card .cap{font-size:13.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em}
+.fc-card dl{display:grid;grid-template-columns:120px 1fr;gap:12px 18px;margin-top:18px}
+.fc-card dt{font:600 15px var(--f-display);color:var(--ink)}
+.fc-card dd{color:var(--ink-2);font-size:16px}
+.fc-dark .brief{color:var(--foam)}
+.salt .ix-desc{color:var(--ink-2)}
+.salt .index,.salt .index li{border-color:rgba(10,22,34,.15)}
+.fc-rule{font-size:clamp(26px,2.8vw,40px)!important;max-width:24ch}
+@media (max-width:760px){.salt .index .row{grid-template-columns:1fr!important;gap:8px;padding:24px 0}.fc-card dl{grid-template-columns:1fr;gap:4px}.fc-card dd{margin-bottom:10px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Naar de inhoud</a>
+<header class="nav" id="nav"><div class="wrap nav-in">
+<a class="brand" href="/nl/" aria-label="Waterproofmedia home"><span><span class="name">Waterproofmedia</span><span class="tag">Flow creates growth</span></span></a>
+<nav class="nav-links" aria-label="Main"><a href="/nl/#diensten">Diensten</a><a href="/nl/#aanbod">Aanbod</a><a href="/nl/cases/">Cases</a><a href="/nl/#lab">Lab</a><a href="/nl/#team">Team</a></nav>
+<div class="nav-right"><div class="lang" aria-label="Language"><a href="/nl/factchecker/" hreflang="nl" lang="nl" aria-current="true">NL</a></div><a class="btn btn-primary" href="#aanvragen" data-track="cta_nav_factcheck">Gratis factcheck</a><button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button></div>
+</div>
+<div class="mobile-menu" id="mobileMenu"><a href="/nl/#diensten">Diensten</a><a href="/nl/#aanbod">Aanbod</a><a href="/nl/cases/">Cases</a><a href="/nl/#lab">Lab</a><a href="/nl/#team">Team</a><a class="btn btn-primary" href="#aanvragen" data-track="cta_nav_factcheck">Gratis factcheck</a></div>
+</header>
+<main id="main">
+<section class="page-hero with-sea"><div class="wrap">
+<p class="kicker">Waterproofmedia Lab · AI-factchecker</p>
+<h1 style="margin-top:22px">Klopt het wat er staat? <span class="soft">Drie AI's checken het.</span></h1>
+<p class="lede">Je stuurt een claim, een tekst of een cijfer. Claude, GPT en Gemini controleren die los van elkaar op het web. Daarna reageren ze op elkaar. Jij krijgt per claim een helder oordeel, met bronnen.</p>
+<div class="cta-row"><a class="btn btn-primary" href="#aanvragen" data-track="cta_factcheck_hero">Vraag een gratis factcheck aan <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a><a class="btn btn-ghost" href="#werkwijze">Zo werkt het</a></div>
+<div class="principles"><div><b>Drie modellen</b><span>van drie makers, los van elkaar</span></div><div><b>Bronnen</b><span>bij elk oordeel, met link</span></div><div><b>Geen gokwerk</b><span>onbekend is ook een antwoord</span></div></div>
+</div>
+<div class="sea" aria-hidden="true"><img src="/assets/img/Codex-afbeelding-23-sep-2026-13_37_38-1400.webp" srcset="/assets/img/Codex-afbeelding-23-sep-2026-13_37_38-800.webp 800w, /assets/img/Codex-afbeelding-23-sep-2026-13_37_38-1400.webp 1400w, /assets/img/Codex-afbeelding-23-sep-2026-13_37_38.webp 2172w" sizes="100vw" alt=""></div>
+</section>
+
+<section class="fc-dark"><div class="wrap two-col">
+<div><h2>Waarom drie in plaats van één?</h2></div>
+<div><p class="brief">Eén AI klinkt altijd zeker. Ook als hij iets verzint.</p>
+<p>Daarom doen drie modellen van drie verschillende makers hetzelfde werk, zonder dat ze elkaars antwoord zien. Zijn ze het eens, dan sta je sterker. Zijn ze het oneens, dan weet je precies waar je moet kijken.</p>
+<div class="fc-models" aria-label="Modellen"><span>Claude</span><span>GPT</span><span>Gemini</span></div></div>
+</div></section>
+
+<section id="werkwijze" class="salt"><div class="wrap">
+<div class="sec-head"><h2>Zo werkt het.</h2><p class="lede">Jij stuurt één claim of een korte tekst. Heb je al een bron? Stuur die mee. Daarna gaat het in drie stappen.</p></div>
+<div class="steps">
+<div class="step"><div class="num" aria-hidden="true">1</div><h3>Blind checken</h3><p>Elk model splitst je tekst in losse claims en zoekt zelf op het web. Ook naar tegenbewijs. Aangeleverde bronnen worden gecheckt, niet blind geloofd.</p></div>
+<div class="step"><div class="num" aria-hidden="true">2</div><h3>Op elkaar reageren</h3><p>Elk model ziet de andere twee antwoorden, zonder naam. Van mening veranderen mag alleen door bewijs of een betere bron. Nooit omdat de rest iets anders zegt.</p></div>
+<div class="step"><div class="num" aria-hidden="true">3</div><h3>Neutraal samenvatten</h3><p>Een aparte stap zet op een rij waar ze het over eens zijn, waar ze verschillen en wat nog open staat. Zonder eigen mening en zonder winnaar te kiezen.</p></div>
+</div>
+</div></section>
+
+<section class="salt" style="padding-top:0"><div class="wrap two-col">
+<div><h2 style="color:var(--ink)">Wat je terugkrijgt.</h2>
+<p style="color:var(--ink-2)">Per claim één oordeel. Zo zie je in één oogopslag wat staat en wat niet.</p>
+<div class="fc-verdicts"><span class="fc-v ok">Klopt</span><span class="fc-v part">Klopt deels</span><span class="fc-v no">Klopt niet</span><span class="fc-v unk">Onbekend</span></div>
+<p style="color:var(--ink-2)">Je krijgt ook de hele uitwerking van beide rondes. Zo kun je elke stap zelf nalezen.</p></div>
+<div class="fc-card"><p class="cap">Zo ziet een oordeel eruit (format)</p>
+<dl><dt>Claim</dt><dd>De zin of het cijfer uit jouw tekst</dd>
+<dt>Oordeel</dt><dd>Klopt, klopt deels, klopt niet of onbekend</dd>
+<dt>Eens</dt><dd>3 van 3, 2 van 3 of verdeeld</dd>
+<dt>Bronnen</dt><dd>Links naar de pagina's die de modellen vonden</dd>
+<dt>Toelichting</dt><dd>Eén zin uitleg</dd>
+<dt>Zekerheid</dt><dd>Hoog, middel of laag</dd></dl></div>
+</div></section>
+
+<section><div class="wrap two-col">
+<div><p class="kicker">De vaste regel</p><p class="display fc-rule" style="margin-top:20px">Verzinnen mag niet.</p></div>
+<div><p>Elk model krijgt dezelfde opdracht: verzin nooit cijfers, citaten of bronnen. Weet een model het niet, dan schrijft het "onbekend".</p>
+<p>De samenvatting neemt alleen links over die echt in de antwoorden staan. Zijn de modellen verdeeld, dan wordt het oordeel "onbekend". Liever eerlijk dan stellig.</p></div>
+</div></section>
+
+<section class="salt"><div class="wrap">
+<div class="sec-head"><h2>Handig voor.</h2></div>
+<ul class="index">
+<li><div class="row" style="grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)"><span class="ix-name" style="font-size:clamp(24px,2.8vw,40px)">Teksten vóór publicatie</span><span class="ix-desc">Blogs, persberichten en nieuwsbrieven. Check de feiten voordat je op verzenden drukt.</span></div></li>
+<li><div class="row" style="grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)"><span class="ix-name" style="font-size:clamp(24px,2.8vw,40px)">Cijfers in een pitch</span><span class="ix-desc">Marktcijfers in een deck, offerte of jaarverslag. Weet waar ze vandaan komen.</span></div></li>
+<li><div class="row" style="grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)"><span class="ix-name" style="font-size:clamp(24px,2.8vw,40px)">Claims van anderen</span><span class="ix-desc">Wat een concurrent, leverancier of advertentie belooft. Houdt het stand?</span></div></li>
+<li><div class="row" style="grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)"><span class="ix-name" style="font-size:clamp(24px,2.8vw,40px)">Tekst die AI schreef</span><span class="ix-desc">AI schrijft snel, maar verzint soms ook. Laat het checken voordat het jouw naam draagt.</span></div></li>
+</ul>
+</div></section>
+
+<section><div class="wrap two-col">
+<div><h2>Wat het niet is.</h2></div>
+<div><p>Geen vervanging voor een journalist, jurist of expert. Ook drie modellen kunnen het mis hebben. Daarom zie je altijd de bronnen, zodat je zelf kunt nalezen.</p>
+<p>Stuur geen vertrouwelijke informatie. Je tekst gaat via OpenRouter naar de drie modellen.</p></div>
+</div></section>
+
+<section id="aanvragen" style="padding-top:0"><div class="wrap contact-grid">
+<div class="form">
+<h2 style="font-size:clamp(34px,4vw,56px)">Vraag een gratis factcheck aan.</h2>
+<p class="lede" style="margin:16px 0 28px">Stuur één claim of een korte tekst. Je krijgt het verslag binnen twee werkdagen per mail.</p>
+<form id="contactForm" novalidate>
+<input type="hidden" name="topic" value="factcheck">
+<div class="field"><label for="f-msg">Welke claim of tekst wil je laten checken?</label><textarea id="f-msg" name="message" required maxlength="3000" placeholder="Plak hier de zin, het cijfer of de alinea. Heb je een bron? Zet de link eronder."></textarea></div>
+<div class="fields">
+<div class="field"><label for="f-name">Naam</label><input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120"></div>
+<div class="field"><label for="f-email">E-mailadres</label><input id="f-email" name="email" type="email" autocomplete="email" required maxlength="200"></div>
+<div class="field full"><label for="f-company">Organisatie <span class="hint">(optioneel)</span></label><input id="f-company" name="company" type="text" autocomplete="organization" maxlength="160"></div>
+</div>
+<div class="hp" aria-hidden="true"><label for="f-fax">Fax</label><input id="f-fax" name="fax" type="text" tabindex="-1" autocomplete="off"></div>
+<label class="check"><input type="checkbox" name="consent" required> Ik vind het goed dat Waterproofmedia mijn tekst laat checken en contact met me opneemt over deze aanvraag.</label><p><a href="/nl/privacyverklaring/">Lees hoe we met je gegevens omgaan.</a></p>
+<button class="btn btn-primary" type="submit">Verstuur je claim</button>
+<p class="form-msg" id="formMsg" role="alert"></p>
+</form>
+<div class="done" id="formDone" tabindex="-1"><h2>Bedankt, je claim is binnen.</h2><p>We zetten de drie modellen aan het werk. Je krijgt het verslag binnen twee werkdagen per mail.</p><a class="btn btn-primary" href="/plan" target="_blank" rel="noopener" data-track="cta_calendar_after_factcheck">Plan alvast een gesprek <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a></div>
+</div>
+<aside class="side"><div><h3>Wat er daarna gebeurt</h3><ol class="expect"><li>Claude, GPT en Gemini checken je claim in twee rondes.</li><li>Je krijgt per mail het oordeel per claim, met bronnen.</li><li>Vragen over de uitkomst? Dan bespreken we die graag.</li></ol></div><div><h3>Gratis, één claim</h3><p>De gratis factcheck is voor één claim of korte tekst per aanvraag.</p></div><div><h3>Mail</h3><a class="textlink" href="mailto:info@waterproofmedia.com">info@waterproofmedia.com</a></div></aside>
+</div></section>
+
+<section class="final"><div class="sea-bg ij" aria-hidden="true"><img src="/assets/img/wpm-ij-amsterdam.webp" alt="" loading="lazy"></div>
+<div class="wrap"><p class="kicker" style="justify-content:center">Automation &amp; AI</p><h2 style="margin-top:20px">Zo'n workflow voor je eigen werk?</h2>
+<p>Deze factchecker draait als automatisering in Make, met meerdere AI-modellen achter elkaar. Zo bouwen we ook workflows voor klanten: AI voor het denkwerk, automatisering voor de rest.</p>
+<div class="cta-row"><a class="btn btn-primary" href="/nl/contact/?topic=automation" data-track="cta_factcheck_final">Plan een kennismaking <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a><a class="btn btn-ghost" href="#aanvragen">Eerst een gratis factcheck</a></div></div>
+</section>
+</main>
+<footer class="foot"><div class="wrap foot-grid">
+<div class="foot-brand"><a class="brand" href="/nl/"><span><span class="name">Waterproofmedia</span><span class="tag">Flow creates growth</span></span></a><p>Growth studio in Amsterdam.</p></div>
+<div><h2 class="foot-h">Diensten</h2><a href="/nl/campagnes/">Campagnes</a><a href="/nl/#diensten">CRO</a><a href="/nl/#diensten">Content</a><a href="/nl/#diensten">Automation &amp; AI</a><a href="/nl/#diensten">Dashboards</a></div><div><h2 class="foot-h">Lab</h2><a href="/nl/factchecker/">AI-factchecker</a><a href="/en/growth-scan/">Growth Scan</a><a href="/en/growth-dashboard/">Growth Dashboard</a><a href="https://walhallajobs.com" target="_blank" rel="noopener">Walhalla Jobs</a></div><div><h2 class="foot-h">Studio</h2><a href="/nl/cases/">Cases</a><a href="/nl/#team">Team</a><a href="/nl/contact/">Contact</a><a href="mailto:info@waterproofmedia.com">info@waterproofmedia.com</a></div></div>
+<div class="wrap foot-bottom"><span>&copy; 2026 Waterproofmedia, Amsterdam</span><a href="/en/disclaimer/">Disclaimer</a></div>
+</footer>
+<script src="/assets/js/site.js?v=5" defer></script>
+<script src="/assets/js/vendor/gsap.min.js?v=3.15.1" defer></script>
+<script src="/assets/js/vendor/ScrollTrigger.min.js?v=3.15.1" defer></script>
+<script src="/assets/js/motion.js?v=1" defer></script>
+</body>
+</html>
