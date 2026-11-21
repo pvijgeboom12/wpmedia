@@ -6,6 +6,8 @@
   "workers_dev": true,
   "preview_urls": true,
   "previews": {},
+  // FACTCHECK: geen id = Cloudflare maakt de namespace automatisch aan bij de deploy
+  "kv_namespaces": [{ "binding": "FACTCHECK" }],
   "assets": {
     "directory": ".",
     "html_handling": "auto-trailing-slash",
