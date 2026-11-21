@@ -43,55 +43,39 @@
 .fc-opt{border-top:1px solid var(--line);padding-top:16px;margin-top:6px}
 .fc-opt summary{cursor:pointer;color:var(--spray);font-size:15px}
 #fcTurnstile{min-height:65px;margin:14px 0 4px}
-.fc-stage{position:relative;width:100%;max-width:620px;margin-inline:auto;border:1px solid var(--line-2);border-radius:28px;padding:18px 14px 16px;background:linear-gradient(180deg,var(--tide),var(--deep))}
-.fc-top{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mist);padding:0 6px 12px}
-.fc-lamps{display:flex;gap:6px}.fc-lamps i{width:8px;height:8px;border-radius:50%;background:var(--line-2)}
-[data-phase=r1] .fc-lamps i:nth-child(1),[data-phase=r2] .fc-lamps i:nth-child(-n+2),[data-phase=src] .fc-lamps i:nth-child(-n+3),[data-phase=sum] .fc-lamps i,[data-phase=done] .fc-lamps i{background:var(--glow);box-shadow:0 0 8px var(--glow)}
-.fc-machine{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.fc-col{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
-.fc-col[data-who=claude]{color:#f0a37f}.fc-col[data-who=gpt]{color:#6fd8ac}.fc-col[data-who=gemini]{color:#8fb2ff}
-.fc-ava{position:relative;width:clamp(44px,9vw,62px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:var(--deep);border:1px solid var(--line-2)}
-.fc-ava svg{width:58%;height:58%}
-.fc-ava::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid transparent;border-top-color:currentColor;opacity:0}
-[data-phase=r1] .fc-ava::after,[data-phase=r2] .fc-ava::after{opacity:.9;animation:fcspin 1.1s linear infinite}
-@keyframes fcspin{to{transform:rotate(360deg)}}
-.fc-name{font:600 13.5px var(--f-body);color:var(--foam);text-align:center}
-.fc-name small{display:block;font-weight:400;color:var(--mist);font-size:11.5px}
-.fc-reel{position:relative;box-sizing:content-box;width:calc(100% - 2px);height:64px;border-radius:14px;overflow:hidden;background:#030810;border:1px solid var(--line-2);box-shadow:inset 0 10px 14px -8px rgba(0,0,0,.8),inset 0 -10px 14px -8px rgba(0,0,0,.8)}
-.fc-reel::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor;opacity:.25;z-index:1}
-.fc-strip{display:flex;flex-direction:column;will-change:transform}
-.fc-strip span{flex:0 0 64px;height:64px;display:grid;place-items:center;font:700 clamp(14px,2.2vw,18px) var(--f-display);color:var(--foam);letter-spacing:-.01em}
-[data-phase=r1] .fc-strip,[data-phase=r2] .fc-strip{animation:fcreel .9s linear infinite}
-[data-phase=r2] .fc-col[data-who=gpt] .fc-strip{animation-duration:.75s}[data-phase=r2] .fc-col[data-who=gemini] .fc-strip{animation-duration:1.05s}
-@keyframes fcreel{to{transform:translateY(-384px)}}
-.fc-final{position:absolute;inset:0;display:grid;place-items:center;font:700 clamp(14px,2.2vw,18px) var(--f-display);color:currentColor;opacity:0;transform:translateY(-24px)}
-.fc-col.stopped .fc-strip{opacity:0}
-.fc-col.stopped .fc-final{opacity:1;transform:none;transition:transform .5s cubic-bezier(.2,1.6,.4,1),opacity .2s}
-.fc-bubble{position:relative;width:100%;min-height:92px;background:var(--foam);color:var(--ink);font-size:13px;line-height:1.4;padding:9px 10px;border-radius:12px;opacity:.12;transition:opacity .25s}
-.fc-bubble.show{opacity:1}
-.fc-bubble::after{content:"";position:absolute;bottom:100%;left:50%;margin-left:-6px;border:6px solid transparent;border-bottom-color:var(--foam)}
-.fc-link{position:absolute;top:calc(clamp(44px,9vw,62px) + 52px);width:22px;height:2px;background:repeating-linear-gradient(90deg,var(--glow) 0 4px,transparent 4px 8px);opacity:0;transform:translateX(-50%)}
-.fc-link.l1{left:33.33%}.fc-link.l2{left:66.66%}
-[data-phase=r2] .fc-link{opacity:1;animation:fcdash .6s linear infinite}
-@keyframes fcdash{to{background-position:8px 0}}
-.fc-hub{display:flex;gap:12px;align-items:center;margin-top:14px;padding:10px 12px;border:1px dashed var(--line-2);border-radius:14px;color:var(--glow)}
-.fc-hub .fc-ava{width:40px;flex:0 0 40px}
-[data-phase=src] .fc-hub .fc-ava::after,[data-phase=sum] .fc-hub .fc-ava::after{opacity:.9;animation:fcspin 1.1s linear infinite}
+.fc-stage{position:relative;width:100%;max-width:680px;margin-inline:auto;border:1px solid var(--line-2);border-radius:24px;padding:clamp(16px,2.6vw,24px);background:linear-gradient(180deg,var(--tide),var(--deep))}
+.fc-machine{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.6vw,16px)}
+.fc-col{display:flex;flex-direction:column;gap:12px;min-width:0}
+.fc-name{display:flex;align-items:center;gap:8px;font:700 clamp(20px,2.3vw,28px)/1.1 var(--f-display);letter-spacing:-.02em;color:var(--foam)}
+.fc-name::before{content:"";flex:0 0 10px;height:10px;border-radius:50%;background:var(--c)}
+.fc-col[data-who=gpt]{--c:#6fd8ac}.fc-col[data-who=claude]{--c:#f0a37f}.fc-col[data-who=gemini]{--c:#8fb2ff}
+.fc-bubble{position:relative;min-height:128px;background:var(--deep);border:1px solid var(--line-2);color:var(--spray);font-size:15px;line-height:1.5;padding:14px 14px 16px;border-radius:4px 16px 16px 16px;transition:border-color .25s,background .25s,color .25s}
+.fc-bubble.show{background:var(--foam);border-color:var(--foam);color:var(--ink)}
+.fc-col.talking .fc-bubble{box-shadow:0 0 0 2px var(--c)}
+.fc-dots{display:none;gap:5px;padding:4px 0}
+.fc-dots i{width:7px;height:7px;border-radius:50%;background:var(--c);animation:fcdot 1.2s ease-in-out infinite}
+.fc-dots i:nth-child(2){animation-delay:.15s}.fc-dots i:nth-child(3){animation-delay:.3s}
+@keyframes fcdot{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+.fc-col.thinking .fc-dots{display:flex}
+.fc-col.thinking .fc-text:empty{display:none}
+.fc-hub{display:flex;gap:12px;align-items:flex-start;margin-top:16px;padding:14px;border:1px dashed var(--line-2);border-radius:16px}
+.fc-hub-l{flex:0 0 auto;font:600 14px var(--f-body);color:var(--glow);padding-top:2px}
+.fc-hub .fc-bubble{min-height:0;flex:1;border-radius:16px;font-size:14.5px;padding:10px 12px}
 [data-phase=src] .fc-hub,[data-phase=sum] .fc-hub{border-style:solid;border-color:var(--glow)}
-.fc-hub .fc-bubble{min-height:0;flex:1}.fc-hub .fc-bubble::after{bottom:auto;top:50%;left:auto;right:100%;margin:-6px 0 0;border-bottom-color:transparent;border-right-color:var(--foam)}
-.fc-score{margin-top:14px;padding:14px 16px;border-radius:16px;background:#030810;border:1px solid var(--line-2);display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:center}
-.fc-pct{font:700 clamp(40px,7vw,58px)/1 var(--f-display);letter-spacing:-.04em;color:var(--mist);font-variant-numeric:tabular-nums;min-width:3.4ch;transition:color .3s}
-.fc-pct.g{color:#3ee08f}.fc-pct.o{color:#ffb547}.fc-pct.r{color:#ff6b6b}
+.fc-score{margin-top:16px;padding:16px 18px;border-radius:16px;background:#030810;border:1px solid var(--line-2);display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:center}
+.fc-pct{font:700 clamp(44px,7vw,64px)/1 var(--f-display);letter-spacing:-.04em;color:var(--spray);font-variant-numeric:tabular-nums;min-width:3.2ch}
+.fc-pct.g{color:#3ee08f}.fc-pct.o{color:#ffb547}.fc-pct.r{color:#ff7a7a}
 .fc-bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
-.fc-bar i{display:block;height:100%;width:0;border-radius:99px;background:var(--mist);transition:width 1.6s cubic-bezier(.2,.7,.2,1),background .3s}
-.fc-bar i.g{background:#3ee08f}.fc-bar i.o{background:#ffb547}.fc-bar i.r{background:#ff6b6b}
-.fc-score-l{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--spray);max-width:none}
-.fc-tip{position:relative;border:1px solid var(--line-2);border-radius:99px;width:22px;height:22px;font:600 12px var(--f-body);color:var(--spray);background:none;cursor:help}
-.fc-tip span{position:absolute;right:0;bottom:calc(100% + 8px);width:min(300px,78vw);background:var(--foam);color:var(--ink);text-align:left;font:400 13px/1.45 var(--f-body);padding:10px 12px;border-radius:12px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:5}
-.fc-tip:hover span,.fc-tip:focus span{opacity:1}
-.fc-score-sub{grid-column:1/-1;font-size:12.5px;color:var(--mist);max-width:none}
-.fc-phase{margin-top:12px;font-size:13.5px;color:var(--spray);text-align:center;max-width:none}
-@media (max-width:520px){.fc-machine{gap:6px}.fc-bubble{font-size:12px;min-height:110px;padding:8px}.fc-stage{padding:14px 10px}}
+.fc-bar i{display:block;height:100%;width:0;border-radius:99px;background:var(--mist);transition:width 1.4s cubic-bezier(.2,.7,.2,1)}
+.fc-bar i.g{background:#3ee08f}.fc-bar i.o{background:#ffb547}.fc-bar i.r{background:#ff7a7a}
+.fc-score-l{display:flex;justify-content:space-between;align-items:center;gap:10px;font:600 15px var(--f-body);color:var(--foam);max-width:none;margin-bottom:8px}
+.fc-tip{position:relative;flex:0 0 auto;border:1px solid var(--line-2);border-radius:99px;min-width:32px;height:32px;font:600 13px var(--f-body);color:var(--foam);background:none;cursor:help}
+.fc-tip span{position:absolute;right:0;bottom:calc(100% + 8px);width:min(300px,80vw);background:var(--foam);color:var(--ink);text-align:left;font:400 14px/1.45 var(--f-body);padding:12px 14px;border-radius:12px;visibility:hidden;opacity:0;transition:opacity .2s;z-index:5}
+.fc-tip:hover span,.fc-tip:focus-visible span,.fc-tip[aria-expanded=true] span{visibility:visible;opacity:1}
+.fc-score-sub{grid-column:1/-1;font-size:14px;color:var(--spray);max-width:none}
+.fc-phase{margin-top:14px;font-size:14.5px;color:var(--spray);text-align:center;max-width:none}
+@media (max-width:640px){.fc-machine{grid-template-columns:1fr;gap:14px}.fc-col{display:grid;grid-template-columns:1fr;gap:8px}.fc-bubble{min-height:0}.fc-col .fc-bubble:not(.show){min-height:52px}.fc-score{grid-template-columns:1fr}.fc-hub{flex-direction:column;gap:8px}}
+@media (prefers-reduced-motion:reduce){.fc-dots i{animation:none;opacity:.7}.fc-bar i{transition:none}}
 .fc-note{font-size:12.5px;color:var(--mist);margin-top:10px;text-align:center;max-width:none}
 .fc-result{margin-top:28px;border:1px solid var(--line-2);border-radius:22px;padding:24px;background:var(--deep)}
 .fc-result:focus{outline:none}
@@ -110,7 +94,7 @@
 .fc-more{margin-top:16px}.fc-more summary{cursor:pointer;color:var(--glow)}
 .fc-pre{white-space:pre-wrap;font-size:14px;color:var(--spray);margin-top:6px}
 @media (max-width:900px){.fc-tool{grid-template-columns:1fr}}
-@media (prefers-reduced-motion:reduce){.fc-strip,.fc-ava::after,.fc-link{animation:none!important}}
+
 .fc-rule{font-size:clamp(26px,2.8vw,40px)!important;max-width:24ch}
 @media (max-width:760px){.salt .index .row{grid-template-columns:1fr!important;gap:8px;padding:24px 0}.fc-card dl{grid-template-columns:1fr;gap:4px}.fc-card dd{margin-bottom:10px}}
 </style>
@@ -136,7 +120,7 @@
 </section>
 
 <section id="check" style="padding-top:clamp(40px,6vw,80px)"><div class="wrap">
-<div class="sec-head"><div><p class="kicker">Probeer het zelf</p><h2 style="margin-top:20px">Check een claim.</h2></div><p class="lede">Typ een zin of een cijfer. Je ziet live hoe Claude, GPT en Gemini het checken en op elkaar reageren. Aan het eind rolt er een waarheidsscore uit.</p></div>
+<div class="sec-head"><div><p class="kicker">Probeer het zelf</p><h2 style="margin-top:20px">Check een claim.</h2></div><p class="lede">Typ een zin of een cijfer. Je ziet live hoe ChatGPT, Claude en Gemini het checken en op elkaar reageren. Aan het eind rolt er een waarheidsscore uit.</p></div>
 <div class="fc-tool" id="fcTool" data-sitekey="1x00000000000000000000AA">
 <div class="form">
 <form id="fcForm" novalidate>
@@ -154,9 +138,8 @@
 </form>
 </div>
 <div>
-<div class="fc-stage" id="fcStage" data-phase="idle" aria-hidden="true"><div class="fc-top"><span>Factcheck-machine</span><span class="fc-lamps"><i></i><i></i><i></i><i></i></span></div><div class="fc-machine"><div class="fc-col" data-who="claude"><div class="fc-ava"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="20" cy="20" r="13"/><path d="M14 22c2 3 10 3 12 0"/><circle cx="15" cy="16" r="1.4" fill="currentColor"/><circle cx="25" cy="16" r="1.4" fill="currentColor"/></svg></div><span class="fc-name">Claude<small>model A</small></span><div class="fc-reel"><div class="fc-strip"><span>klopt</span><span>deels</span><span>bron?</span><span>niet</span><span>check</span><span>onbekend</span><span>klopt</span><span>deels</span><span>bron?</span><span>niet</span><span>check</span><span>onbekend</span></div><b class="fc-final">klaar</b></div><div class="fc-bubble" data-bubble="claude"></div></div><div class="fc-col" data-who="gpt"><div class="fc-ava"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M20 6l12 7v14l-12 7-12-7V13z"/><circle cx="15.5" cy="18" r="1.4" fill="currentColor"/><circle cx="24.5" cy="18" r="1.4" fill="currentColor"/><path d="M15 24h10" stroke-linecap="round"/></svg></div><span class="fc-name">GPT<small>model B</small></span><div class="fc-reel"><div class="fc-strip"><span>klopt</span><span>deels</span><span>bron?</span><span>niet</span><span>check</span><span>onbekend</span><span>klopt</span><span>deels</span><span>bron?</span><span>niet</span><span>check</span><span>onbekend</span></div><b class="fc-final">klaar</b></div><div class="fc-bubble" data-bubble="gpt"></div></div><div class="fc-col" data-who="gemini"><div class="fc-ava"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><rect x="8" y="8" width="24" height="24" rx="7"/><circle cx="15" cy="18" r="1.4" fill="currentColor"/><circle cx="25" cy="18" r="1.4" fill="currentColor"/><path d="M15 24c3 2 7 2 10 0" stroke-linecap="round"/></svg></div><span class="fc-name">Gemini<small>model C</small></span><div class="fc-reel"><div class="fc-strip"><span>klopt</span><span>deels</span><span>bron?</span><span>niet</span><span>check</span><span>onbekend</span><span>klopt</span><span>deels</span><span>bron?</span><span>niet</span><span>check</span><span>onbekend</span></div><b class="fc-final">klaar</b></div><div class="fc-bubble" data-bubble="gemini"></div></div><i class="fc-link l1"></i><i class="fc-link l2"></i></div><div class="fc-hub" data-who="hub"><div class="fc-ava"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8h12l6 6v18H12z"/><path d="M17 20h9M17 25h9M17 15h4"/></svg></div><div class="fc-bubble" data-bubble="hub">Bronnen en notulist wachten op de drie.</div></div><div class="fc-score"><div class="fc-pct" id="fcPct">–</div><div><p class="fc-score-l"><span>Waarheidsscore</span><button type="button" class="fc-tip" aria-describedby="fcTip">i<span id="fcTip" role="tooltip">Zo rekenen we: klopt = 100, klopt deels = 50, klopt niet = 0. Onbekend telt niet mee. Per claim weegt de overeenstemming mee: 3 van 3 eens telt 1, 2 van 3 telt 0,75, verdeeld telt 0,5. Groen is 70 of hoger, oranje 40 tot 70, rood onder 40.</span></button></p><div class="fc-bar"><i id="fcBar"></i></div></div><p class="fc-score-sub" id="fcScoreSub">Berekend uit de oordelen per claim. Geen gok van een AI.</p></div><p class="fc-phase" id="fcPhase">Typ een claim en trek aan de hendel.</p></div>
-<p class="fc-note">Eigen illustraties, geen officiële logo's.</p>
-<p class="sr-only" id="fcLive" aria-live="polite" style="position:absolute;left:-9999px"></p>
+<div class="fc-stage" id="fcStage" data-phase="idle"><div class="fc-machine"><div class="fc-col" data-who="gpt"><h3 class="fc-name">ChatGPT</h3><div class="fc-bubble" data-bubble="gpt"><span class="fc-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="fc-text">Wacht op je claim.</span></div></div><div class="fc-col" data-who="claude"><h3 class="fc-name">Claude</h3><div class="fc-bubble" data-bubble="claude"><span class="fc-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="fc-text">Wacht op je claim.</span></div></div><div class="fc-col" data-who="gemini"><h3 class="fc-name">Gemini</h3><div class="fc-bubble" data-bubble="gemini"><span class="fc-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="fc-text">Wacht op je claim.</span></div></div></div><div class="fc-hub" data-who="hub"><span class="fc-hub-l">Bronnen en notulist</span><div class="fc-bubble" data-bubble="hub"><span class="fc-text">Komen in actie als de drie klaar zijn.</span></div></div><div class="fc-score" role="group" aria-labelledby="fcScoreL"><div class="fc-pct" id="fcPct" aria-hidden="true">–</div><div><p class="fc-score-l"><span id="fcScoreL">Waarheidsscore</span><button type="button" class="fc-tip" aria-expanded="false" aria-controls="fcTip" aria-label="Hoe de score wordt berekend">i<span id="fcTip" role="tooltip">De score is het gemiddelde van alle claims. Klopt telt als 100, klopt deels als 50 en klopt niet als 0. Onbekend telt niet mee. Groen is 70 of hoger, oranje 40 tot 70, rood onder 40.</span></button></p><div class="fc-bar" aria-hidden="true"><i id="fcBar"></i></div></div><p class="fc-score-sub" id="fcScoreSub">Gemiddelde van de oordelen per claim. Geen gok van een AI.</p></div><p class="fc-phase" id="fcPhase" aria-hidden="true">Typ een claim en zie de drie aan het werk.</p></div>
+<p id="fcLive" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></p>
 <div class="fc-result" id="fcResult" tabindex="-1" hidden></div>
 </div>
 </div>
@@ -251,6 +234,6 @@
 <script src="/assets/js/vendor/gsap.min.js?v=3.15.1" defer></script>
 <script src="/assets/js/vendor/ScrollTrigger.min.js?v=3.15.1" defer></script>
 <script src="/assets/js/motion.js?v=1" defer></script>
-<script src="/assets/js/factcheck.js?v=3" defer></script>
+<script src="/assets/js/factcheck.js?v=4" defer></script>
 </body>
 </html>
