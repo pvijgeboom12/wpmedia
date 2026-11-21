@@ -1,6 +1,6 @@
 import { deliverLead, clean, isEmail, json, sameOrigin, attribution } from './lead.js';
 
-const TOPICS = ['campagne', 'cro', 'content', 'automation', 'dashboard', 'growth-scan', 'anders'];
+const TOPICS = ['campagne', 'cro', 'content', 'automation', 'dashboard', 'growth-scan', 'factcheck', 'anders'];
 const TIMING = ['asap', 'month', 'quarter', 'exploring'];
 
 export async function onRequestPost({ request, env }) {
