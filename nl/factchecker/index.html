@@ -38,6 +38,57 @@
 .fc-dark .brief{color:var(--foam)}
 .salt .ix-desc{color:var(--ink-2)}
 .salt .index,.salt .index li{border-color:rgba(10,22,34,.15)}
+.fc-tool{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,5vw,64px);align-items:start}
+.fc-tool .field textarea{min-height:130px}
+.fc-opt{border-top:1px solid var(--line);padding-top:16px;margin-top:6px}
+.fc-opt summary{cursor:pointer;color:var(--spray);font-size:15px}
+#fcTurnstile{min-height:65px;margin:14px 0 4px}
+.fc-stage{position:relative;aspect-ratio:1/1;max-width:560px;width:100%;margin-inline:auto;border:1px solid var(--line);border-radius:28px;background:radial-gradient(circle at 50% 55%,rgba(92,242,214,.07),transparent 60%),var(--deep);overflow:hidden}
+.fc-stage svg.fc-wires{position:absolute;inset:0;width:100%;height:100%}
+.fc-wires line{stroke:var(--line-2);stroke-width:1.2;stroke-dasharray:4 8;opacity:.35;transition:opacity .4s}
+.fc-wires .hubw{stroke:var(--glow)}
+[data-phase=r2] .fc-wires .peer,[data-phase=src] .fc-wires .hubw,[data-phase=sum] .fc-wires .hubw{opacity:1;animation:fcflow 1.2s linear infinite}
+@keyframes fcflow{to{stroke-dashoffset:-24}}
+.fc-node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:8px;width:30%}
+.fc-node[data-who=claude]{left:50%;top:21%}.fc-node[data-who=gpt]{left:20%;top:72%}.fc-node[data-who=gemini]{left:80%;top:72%}.fc-node[data-who=hub]{left:50%;top:57%;width:22%}
+.fc-ava{position:relative;width:clamp(54px,11vw,78px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:var(--tide);border:1px solid var(--line-2)}
+.fc-ava svg{width:56%;height:56%}
+.fc-ava::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:2px solid transparent;border-top-color:currentColor;opacity:0}
+[data-phase=r1] .fc-node:not([data-who=hub]) .fc-ava::after,[data-phase=r2] .fc-node:not([data-who=hub]) .fc-ava::after,[data-phase=src] [data-who=hub] .fc-ava::after,[data-phase=sum] [data-who=hub] .fc-ava::after{opacity:.9;animation:fcspin 1.1s linear infinite}
+@keyframes fcspin{to{transform:rotate(360deg)}}
+.fc-node[data-who=claude]{color:#f0a37f}.fc-node[data-who=gpt]{color:#6fd8ac}.fc-node[data-who=gemini]{color:#8fb2ff}.fc-node[data-who=hub]{color:var(--glow)}
+.fc-name{font:600 13.5px var(--f-body);color:var(--foam)}
+.fc-name small{display:block;font-weight:400;color:var(--mist);font-size:12px;text-align:center}
+.fc-bubble{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translate(-50%,6px);width:max(160px,130%);max-width:220px;background:var(--foam);color:var(--ink);font-size:13.5px;line-height:1.4;padding:9px 12px;border-radius:14px;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;min-height:1.4em}
+.fc-bubble.show{opacity:1;transform:translate(-50%,0)}
+.fc-bubble::after{content:"";position:absolute;top:100%;left:50%;margin-left:-6px;border:6px solid transparent;border-top-color:var(--foam)}
+.fc-node[data-who=claude] .fc-bubble{bottom:auto;top:calc(100% + 34px)}
+.fc-node[data-who=claude] .fc-bubble::after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:var(--foam)}
+.fc-node[data-who=hub] .fc-bubble{bottom:auto;top:calc(100% + 30px)}
+.fc-node[data-who=hub] .fc-bubble::after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:var(--foam)}
+.fc-node[data-who=gpt] .fc-bubble{left:-8%;transform:translate(0,6px)}.fc-node[data-who=gpt] .fc-bubble.show{transform:translate(0,0)}.fc-node[data-who=gpt] .fc-bubble::after{left:42%}
+.fc-node[data-who=gemini] .fc-bubble{left:auto;right:-8%;transform:translate(0,6px)}.fc-node[data-who=gemini] .fc-bubble.show{transform:translate(0,0)}.fc-node[data-who=gemini] .fc-bubble::after{left:58%}
+[data-phase=done] .fc-bubble{opacity:0!important}
+.fc-phase{position:absolute;left:18px;right:18px;bottom:14px;font-size:13.5px;color:var(--spray);text-align:center}
+.fc-note{font-size:12.5px;color:var(--mist);margin-top:10px;text-align:center;max-width:none}
+.fc-result{margin-top:28px;border:1px solid var(--line-2);border-radius:22px;padding:24px;background:var(--deep)}
+.fc-result:focus{outline:none}
+.fc-tag{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--glow)}
+.fc-demo h3,.fc-result h3{margin-top:10px;font-size:28px}
+.fc-demo p:not(.fc-tag){color:var(--spray);margin-top:10px}
+.fc-claim{border-top:1px solid var(--line);padding:16px 0}
+.fc-claim-top{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.fc-claim-t{font:600 18px var(--f-display);margin-top:10px}
+.fc-claim p{color:var(--spray);margin-top:6px;font-size:15.5px}
+.fc-src a{color:var(--glow);text-decoration:underline;word-break:break-all}
+.fc-eens{font-size:14px;color:var(--mist)}
+.fc-result .fc-v.ok{color:#5cf2d6;border-color:#5cf2d6}.fc-result .fc-v.part{color:#ffd166;border-color:#ffd166}.fc-result .fc-v.no{color:#ff8a8a;border-color:#ff8a8a}.fc-result .fc-v.unk{color:var(--spray);border-color:var(--mist)}
+.fc-open h4,.fc-more h4{font:600 15px var(--f-display);margin-top:16px}
+.fc-open li{color:var(--spray);margin:6px 0 0 18px}
+.fc-more{margin-top:16px}.fc-more summary{cursor:pointer;color:var(--glow)}
+.fc-pre{white-space:pre-wrap;font-size:14px;color:var(--spray);margin-top:6px}
+@media (max-width:900px){.fc-tool{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.fc-wires line,.fc-ava::after{animation:none!important}}
 .fc-rule{font-size:clamp(26px,2.8vw,40px)!important;max-width:24ch}
 @media (max-width:760px){.salt .index .row{grid-template-columns:1fr!important;gap:8px;padding:24px 0}.fc-card dl{grid-template-columns:1fr;gap:4px}.fc-card dd{margin-bottom:10px}}
 </style>
@@ -47,20 +98,54 @@
 <header class="nav" id="nav"><div class="wrap nav-in">
 <a class="brand" href="/nl/" aria-label="Waterproofmedia home"><span><span class="name">Waterproofmedia</span><span class="tag">Flow creates growth</span></span></a>
 <nav class="nav-links" aria-label="Main"><a href="/nl/#diensten">Diensten</a><a href="/nl/#aanbod">Aanbod</a><a href="/nl/cases/">Cases</a><a href="/nl/#lab">Lab</a><a href="/nl/#team">Team</a></nav>
-<div class="nav-right"><div class="lang" aria-label="Language"><a href="/nl/factchecker/" hreflang="nl" lang="nl" aria-current="true">NL</a></div><a class="btn btn-primary" href="#aanvragen" data-track="cta_nav_factcheck">Gratis factcheck</a><button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button></div>
+<div class="nav-right"><div class="lang" aria-label="Language"><a href="/nl/factchecker/" hreflang="nl" lang="nl" aria-current="true">NL</a></div><a class="btn btn-primary" href="#check" data-track="cta_nav_factcheck">Check een claim</a><button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button></div>
 </div>
-<div class="mobile-menu" id="mobileMenu"><a href="/nl/#diensten">Diensten</a><a href="/nl/#aanbod">Aanbod</a><a href="/nl/cases/">Cases</a><a href="/nl/#lab">Lab</a><a href="/nl/#team">Team</a><a class="btn btn-primary" href="#aanvragen" data-track="cta_nav_factcheck">Gratis factcheck</a></div>
+<div class="mobile-menu" id="mobileMenu"><a href="/nl/#diensten">Diensten</a><a href="/nl/#aanbod">Aanbod</a><a href="/nl/cases/">Cases</a><a href="/nl/#lab">Lab</a><a href="/nl/#team">Team</a><a class="btn btn-primary" href="#check" data-track="cta_nav_factcheck">Check een claim</a></div>
 </header>
 <main id="main">
 <section class="page-hero with-sea"><div class="wrap">
 <p class="kicker">Waterproofmedia Lab · AI-factchecker</p>
 <h1 style="margin-top:22px">Klopt het wat er staat? <span class="soft">Drie AI's checken het.</span></h1>
 <p class="lede">Je stuurt een claim, een tekst of een cijfer. Claude, GPT en Gemini controleren die los van elkaar op het web. Daarna reageren ze op elkaar. Jij krijgt per claim een helder oordeel, met bronnen.</p>
-<div class="cta-row"><a class="btn btn-primary" href="#aanvragen" data-track="cta_factcheck_hero">Vraag een gratis factcheck aan <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a><a class="btn btn-ghost" href="#werkwijze">Zo werkt het</a></div>
+<div class="cta-row"><a class="btn btn-primary" href="#check" data-track="cta_factcheck_hero">Check een claim <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a><a class="btn btn-ghost" href="#werkwijze">Zo werkt het</a></div>
 <div class="principles"><div><b>Drie modellen</b><span>van drie makers, los van elkaar</span></div><div><b>Bronnen</b><span>bij elk oordeel, met link</span></div><div><b>Geen gokwerk</b><span>onbekend is ook een antwoord</span></div></div>
 </div>
 <div class="sea" aria-hidden="true"><img src="/assets/img/Codex-afbeelding-23-sep-2026-13_37_38-1400.webp" srcset="/assets/img/Codex-afbeelding-23-sep-2026-13_37_38-800.webp 800w, /assets/img/Codex-afbeelding-23-sep-2026-13_37_38-1400.webp 1400w, /assets/img/Codex-afbeelding-23-sep-2026-13_37_38.webp 2172w" sizes="100vw" alt=""></div>
 </section>
+
+<section id="check" style="padding-top:clamp(40px,6vw,80px)"><div class="wrap">
+<div class="sec-head"><div><p class="kicker">Probeer het zelf</p><h2 style="margin-top:20px">Check een claim.</h2></div><p class="lede">Typ een zin of een cijfer. Je ziet live hoe Claude, GPT en Gemini het checken en op elkaar reageren.</p></div>
+<div class="fc-tool" id="fcTool" data-sitekey="1x00000000000000000000AA">
+<div class="form">
+<form id="fcForm" novalidate>
+<div class="field"><label for="fc-vraag">Welke claim wil je checken?</label><textarea id="fc-vraag" name="vraag" required minlength="12" maxlength="1200" placeholder="Bijvoorbeeld een zin uit een persbericht, een marktcijfer of een bewering van een concurrent."></textarea></div>
+<details class="fc-opt"><summary>Bron meesturen of het verslag per mail? (optioneel)</summary>
+<div class="field" style="margin-top:14px"><label for="fc-bron">Bron <span class="hint">(link, optioneel)</span></label><input id="fc-bron" name="bronnen" type="url" inputmode="url" placeholder="https://" maxlength="600"></div>
+<div class="field"><label for="fc-mail">E-mailadres <span class="hint">(optioneel, voor het verslag)</span></label><input id="fc-mail" name="email" type="email" autocomplete="email" maxlength="200"></div>
+<label class="check"><input type="checkbox" name="consent"> Stuur mij het verslag en neem contact met me op over deze check.</label>
+</details>
+<div class="hp" aria-hidden="true"><label for="fc-fax">Fax</label><input id="fc-fax" name="fax" type="text" tabindex="-1" autocomplete="off"></div>
+<div id="fcTurnstile"></div>
+<button class="btn btn-primary" type="submit" data-track="factcheck_run">Check deze claim</button>
+<p class="form-msg" id="fcMsg" role="alert"></p>
+<p class="note-sm">Maximaal 3 checks per dag. Stuur geen vertrouwelijke informatie: je tekst gaat via OpenRouter naar de drie modellen. <a href="/nl/privacyverklaring/" style="text-decoration:underline">Privacy</a></p>
+</form>
+</div>
+<div>
+<div class="fc-stage" id="fcStage" data-phase="idle" aria-hidden="true">
+<svg class="fc-wires" viewBox="0 0 100 100" preserveAspectRatio="none"><line class="peer" x1="50" y1="21" x2="20" y2="72"/><line class="peer" x1="50" y1="21" x2="80" y2="72"/><line class="peer" x1="20" y1="72" x2="80" y2="72"/><line class="hubw" x1="50" y1="21" x2="50" y2="57"/><line class="hubw" x1="20" y1="72" x2="50" y2="57"/><line class="hubw" x1="80" y1="72" x2="50" y2="57"/></svg>
+<div class="fc-node" data-who="claude"><div class="fc-bubble" data-bubble="claude"></div><div class="fc-ava"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="20" cy="20" r="13"/><path d="M14 22c2 3 10 3 12 0"/><circle cx="15" cy="16" r="1.4" fill="currentColor"/><circle cx="25" cy="16" r="1.4" fill="currentColor"/></svg></div><span class="fc-name">Claude<small>model A</small></span></div>
+<div class="fc-node" data-who="gpt"><div class="fc-bubble" data-bubble="gpt"></div><div class="fc-ava"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M20 6l12 7v14l-12 7-12-7V13z"/><circle cx="15.5" cy="18" r="1.4" fill="currentColor"/><circle cx="24.5" cy="18" r="1.4" fill="currentColor"/><path d="M15 24h10" stroke-linecap="round"/></svg></div><span class="fc-name">GPT<small>model B</small></span></div>
+<div class="fc-node" data-who="gemini"><div class="fc-bubble" data-bubble="gemini"></div><div class="fc-ava"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><rect x="8" y="8" width="24" height="24" rx="7"/><circle cx="15" cy="18" r="1.4" fill="currentColor"/><circle cx="25" cy="18" r="1.4" fill="currentColor"/><path d="M15 24c3 2 7 2 10 0" stroke-linecap="round"/></svg></div><span class="fc-name">Gemini<small>model C</small></span></div>
+<div class="fc-node" data-who="hub"><div class="fc-bubble" data-bubble="hub"></div><div class="fc-ava" style="width:clamp(42px,8vw,56px)"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8h12l6 6v18H12z"/><path d="M17 20h9M17 25h9M17 15h4"/></svg></div><span class="fc-name">Bronnen<small>en notulist</small></span></div>
+<p class="fc-phase" id="fcPhase">Typ een claim en zie de drie AI's aan het werk.</p>
+</div>
+<p class="fc-note">Eigen illustraties, geen officiële logo's.</p>
+<p class="sr-only" id="fcLive" aria-live="polite" style="position:absolute;left:-9999px"></p>
+<div class="fc-result" id="fcResult" tabindex="-1" hidden></div>
+</div>
+</div>
+</div></section>
 
 <section class="fc-dark"><div class="wrap two-col">
 <div><h2>Waarom drie in plaats van één?</h2></div>
@@ -74,7 +159,7 @@
 <div class="steps">
 <div class="step"><div class="num" aria-hidden="true">1</div><h3>Blind checken</h3><p>Elk model splitst je tekst in losse claims en zoekt zelf op het web. Ook naar tegenbewijs. Aangeleverde bronnen worden gecheckt, niet blind geloofd.</p></div>
 <div class="step"><div class="num" aria-hidden="true">2</div><h3>Op elkaar reageren</h3><p>Elk model ziet de andere twee antwoorden, zonder naam. Van mening veranderen mag alleen door bewijs of een betere bron. Nooit omdat de rest iets anders zegt.</p></div>
-<div class="step"><div class="num" aria-hidden="true">3</div><h3>Neutraal samenvatten</h3><p>Een aparte stap zet op een rij waar ze het over eens zijn, waar ze verschillen en wat nog open staat. Zonder eigen mening en zonder winnaar te kiezen.</p></div>
+<div class="step"><div class="num" aria-hidden="true">3</div><h3>Bronnen beslissen</h3><p>Blijven ze het oneens, dan geeft een betrouwbare bron de doorslag. Een neutrale samenvatting zet daarna op een rij wat klopt, wat verschilt en wat nog open staat.</p></div>
 </div>
 </div></section>
 
@@ -95,7 +180,7 @@
 <section><div class="wrap two-col">
 <div><p class="kicker">De vaste regel</p><p class="display fc-rule" style="margin-top:20px">Verzinnen mag niet.</p></div>
 <div><p>Elk model krijgt dezelfde opdracht: verzin nooit cijfers, citaten of bronnen. Weet een model het niet, dan schrijft het "onbekend".</p>
-<p>De samenvatting neemt alleen links over die echt in de antwoorden staan. Zijn de modellen verdeeld, dan wordt het oordeel "onbekend". Liever eerlijk dan stellig.</p></div>
+<p>De samenvatting neemt alleen links over die echt in de antwoorden staan. Zijn de modellen het oneens, dan beslist een betrouwbare bron. Is die er niet, dan blijft het oordeel "onbekend". Liever eerlijk dan stellig.</p></div>
 </div></section>
 
 <section class="salt"><div class="wrap">
@@ -116,11 +201,11 @@
 
 <section id="aanvragen" style="padding-top:0"><div class="wrap contact-grid">
 <div class="form">
-<h2 style="font-size:clamp(34px,4vw,56px)">Vraag een gratis factcheck aan.</h2>
-<p class="lede" style="margin:16px 0 28px">Stuur één claim of een korte tekst. Je krijgt het verslag binnen twee werkdagen per mail.</p>
+<h2 style="font-size:clamp(34px,4vw,56px)">Langere tekst? Vraag een uitgebreide check aan.</h2>
+<p class="lede" style="margin:16px 0 28px">Een heel artikel, rapport of pitch? Stuur de tekst en we laten de drie modellen alle claims checken. Je krijgt het verslag binnen twee werkdagen per mail.</p>
 <form id="contactForm" novalidate>
 <input type="hidden" name="topic" value="factcheck">
-<div class="field"><label for="f-msg">Welke claim of tekst wil je laten checken?</label><textarea id="f-msg" name="message" required maxlength="3000" placeholder="Plak hier de zin, het cijfer of de alinea. Heb je een bron? Zet de link eronder."></textarea></div>
+<div class="field"><label for="f-msg">Welke tekst wil je laten checken?</label><textarea id="f-msg" name="message" required maxlength="3000" placeholder="Plak hier de zin, het cijfer of de alinea. Heb je een bron? Zet de link eronder."></textarea></div>
 <div class="fields">
 <div class="field"><label for="f-name">Naam</label><input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120"></div>
 <div class="field"><label for="f-email">E-mailadres</label><input id="f-email" name="email" type="email" autocomplete="email" required maxlength="200"></div>
@@ -133,13 +218,13 @@
 </form>
 <div class="done" id="formDone" tabindex="-1"><h2>Bedankt, je claim is binnen.</h2><p>We zetten de drie modellen aan het werk. Je krijgt het verslag binnen twee werkdagen per mail.</p><a class="btn btn-primary" href="/plan" target="_blank" rel="noopener" data-track="cta_calendar_after_factcheck">Plan alvast een gesprek <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a></div>
 </div>
-<aside class="side"><div><h3>Wat er daarna gebeurt</h3><ol class="expect"><li>Claude, GPT en Gemini checken je claim in twee rondes.</li><li>Je krijgt per mail het oordeel per claim, met bronnen.</li><li>Vragen over de uitkomst? Dan bespreken we die graag.</li></ol></div><div><h3>Gratis, één claim</h3><p>De gratis factcheck is voor één claim of korte tekst per aanvraag.</p></div><div><h3>Mail</h3><a class="textlink" href="mailto:info@waterproofmedia.com">info@waterproofmedia.com</a></div></aside>
+<aside class="side"><div><h3>Wat er daarna gebeurt</h3><ol class="expect"><li>Claude, GPT en Gemini checken je claim in twee rondes.</li><li>Je krijgt per mail het oordeel per claim, met bronnen.</li><li>Vragen over de uitkomst? Dan bespreken we die graag.</li></ol></div><div><h3>Snel één claim checken?</h3><p>Gebruik de <a class="textlink" href="#check">check bovenaan de pagina</a>. Dan zie je de uitkomst direct.</p></div><div><h3>Mail</h3><a class="textlink" href="mailto:info@waterproofmedia.com">info@waterproofmedia.com</a></div></aside>
 </div></section>
 
 <section class="final"><div class="sea-bg ij" aria-hidden="true"><img src="/assets/img/wpm-ij-amsterdam.webp" alt="" loading="lazy"></div>
 <div class="wrap"><p class="kicker" style="justify-content:center">Automation &amp; AI</p><h2 style="margin-top:20px">Zo'n workflow voor je eigen werk?</h2>
 <p>Deze factchecker draait als automatisering in Make, met meerdere AI-modellen achter elkaar. Zo bouwen we ook workflows voor klanten: AI voor het denkwerk, automatisering voor de rest.</p>
-<div class="cta-row"><a class="btn btn-primary" href="/nl/contact/?topic=automation" data-track="cta_factcheck_final">Plan een kennismaking <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a><a class="btn btn-ghost" href="#aanvragen">Eerst een gratis factcheck</a></div></div>
+<div class="cta-row"><a class="btn btn-primary" href="/nl/contact/?topic=automation" data-track="cta_factcheck_final">Plan een kennismaking <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a><a class="btn btn-ghost" href="#check">Eerst een claim checken</a></div></div>
 </section>
 </main>
 <footer class="foot"><div class="wrap foot-grid">
@@ -151,5 +236,6 @@
 <script src="/assets/js/vendor/gsap.min.js?v=3.15.1" defer></script>
 <script src="/assets/js/vendor/ScrollTrigger.min.js?v=3.15.1" defer></script>
 <script src="/assets/js/motion.js?v=1" defer></script>
+<script src="/assets/js/factcheck.js?v=1" defer></script>
 </body>
 </html>

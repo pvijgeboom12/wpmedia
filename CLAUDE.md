@@ -55,6 +55,10 @@ Beide sturen leads via `worker/lead.js`. Instellen in Cloudflare → Workers & P
 
 Feiten in de assistent staan in het `KNOWLEDGE`-blok in `worker/chat.js`. Houd dat gelijk met de site. Geen prijzen.
 
+## AI-factchecker (/nl/factchecker/)
+
+`worker/factcheck.js` + `assets/js/factcheck.js`. Pagina → `POST /api/factcheck` (Turnstile, limiet per IP en per dag) → Make-webhook (sitekopie van scenario 8572631) → Make post terug naar `/api/factcheck/callback` met header `X-Factcheck-Token` → KV → pagina pollt `GET /api/factcheck?id=`. Nodig voor echte runs: `FACTCHECK_WEBHOOK_URL`, `FACTCHECK_CALLBACK_TOKEN` (secret), `TURNSTILE_SECRET` (secret) en KV-binding `FACTCHECK`; optioneel `FACTCHECK_PER_IP_DAY` (3) en `FACTCHECK_SITE_DAY` (30). Ontbreekt er één, dan draait de module in demomodus: alleen de procesanimatie, nooit een oordeel. De Turnstile-sitekey staat als `data-sitekey` op `#fcTool` (nu de testkey van Cloudflare; vervangen bij livegang). Elke run kost OpenRouter-tegoed: aanzetten alleen na akkoord van Pieter.
+
 ## Meten zonder consent
 
 - Cloudflare Web Analytics (cookieloos): zet de site-token in `CF_BEACON_TOKEN` bovenin `assets/js/site.js`. Leeg = uit.
