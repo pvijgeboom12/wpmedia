@@ -61,6 +61,44 @@
     });
   }
 
+
+  /* Truth score: derived only from the verdicts, never guessed by an AI */
+  var pctEl = document.getElementById('fcPct'), barEl = document.getElementById('fcBar'), subEl = document.getElementById('fcScoreSub');
+  var SUB0 = subEl.textContent;
+  function computeScore(claims) {
+    var VAL = { 'klopt': 100, 'klopt deels': 50, 'klopt niet': 0 }, W = { '3/3': 1, '2/3': 0.75, 'verdeeld': 0.5 };
+    var s = 0, w = 0, n = 0, unk = 0;
+    (claims || []).forEach(function (c) {
+      var v = VAL[String(c.oordeel || '').toLowerCase()];
+      if (v === undefined) { unk++; return; }
+      var wt = W[c.eens] || 1; s += v * wt; w += wt; n++;
+    });
+    return { pct: w ? Math.round(s / w) : null, n: n, unk: unk };
+  }
+  function tone(p) { return p >= 70 ? 'g' : p >= 40 ? 'o' : 'r'; }
+  function resetScore() { pctEl.className = 'fc-pct'; pctEl.textContent = '–'; barEl.className = ''; barEl.style.width = '0'; subEl.textContent = SUB0; }
+  function rollScore(target, sub) {
+    stage.querySelectorAll('.fc-col').forEach(function (c, k) { later(function () { c.classList.add('stopped'); }, k * 260); });
+    var t0 = null, dur = RM ? 0 : 1800;
+    function frame(ts) {
+      if (t0 === null) t0 = ts;
+      var k = dur ? Math.min(1, (ts - t0) / dur) : 1;
+      if (k < 1) {
+        var shown = target === null ? Math.floor(Math.random() * 100) : Math.round(target * (1 - Math.pow(1 - k, 3)) + (Math.random() * 18 - 9) * (1 - k));
+        shown = Math.max(0, Math.min(100, shown));
+        pctEl.textContent = shown + '%'; pctEl.className = 'fc-pct ' + tone(shown);
+        requestAnimationFrame(frame);
+      } else if (target === null) {
+        pctEl.textContent = '?'; pctEl.className = 'fc-pct'; barEl.className = ''; barEl.style.width = '0';
+      } else {
+        pctEl.textContent = target + '%'; pctEl.className = 'fc-pct ' + tone(target);
+      }
+    }
+    if (target !== null) { barEl.className = tone(target); barEl.style.width = target + '%'; }
+    subEl.textContent = sub;
+    later(function () { requestAnimationFrame(frame); }, 800);
+  }
+
   /* Turnstile, loaded on first interaction */
   function loadTurnstile() {
     if (!SITEKEY || tsLoading) return; tsLoading = true;
@@ -88,7 +126,7 @@
   };
   function fail(code) {
     running = false; clearTimers(); stage.setAttribute('data-phase', 'idle');
-    msg.textContent = ERR[code] || ERR.error; msg.className = 'form-msg err'; phaseEl.textContent = 'Gestopt.';
+    msg.textContent = ERR[code] || ERR.error; msg.className = 'form-msg err'; phaseEl.textContent = 'Gestopt.'; resetScore();
     btn.disabled = false; btn.textContent = 'Check deze claim';
     if (window.turnstile && tsId !== null) { window.turnstile.reset(tsId); tsToken = ''; }
   }
@@ -143,19 +181,19 @@
     if ((d.vraag || '').trim().length < 12) { msg.textContent = ERR.too_short; msg.className = 'form-msg err'; return; }
     if (SITEKEY && !tsToken && window.turnstile) { msg.textContent = 'Nog even geduld: de beveiligingscheck is bijna klaar.'; msg.className = 'form-msg'; return; }
     msg.textContent = ''; btn.disabled = true; btn.textContent = 'Bezig met checken…';
-    out.hidden = true; out.innerHTML = ''; shown = {}; running = true;
+    out.hidden = true; out.innerHTML = ''; shown = {}; running = true; resetScore(); stage.querySelectorAll('.fc-col').forEach(function (c) { c.classList.remove('stopped'); });
     stage.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'center' });
     fetch('/api/factcheck', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) })
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
       .then(function (res) {
         if (!res.ok || !res.j.ok) return fail(res.j && res.j.error);
         if (res.j.demo) {
-          playScript(0, function () { { running = false; stage.setAttribute('data-phase', 'done'); live.textContent = phaseEl.textContent = 'Klaar. Dit was een preview van het proces.'; renderDemo(); btn.disabled = false; btn.textContent = 'Check deze claim'; } return true; });
+          playScript(0, function () { { running = false; stage.setAttribute('data-phase', 'done'); live.textContent = phaseEl.textContent = 'Klaar. Dit was een preview van het proces.'; renderDemo(); rollScore(null, 'Preview: geen echte uitslag. Na de livegang rolt hier het echte percentage uit.'); btn.disabled = false; btn.textContent = 'Check deze claim'; } return true; });
           return;
         }
         var job = null, started = Date.now();
         playScript(0, function () { return !running; });
-        function finish() { running = false; clearTimers(); stage.setAttribute('data-phase', 'done'); live.textContent = phaseEl.textContent = 'Klaar. Hieronder staat de uitkomst.'; renderResult(job); btn.disabled = false; btn.textContent = 'Check nog een claim'; }
+        function finish() { running = false; clearTimers(); stage.setAttribute('data-phase', 'done'); live.textContent = phaseEl.textContent = 'Klaar. Hieronder staat de uitkomst.'; renderResult(job); var sc = computeScore((job.resultaat || {}).claims); rollScore(sc.pct, sc.pct === null ? 'Niet te bepalen: geen claim kreeg een duidelijk oordeel.' : 'Uit ' + sc.n + (sc.n === 1 ? ' claim' : ' claims') + (sc.unk ? ', ' + sc.unk + ' onbekend telt niet mee' : '') + '. Formule: zie i.'); btn.disabled = false; btn.textContent = 'Check nog een claim'; }
         (function poll() {
           if (Date.now() - started > 6 * 60 * 1000) return fail('timeout');
           fetch('/api/factcheck?id=' + encodeURIComponent(res.j.id)).then(function (r) { return r.json(); }).then(function (j) {
