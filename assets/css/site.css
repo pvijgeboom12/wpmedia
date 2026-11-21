@@ -665,3 +665,10 @@ section{position:relative;padding-block:clamp(88px,11vw,168px)}
 .salt .product p,.salt .product .p-sub{color:var(--ink-2)}
 .salt .product h3{color:var(--ink)}
 .salt .proves{color:var(--deep-teal)}
+/* Donker blok tussen lichte secties (cases + testimonial) */
+.tide-block{background:var(--tide);color:var(--foam);border-top:0}
+.tide-block h2,.tide-block h3,.tide-block .figure b,.tide-block .case-sm .big,.tide-block .quote blockquote{color:var(--foam)}
+.tide-block p,.tide-block .lede{color:var(--spray)}
+.tide-block .kicker,.tide-block .meta,.tide-block .figure span,.tide-block .case-sm .what,.tide-block .quote figcaption{color:var(--spray)}
+.tide-block .case-feature,.tide-block .case-sm,.tide-block .figure{border-color:var(--line-2)}
+.tide-block .figure.hl b,.tide-block .textlink,.tide-block .case-feature .textlink{color:var(--glow)}
