@@ -108,7 +108,10 @@ export async function status({ request, env }) {
   if (!/^[0-9a-f-]{36}$/.test(id)) return json({ ok: false, error: 'id' }, 400);
   const raw = await env.FACTCHECK.get(`job:${id}`);
   if (!raw) return json({ ok: false, error: 'not_found' }, 404);
-  return json({ ok: true, job: JSON.parse(raw) });
+  const job = JSON.parse(raw);
+  // Make sends no error callback: no result within 6 minutes counts as failed.
+  if (!['done', 'error'].includes(job.status) && Date.now() - Date.parse(job.created) > 6 * 60 * 1000) job.status = 'error';
+  return json({ ok: true, job });
 }
 
 // Make passes AI output as strings; take the first {...} block and parse it.
