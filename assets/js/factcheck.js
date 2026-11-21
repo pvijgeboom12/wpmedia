@@ -36,7 +36,7 @@
     el.textContent = ''; var i = 0;
     (function step() {
       el.textContent = text.slice(0, ++i);
-      if (i < text.length) later(step, 22); else if (done) later(done, 900);
+      if (i < text.length) later(step, 30); else if (done) later(done, 1400);
     })();
   }
   function sayAll(who, lines, done) {
@@ -74,6 +74,7 @@
   }
   form.addEventListener('focusin', loadTurnstile);
   form.addEventListener('pointerenter', loadTurnstile);
+  if ('IntersectionObserver' in window) { var io = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { loadTurnstile(); io.disconnect(); } }, { rootMargin: '200px' }); io.observe(form); } else loadTurnstile();
 
   var ERR = {
     too_short: 'Schrijf een hele zin of een cijfer met context. Minimaal 12 tekens.',
