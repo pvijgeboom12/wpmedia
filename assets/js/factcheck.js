@@ -168,7 +168,7 @@
     if (rounds.length) {
       h += '<details class="fc-more"><summary>Lees de hele discussie</summary>';
       rounds.forEach(function (x) { ['gpt', 'claude', 'gemini'].forEach(function (m) { if (job[x[0]][m]) h += '<h4>' + x[1] + ' · ' + { claude: 'Claude', gpt: 'ChatGPT', gemini: 'Gemini' }[m] + '</h4><p class="fc-pre">' + esc(job[x[0]][m]) + '</p>'; }); });
-      h += job.beslisser ? '<h4>Gemini · beslist bij onenigheid</h4><p class="fc-pre">' + esc(job.beslisser) + '</p>' : r.onenigheid ? '<h4>Gemini</h4><p>Geen bron gevonden die de doorslag geeft. Het oordeel blijft open.</p>' : '<h4>Gemini</h4><p>Niet nodig: Claude en ChatGPT waren het eens.</p>';
+      h += job.beslisser ? '<h4>Gemini · beslist bij onenigheid</h4><p class="fc-pre">' + esc(String(job.beslisser).split(/\nJSON:/)[0].trim()) + '</p>' : r.onenigheid ? '<h4>Gemini</h4><p>Geen bron gevonden die de doorslag geeft. Het oordeel blijft open.</p>' : '<h4>Gemini</h4><p>Niet nodig: Claude en ChatGPT waren het eens.</p>';
       h += '</details>';
     }
     h += '<div class="cta-row"><a class="btn btn-primary" href="/nl/contact/?topic=automation" data-track="cta_factcheck_result">Zo\'n workflow voor je eigen werk?</a></div>';
@@ -176,7 +176,7 @@
   }
 
   /* Show real round text in the bubbles as it arrives */
-  function excerpt(t) { t = String(t || '').replace(/\s+/g, ' ').trim(); return t.length > 150 ? t.slice(0, 147) + '…' : t; }
+  function excerpt(t) { t = String(t || '').split(/\nJSON:/)[0].replace(/[*#`]+/g, '').replace(/\s+/g, ' ').trim(); return t.length > 150 ? t.slice(0, 147) + '…' : t; }
   var shown = {};
   function showRound(job, key) {
     if (shown[key] || !job[key]) return; shown[key] = true;
