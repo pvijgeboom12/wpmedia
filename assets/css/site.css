@@ -656,3 +656,19 @@ section{position:relative;padding-block:clamp(88px,11vw,168px)}
 .tier,.tier:nth-child(2),.tier:nth-child(3){min-height:0;box-shadow:0 30px 60px -40px rgba(10,22,34,.35)}
 .tier .btn{margin-top:auto}
 @media(max-width:900px){.tier .btn{margin-top:28px}}
+
+/* Variant "lichter" (preview site-lichter): diepzee-blauw i.p.v. bijna zwart, meer lichte secties */
+:root{--abyss:#0a1f33;--deep:#0e2840;--tide:#14324f;--tide-2:#1a3d5f}
+.salt .index,.salt .index li{border-color:rgba(10,22,34,.14)}
+.salt .ix-desc,.salt .ix-sub,.salt .ix-proof{color:var(--ink-2)}
+.salt .product{background:#fff;border-color:rgba(10,22,34,.12)}
+.salt .product p,.salt .product .p-sub{color:var(--ink-2)}
+.salt .product h3{color:var(--ink)}
+.salt .proves{color:var(--deep-teal)}
+/* Donker blok tussen lichte secties (cases + testimonial) */
+.tide-block{background:var(--tide);color:var(--foam);border-top:0}
+.tide-block h2,.tide-block h3,.tide-block .figure b,.tide-block .case-sm .big,.tide-block .quote blockquote{color:var(--foam)}
+.tide-block p,.tide-block .lede{color:var(--spray)}
+.tide-block .kicker,.tide-block .meta,.tide-block .figure span,.tide-block .case-sm .what,.tide-block .quote figcaption{color:var(--spray)}
+.tide-block .case-feature,.tide-block .case-sm,.tide-block .figure{border-color:var(--line-2)}
+.tide-block .figure.hl b,.tide-block .textlink,.tide-block .case-feature .textlink{color:var(--glow)}
