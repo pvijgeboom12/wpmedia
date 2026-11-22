@@ -5,7 +5,8 @@
   "compatibility_date": "2026-09-01",
   "workers_dev": true,
   "preview_urls": true,
-  "previews": {},
+  "previews": { "kv_namespaces": [{ "binding": "FACTCHECK", "id": "86f6c7cb626c4ee48351614be6ae4c5c" }] },
+  "kv_namespaces": [{ "binding": "FACTCHECK", "id": "86f6c7cb626c4ee48351614be6ae4c5c" }],
   "assets": {
     "directory": ".",
     "html_handling": "auto-trailing-slash",

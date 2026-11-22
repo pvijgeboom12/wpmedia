@@ -55,6 +55,10 @@ Beide sturen leads via `worker/lead.js`. Instellen in Cloudflare → Workers & P
 
 Feiten in de assistent staan in het `KNOWLEDGE`-blok in `worker/chat.js`. Houd dat gelijk met de site. Geen prijzen.
 
+## AI-factchecker (/nl/factchecker/)
+
+`worker/factcheck.js` + `assets/js/factcheck.js`. Pagina → `POST /api/factcheck` (Turnstile, limiet per IP en per dag) → Make-webhook (sitekopie van scenario 8572631) → Make post terug naar `/api/factcheck/callback` met header `X-Factcheck-Token` → KV → pagina pollt `GET /api/factcheck?id=`. Nodig voor echte runs: `FACTCHECK_WEBHOOK_URL`, `FACTCHECK_CALLBACK_TOKEN` (secret), `TURNSTILE_SECRET` (secret) en KV-binding `FACTCHECK` (id staat in `wrangler.jsonc`, zowel bovenaan als in het `previews`-blok: zonder dat blok krijgen preview-versies geen KV). Previews erven geen productie-secrets: zet de secrets ook onder Settings → Variables and secrets → Previews Base (waarden opnieuw invullen). Een bestaande preview krijgt latere Base-wijzigingen niet; alleen nieuwe previews. Het demo-antwoord van `POST /api/factcheck` noemt welke instellingen ontbreken (alleen namen); optioneel `FACTCHECK_PER_IP_DAY` (3) en `FACTCHECK_SITE_DAY` (10). Ontbreekt er één, dan draait de module in demomodus: alleen de procesanimatie, nooit een oordeel. De Turnstile-sitekey staat als `data-sitekey` op `#fcTool` (nu de testkey van Cloudflare; vervangen bij livegang). Elke run kost OpenRouter-tegoed: aanzetten alleen na akkoord van Pieter.
+
 ## Meten zonder consent
 
 - Cloudflare Web Analytics (cookieloos): zet de site-token in `CF_BEACON_TOKEN` bovenin `assets/js/site.js`. Leeg = uit.
