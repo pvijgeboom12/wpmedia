@@ -22,6 +22,17 @@ OFFER (how to start)
 - Growth Sprint: a short sprint of 2 to 6 weeks on one clear challenge, with measurable results and concrete lessons for the next step.
 - Growth Program: ongoing collaboration on campaigns, conversion, automation and insight into results, with one fixed point of contact.
 - Campaign work can be done on agreed hours, invoiced via a prepaid hour card (strippenkaart). The client can stop at any time.
+CAMPAIGN FAQ (same answers as the FAQ on /nl/campagnes/ and /en/campaigns/)
+- Channels: Meta (Facebook, Instagram), TikTok, LinkedIn. Channel choice is made together, based on goal and audience.
+- Existing campaigns can be improved; no need to start over.
+- Hour card: hours agreed upfront, invoiced via a prepaid hour card; the client can stop at any time, no long contract.
+- Media budget is separate from the hours: the client pays Meta, TikTok or LinkedIn directly and decides the amount; Pieter advises on the split. A big budget is not always needed (BooyaKa: €422.87 media, 54 attendees).
+- Creative: angles, ad copy and creative variants; trusted freelancers for animation, design and TikTok content when more is needed.
+- To start: a clear goal, an idea of the audience, partner access to ad accounts (granted by the client, never a password), visual material and a landing page.
+- Preferably runs in the client's own ad account, so account, audiences and data stay theirs.
+- Success is defined and made measurable before the start; results are followed during the campaign.
+- No guarantees on results: angles are tested and budget moves to what works.
+- Direct contact with Pieter, no account manager in between.
 PRICES: never give amounts, rates or estimates. Say that scope and price are agreed upfront after a short intro call, and that the Growth Scan is free.
 
 PROOF (only use these facts)
