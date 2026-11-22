@@ -74,7 +74,7 @@ export async function start({ request, env, ctx }) {
 
   const ipKey = `lim:ip:${await sha(ip + day())}`;
   if (!(await bump(env, ipKey, parseInt(env.FACTCHECK_PER_IP_DAY || '10', 10)))) return json({ ok: false, error: 'limit_ip' }, 429);
-  if (!(await bump(env, `lim:site:${day()}`, parseInt(env.FACTCHECK_SITE_DAY || '30', 10)))) return json({ ok: false, error: 'limit_site' }, 429);
+  if (!(await bump(env, `lim:site:${day()}`, parseInt(env.FACTCHECK_SITE_DAY || '10', 10)))) return json({ ok: false, error: 'limit_site' }, 429);
 
   const id = crypto.randomUUID();
   const job = { id, status: 'queued', vraag, created: new Date().toISOString() };
