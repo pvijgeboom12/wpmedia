@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AI-factchecker: drie modellen, één oordeel | Waterproofmedia</title>
-<meta name="description" content="Klopt die claim? Claude, GPT en Gemini checken hem los van elkaar op het web, reageren op elkaar en geven per claim een oordeel met bronnen. Vraag een gratis factcheck aan.">
+<title>AI-factchecker: twee checken, de derde beslist | Waterproofmedia</title>
+<meta name="description" content="Klopt die claim? Claude en GPT checken hem los van elkaar op het web. Zijn ze het oneens, dan beslist Gemini op basis van betrouwbare bronnen. Gratis, met bronnen per claim.">
 <link rel="canonical" href="https://waterproofmedia.com/nl/factchecker/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Waterproofmedia">
-<meta property="og:title" content="AI-factchecker: drie modellen, één oordeel | Waterproofmedia">
-<meta property="og:description" content="Claude, GPT en Gemini checken je claim los van elkaar, reageren op elkaar en geven per claim een oordeel met bronnen.">
+<meta property="og:title" content="AI-factchecker: twee checken, de derde beslist | Waterproofmedia">
+<meta property="og:description" content="Claude en GPT checken je claim los van elkaar. Zijn ze het oneens, dan beslist Gemini op basis van betrouwbare bronnen.">
 <meta property="og:url" content="https://waterproofmedia.com/nl/factchecker/">
 <meta property="og:image" content="https://waterproofmedia.com/assets/img/Codex-afbeelding-23-sep-2026-13_37_38.webp">
 <meta property="og:locale" content="nl_NL">
@@ -113,15 +113,15 @@
 <section class="page-hero with-sea"><div class="wrap">
 <p class="kicker">Waterproofmedia Lab · AI-factchecker</p>
 <h1 style="margin-top:22px">Klopt het wat er staat? <span class="soft">Drie AI's checken het.</span></h1>
-<p class="lede">Je stuurt een claim, een tekst of een cijfer. Claude, GPT en Gemini controleren die los van elkaar op het web. Daarna reageren ze op elkaar. Jij krijgt per claim een helder oordeel, met bronnen.</p>
+<p class="lede">Je stuurt een claim, een tekst of een cijfer. Claude en GPT controleren die los van elkaar op het web. Daarna reageren ze op elkaar. Zijn ze het oneens, dan beslist Gemini op basis van betrouwbare bronnen. Jij krijgt per claim een helder oordeel, met bronnen.</p>
 <div class="cta-row"><a class="btn btn-primary" href="#check" data-track="cta_factcheck_hero">Check een claim <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a><a class="btn btn-ghost" href="#werkwijze">Zo werkt het</a></div>
-<div class="principles"><div><b>Drie modellen</b><span>van drie makers, los van elkaar</span></div><div><b>Bronnen</b><span>bij elk oordeel, met link</span></div><div><b>Geen gokwerk</b><span>onbekend is ook een antwoord</span></div></div>
+<div class="principles"><div><b>Drie modellen</b><span>twee checken, de derde beslist</span></div><div><b>Bronnen</b><span>bij elk oordeel, met link</span></div><div><b>Geen gokwerk</b><span>onbekend is ook een antwoord</span></div></div>
 </div>
 <div class="sea" aria-hidden="true"><img src="/assets/img/Codex-afbeelding-23-sep-2026-13_37_38-1400.webp" srcset="/assets/img/Codex-afbeelding-23-sep-2026-13_37_38-800.webp 800w, /assets/img/Codex-afbeelding-23-sep-2026-13_37_38-1400.webp 1400w, /assets/img/Codex-afbeelding-23-sep-2026-13_37_38.webp 2172w" sizes="100vw" alt=""></div>
 </section>
 
 <section id="check" style="padding-top:clamp(40px,6vw,80px)"><div class="wrap">
-<div class="sec-head"><div><p class="kicker">Probeer het zelf</p><h2 style="margin-top:20px">Check een claim.</h2></div><p class="lede">Typ een zin of een cijfer. Je ziet live hoe ChatGPT, Claude en Gemini het checken en op elkaar reageren. Aan het eind rolt er een waarheidsscore uit.</p></div>
+<div class="sec-head"><div><p class="kicker">Probeer het zelf</p><h2 style="margin-top:20px">Check een claim.</h2></div><p class="lede">Typ een zin of een cijfer. Je ziet live hoe ChatGPT en Claude het checken en op elkaar reageren. Zijn ze het oneens, dan komt Gemini erbij. Aan het eind rolt er een waarheidsscore uit.</p></div>
 <div class="fc-tool" id="fcTool" data-sitekey="1x00000000000000000000AA">
 <div class="form">
 <form id="fcForm" novalidate>
@@ -135,11 +135,11 @@
 <div id="fcTurnstile"></div>
 <button class="btn btn-primary" type="submit" data-track="factcheck_run">Check deze claim</button>
 <p class="form-msg" id="fcMsg" role="alert"></p>
-<p class="note-sm">Maximaal 3 checks per dag. Stuur geen vertrouwelijke informatie: je tekst gaat via OpenRouter naar de drie modellen. <a href="/nl/privacyverklaring/" style="text-decoration:underline">Privacy</a></p>
+<p class="note-sm">Maximaal 3 checks per dag. Stuur geen vertrouwelijke informatie: je tekst gaat via OpenRouter naar de AI-modellen. <a href="/nl/privacyverklaring/" style="text-decoration:underline">Privacy</a></p>
 </form>
 </div>
 <div>
-<div class="fc-stage" id="fcStage" data-phase="idle"><div class="fc-machine"><div class="fc-col" data-who="gpt"><h3 class="fc-name">ChatGPT</h3><div class="fc-bubble" data-bubble="gpt"><span class="fc-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="fc-text">Wacht op je claim.</span></div></div><div class="fc-col" data-who="claude"><h3 class="fc-name">Claude</h3><div class="fc-bubble" data-bubble="claude"><span class="fc-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="fc-text">Wacht op je claim.</span></div></div><div class="fc-col" data-who="gemini"><h3 class="fc-name">Gemini</h3><div class="fc-bubble" data-bubble="gemini"><span class="fc-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="fc-text">Wacht op je claim.</span></div></div></div><div class="fc-hub" data-who="hub"><span class="fc-hub-l">Bronnen en notulist</span><div class="fc-bubble" data-bubble="hub"><span class="fc-text">Komen in actie als de drie klaar zijn.</span></div></div><div class="fc-score" role="group" aria-labelledby="fcScoreL"><div class="fc-pct" id="fcPct" aria-hidden="true">–</div><div><p class="fc-score-l"><span id="fcScoreL">Waarheidsscore</span><button type="button" class="fc-tip" aria-expanded="false" aria-controls="fcTip" aria-label="Hoe de score wordt berekend">i<span id="fcTip" role="tooltip">De score is het gemiddelde van alle claims. Klopt telt als 100, klopt deels als 50 en klopt niet als 0. Onbekend telt niet mee. Groen is 70 of hoger, oranje 40 tot 70, rood onder 40.</span></button></p><div class="fc-bar" aria-hidden="true"><i id="fcBar"></i></div></div><p class="fc-score-sub" id="fcScoreSub">Gemiddelde van de oordelen per claim. Geen gok van een AI.</p></div><p class="fc-phase" id="fcPhase" aria-hidden="true">Typ een claim en zie de drie aan het werk.</p></div>
+<div class="fc-stage" id="fcStage" data-phase="idle"><div class="fc-machine"><div class="fc-col" data-who="gpt"><h3 class="fc-name">ChatGPT</h3><div class="fc-bubble" data-bubble="gpt"><span class="fc-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="fc-text">Wacht op je claim.</span></div></div><div class="fc-col" data-who="claude"><h3 class="fc-name">Claude</h3><div class="fc-bubble" data-bubble="claude"><span class="fc-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="fc-text">Wacht op je claim.</span></div></div><div class="fc-col" data-who="gemini"><h3 class="fc-name">Gemini</h3><div class="fc-bubble" data-bubble="gemini"><span class="fc-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="fc-text">Wacht op je claim.</span></div></div></div><div class="fc-hub" data-who="hub"><span class="fc-hub-l">Bronnen en notulist</span><div class="fc-bubble" data-bubble="hub"><span class="fc-text">Komen in actie als Claude en ChatGPT klaar zijn.</span></div></div><div class="fc-score" role="group" aria-labelledby="fcScoreL"><div class="fc-pct" id="fcPct" aria-hidden="true">–</div><div><p class="fc-score-l"><span id="fcScoreL">Waarheidsscore</span><button type="button" class="fc-tip" aria-expanded="false" aria-controls="fcTip" aria-label="Hoe de score wordt berekend">i<span id="fcTip" role="tooltip">De score is het gemiddelde van alle claims. Klopt telt als 100, klopt deels als 50 en klopt niet als 0. Onbekend telt niet mee. Groen is 70 of hoger, oranje 40 tot 70, rood onder 40.</span></button></p><div class="fc-bar" aria-hidden="true"><i id="fcBar"></i></div></div><p class="fc-score-sub" id="fcScoreSub">Gemiddelde van de oordelen per claim. Geen gok van een AI.</p></div><p class="fc-phase" id="fcPhase" aria-hidden="true">Typ een claim en zie de AI's aan het werk.</p></div>
 <p id="fcLive" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></p>
 <div class="fc-result" id="fcResult" tabindex="-1" hidden></div>
 </div>
@@ -149,7 +149,7 @@
 <section class="fc-dark"><div class="wrap two-col">
 <div><h2>Waarom drie in plaats van één?</h2></div>
 <div><p class="brief">Eén AI klinkt altijd zeker. Ook als hij iets verzint.</p>
-<p>Daarom doen drie modellen van drie verschillende makers hetzelfde werk, zonder dat ze elkaars antwoord zien. Zijn ze het eens, dan sta je sterker. Zijn ze het oneens, dan weet je precies waar je moet kijken.</p>
+<p>Daarom doen twee modellen van twee verschillende makers hetzelfde werk, zonder dat ze elkaars antwoord zien. Zijn ze het eens, dan sta je sterker. Zijn ze het oneens, dan zoekt een derde model van weer een andere maker de beste bron en beslist.</p>
 <div class="fc-models" aria-label="Modellen"><span>Claude</span><span>GPT</span><span>Gemini</span></div></div>
 </div></section>
 
@@ -157,9 +157,9 @@
 <div class="sec-head"><h2>Zo werkt het.</h2><p class="lede">Jij stuurt één claim of een korte tekst. Heb je al een bron? Stuur die mee. Daarna gaat het in drie stappen.</p></div>
 <figure class="fc-flow"><img src="/assets/img/factcheck-flow-1600.webp" srcset="/assets/img/factcheck-flow-800.webp 800w, /assets/img/factcheck-flow-1600.webp 1600w" sizes="(max-width: 1100px) 100vw, 1040px" width="1600" height="819" loading="lazy" decoding="async" alt="Schema: één claim gaat langs drie AI-modellen, die elk eigen bronnen zoeken. De drie lijnen komen samen bij één eindoordeel met een vinkje."></figure>
 <div class="steps">
-<div class="step"><div class="num" aria-hidden="true">1</div><h3>Blind checken</h3><p>Elk model splitst je tekst in losse claims en zoekt zelf op het web. Ook naar tegenbewijs. Aangeleverde bronnen worden gecheckt, niet blind geloofd.</p></div>
-<div class="step"><div class="num" aria-hidden="true">2</div><h3>Op elkaar reageren</h3><p>Elk model ziet de andere twee antwoorden, zonder naam. Van mening veranderen mag alleen door bewijs of een betere bron. Nooit omdat de rest iets anders zegt.</p></div>
-<div class="step"><div class="num" aria-hidden="true">3</div><h3>Bronnen beslissen</h3><p>Blijven ze het oneens, dan geeft een betrouwbare bron de doorslag. Een neutrale samenvatting zet daarna op een rij wat klopt, wat verschilt en wat nog open staat.</p></div>
+<div class="step"><div class="num" aria-hidden="true">1</div><h3>Blind checken</h3><p>Claude en GPT splitsen je tekst in losse claims en zoeken zelf op het web. Ook naar tegenbewijs. Aangeleverde bronnen worden gecheckt, niet blind geloofd.</p></div>
+<div class="step"><div class="num" aria-hidden="true">2</div><h3>Op elkaar reageren</h3><p>Claude en GPT zien elk het antwoord van de ander, zonder naam. Van mening veranderen mag alleen door bewijs of een betere bron. Nooit omdat de rest iets anders zegt.</p></div>
+<div class="step"><div class="num" aria-hidden="true">3</div><h3>Gemini beslist</h3><p>Blijven ze het oneens, of komen ze er niet uit, dan zoekt Gemini de beste bron. Die bron geeft de doorslag. Een neutrale samenvatting zet daarna op een rij wat klopt, wat verschilt en wat nog open staat.</p></div>
 </div>
 </div></section>
 
@@ -171,7 +171,7 @@
 <div class="fc-card"><p class="cap">Zo ziet een oordeel eruit (format)</p>
 <dl><dt>Claim</dt><dd>De zin of het cijfer uit jouw tekst</dd>
 <dt>Oordeel</dt><dd>Klopt, klopt deels, klopt niet of onbekend</dd>
-<dt>Eens</dt><dd>3 van 3, 2 van 3 of verdeeld</dd>
+<dt>Eens</dt><dd>2 van 2, deels of verdeeld</dd>
 <dt>Bronnen</dt><dd>Links naar de pagina's die de modellen vonden</dd>
 <dt>Toelichting</dt><dd>Eén zin uitleg</dd>
 <dt>Zekerheid</dt><dd>Hoog, middel of laag</dd></dl></div>
@@ -180,7 +180,7 @@
 <section><div class="wrap two-col">
 <div><p class="kicker">De vaste regel</p><p class="display fc-rule" style="margin-top:20px">Verzinnen mag niet.</p></div>
 <div><p>Elk model krijgt dezelfde opdracht: verzin nooit cijfers, citaten of bronnen. Weet een model het niet, dan schrijft het "onbekend".</p>
-<p>De samenvatting neemt alleen links over die echt in de antwoorden staan. Zijn de modellen het oneens, dan beslist een betrouwbare bron. Is die er niet, dan blijft het oordeel "onbekend". Liever eerlijk dan stellig.</p></div>
+<p>De samenvatting neemt alleen links over die echt in de antwoorden staan. Zijn Claude en GPT het oneens, dan beslist Gemini met een betrouwbare bron. Is die er niet, dan blijft het oordeel "onbekend". Liever eerlijk dan stellig.</p></div>
 </div></section>
 
 <section class="salt"><div class="wrap">
@@ -195,8 +195,8 @@
 
 <section><div class="wrap two-col">
 <div><h2>Wat het niet is.</h2></div>
-<div><p>Geen vervanging voor een journalist, jurist of expert. Ook drie modellen kunnen het mis hebben. Daarom zie je altijd de bronnen, zodat je zelf kunt nalezen.</p>
-<p>Stuur geen vertrouwelijke informatie. Je tekst gaat via OpenRouter naar de drie modellen.</p></div>
+<div><p>Geen vervanging voor een journalist, jurist of expert. Ook drie modellen samen kunnen het mis hebben. Daarom zie je altijd de bronnen, zodat je zelf kunt nalezen.</p>
+<p>Stuur geen vertrouwelijke informatie. Je tekst gaat via OpenRouter naar de AI-modellen.</p></div>
 </div></section>
 
 <section id="aanvragen" style="padding-top:0"><div class="wrap contact-grid">
@@ -236,6 +236,6 @@
 <script src="/assets/js/vendor/gsap.min.js?v=3.15.1" defer></script>
 <script src="/assets/js/vendor/ScrollTrigger.min.js?v=3.15.1" defer></script>
 <script src="/assets/js/motion.js?v=1" defer></script>
-<script src="/assets/js/factcheck.js?v=4" defer></script>
+<script src="/assets/js/factcheck.js?v=5" defer></script>
 </body>
 </html>

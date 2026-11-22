@@ -155,6 +155,7 @@ export async function callback({ request, env }) {
     ...job, status: st, updated: new Date().toISOString(),
     ronde1: ROUND(d.ronde1) || job.ronde1, ronde2: ROUND(d.ronde2) || job.ronde2,
     samenvatting: d.samenvatting ? clean(d.samenvatting, 4000) : job.samenvatting,
+    beslisser: d.scheidsrechter ? clean(d.scheidsrechter, 6000) : job.beslisser,
     resultaat: resultaat && typeof resultaat === 'object' ? resultaat : job.resultaat,
   };
   await env.FACTCHECK.put(`job:${id}`, JSON.stringify(next), { expirationTtl: TTL });
