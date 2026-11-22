@@ -168,7 +168,7 @@
     if (rounds.length) {
       h += '<details class="fc-more"><summary>Lees de hele discussie</summary>';
       rounds.forEach(function (x) { ['gpt', 'claude', 'gemini'].forEach(function (m) { if (job[x[0]][m]) h += '<h4>' + x[1] + ' · ' + { claude: 'Claude', gpt: 'ChatGPT', gemini: 'Gemini' }[m] + '</h4><p class="fc-pre">' + esc(job[x[0]][m]) + '</p>'; }); });
-      h += job.beslisser ? '<h4>Gemini · beslist bij onenigheid</h4><p class="fc-pre">' + esc(job.beslisser) + '</p>' : '<h4>Gemini</h4><p>Niet nodig: Claude en ChatGPT waren het eens.</p>';
+      h += job.beslisser ? '<h4>Gemini · beslist bij onenigheid</h4><p class="fc-pre">' + esc(job.beslisser) + '</p>' : r.onenigheid ? '<h4>Gemini</h4><p>Geen bron gevonden die de doorslag geeft. Het oordeel blijft open.</p>' : '<h4>Gemini</h4><p>Niet nodig: Claude en ChatGPT waren het eens.</p>';
       h += '</details>';
     }
     h += '<div class="cta-row"><a class="btn btn-primary" href="/nl/contact/?topic=automation" data-track="cta_factcheck_result">Zo\'n workflow voor je eigen werk?</a></div>';
@@ -205,7 +205,7 @@
         }
         var job = null, started = Date.now();
         playScript(0, function () { return !running; });
-        function finish() { running = false; clearTimers(); idleCols(); var gb = bubble('gemini'), gt = job.beslisser ? excerpt(job.beslisser) : 'Niet nodig: Claude en ChatGPT waren het eens.'; gb.classList.add('show'); gb._full = gt; gb.querySelector('.fc-text').textContent = gt; stage.setAttribute('data-phase', 'done'); live.textContent = phaseEl.textContent = 'Klaar. Hieronder staat de uitkomst.'; renderResult(job); var sc = computeScore((job.resultaat || {}).claims); rollScore(sc.pct, sc.pct === null ? 'Niet te bepalen: geen claim kreeg een duidelijk oordeel.' : 'Gemiddelde van ' + sc.n + (sc.n === 1 ? ' claim' : ' claims') + (sc.unk ? '. ' + sc.unk + ' onbekend telt niet mee' : '') + '.'); btn.disabled = false; btn.textContent = 'Check nog een claim'; }
+        function finish() { running = false; clearTimers(); idleCols(); var gb = bubble('gemini'), gt = job.beslisser ? excerpt(job.beslisser) : (job.resultaat && job.resultaat.onenigheid) ? 'Ik vond geen bron die de doorslag geeft. Het oordeel blijft open.' : 'Niet nodig: Claude en ChatGPT waren het eens.'; gb.classList.add('show'); gb._full = gt; gb.querySelector('.fc-text').textContent = gt; stage.setAttribute('data-phase', 'done'); live.textContent = phaseEl.textContent = 'Klaar. Hieronder staat de uitkomst.'; renderResult(job); var sc = computeScore((job.resultaat || {}).claims); rollScore(sc.pct, sc.pct === null ? 'Niet te bepalen: geen claim kreeg een duidelijk oordeel.' : 'Gemiddelde van ' + sc.n + (sc.n === 1 ? ' claim' : ' claims') + (sc.unk ? '. ' + sc.unk + ' onbekend telt niet mee' : '') + '.'); btn.disabled = false; btn.textContent = 'Check nog een claim'; }
         (function poll() {
           if (Date.now() - started > 6 * 60 * 1000) return fail('timeout');
           fetch('/api/factcheck?id=' + encodeURIComponent(res.j.id)).then(function (r) { return r.json(); }).then(function (j) {
