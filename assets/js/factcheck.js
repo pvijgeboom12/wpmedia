@@ -11,16 +11,15 @@
   var tsId = null, tsToken = '', tsLoading = false, timers = [], pollT = null, running = false;
 
   var SCRIPT = {
-    r1: { label: 'Ronde 1 · de drie checken blind, los van elkaar',
+    r1: { label: 'Ronde 1 · Claude en ChatGPT checken blind, los van elkaar',
       claude: ['Ik splits je tekst in losse claims.', 'Ik zoek bronnen, en ook tegenbewijs.'],
       gpt: ['Ik check eerst de bronnen die je meestuurde.', 'Ik lees wat het web zegt over elke claim.'],
-      gemini: ['Ik zie de antwoorden van de anderen niet.', 'Per claim kies ik: klopt, deels, niet of onbekend.'] },
+      gemini: ['Ik wacht af.', 'Zijn ze het oneens, dan beslis ik.'] },
     r2: { label: 'Ronde 2 · ze lezen elkaars antwoord en checken het',
-      claude: ['Ik lees de andere twee antwoorden.', 'Alleen bewijs kan mijn oordeel veranderen.'],
-      gpt: ['Waar zijn we het oneens? Dat zoek ik op.', 'Ik check het betwiste punt opnieuw.'],
-      gemini: ['Een betere bron? Dan pas ik mijn oordeel aan.', 'Geen bewijs? Dan blijf ik bij mijn oordeel.'] },
-    src: { label: 'Bronnen · bij onenigheid beslist een betrouwbare bron',
-      hub: ['Bij onenigheid geven betrouwbare bronnen de doorslag.'] },
+      claude: ['Ik lees het antwoord van de ander.', 'Alleen bewijs kan mijn oordeel veranderen.'],
+      gpt: ['Waar zijn we het oneens? Dat zoek ik op.', 'Ik check het betwiste punt opnieuw.'] },
+    src: { label: 'Gemini · beslist alleen als de twee het oneens zijn',
+      gemini: ['Oneens? Dan zoek ik de beste bron.'] },
     sum: { label: 'Samenvatting · neutraal, zonder eigen mening',
       hub: ['Ik zet op een rij: eens, verschillen en open punten.'] }
   };
@@ -149,7 +148,7 @@
 
   function renderDemo() {
     out.innerHTML = '<div class="fc-demo"><p class="fc-tag">Preview</p><h3>Zo werkt het proces.</h3>' +
-      '<p>In deze preview draait de echte check nog niet. Je ziet dus alleen hoe de drie AI\'s samenwerken. Na de livegang staat hier per claim het oordeel, met bronnen.</p></div>';
+      '<p>In deze preview draait de echte check nog niet. Je ziet dus alleen hoe de AI\'s samenwerken. Na de livegang staat hier per claim het oordeel, met bronnen.</p></div>';
     out.hidden = false; out.focus();
   }
   function renderResult(job) {
@@ -169,6 +168,7 @@
     if (rounds.length) {
       h += '<details class="fc-more"><summary>Lees de hele discussie</summary>';
       rounds.forEach(function (x) { ['gpt', 'claude', 'gemini'].forEach(function (m) { if (job[x[0]][m]) h += '<h4>' + x[1] + ' · ' + { claude: 'Claude', gpt: 'ChatGPT', gemini: 'Gemini' }[m] + '</h4><p class="fc-pre">' + esc(job[x[0]][m]) + '</p>'; }); });
+      h += job.beslisser ? '<h4>Gemini · beslist bij onenigheid</h4><p class="fc-pre">' + esc(job.beslisser) + '</p>' : '<h4>Gemini</h4><p>Niet nodig: Claude en ChatGPT waren het eens.</p>';
       h += '</details>';
     }
     h += '<div class="cta-row"><a class="btn btn-primary" href="/nl/contact/?topic=automation" data-track="cta_factcheck_result">Zo\'n workflow voor je eigen werk?</a></div>';
@@ -193,7 +193,7 @@
     if ((d.vraag || '').trim().length < 12) { msg.textContent = ERR.too_short; msg.className = 'form-msg err'; return; }
     if (SITEKEY && !tsToken && window.turnstile) { msg.textContent = 'Nog even geduld: de beveiligingscheck is bijna klaar.'; msg.className = 'form-msg'; return; }
     msg.textContent = ''; btn.disabled = true; btn.textContent = 'Bezig met checken…';
-    out.hidden = true; out.innerHTML = ''; shown = {}; running = true; resetScore(); stage.querySelectorAll('.fc-bubble').forEach(function (b) { b._full = ''; b.classList.remove('show'); b.querySelector('.fc-text').textContent = b.getAttribute('data-bubble') === 'hub' ? 'Komen in actie als de drie klaar zijn.' : 'Leest je claim…'; });
+    out.hidden = true; out.innerHTML = ''; shown = {}; running = true; resetScore(); stage.querySelectorAll('.fc-bubble').forEach(function (b) { b._full = ''; b.classList.remove('show'); b.querySelector('.fc-text').textContent = b.getAttribute('data-bubble') === 'hub' ? 'Komen in actie als Claude en ChatGPT klaar zijn.' : b.getAttribute('data-bubble') === 'gemini' ? 'Wacht af.' : 'Leest je claim…'; });
     stage.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'center' });
     fetch('/api/factcheck', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) })
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
@@ -205,7 +205,7 @@
         }
         var job = null, started = Date.now();
         playScript(0, function () { return !running; });
-        function finish() { running = false; clearTimers(); idleCols(); stage.setAttribute('data-phase', 'done'); live.textContent = phaseEl.textContent = 'Klaar. Hieronder staat de uitkomst.'; renderResult(job); var sc = computeScore((job.resultaat || {}).claims); rollScore(sc.pct, sc.pct === null ? 'Niet te bepalen: geen claim kreeg een duidelijk oordeel.' : 'Gemiddelde van ' + sc.n + (sc.n === 1 ? ' claim' : ' claims') + (sc.unk ? '. ' + sc.unk + ' onbekend telt niet mee' : '') + '.'); btn.disabled = false; btn.textContent = 'Check nog een claim'; }
+        function finish() { running = false; clearTimers(); idleCols(); var gb = bubble('gemini'), gt = job.beslisser ? excerpt(job.beslisser) : 'Niet nodig: Claude en ChatGPT waren het eens.'; gb.classList.add('show'); gb._full = gt; gb.querySelector('.fc-text').textContent = gt; stage.setAttribute('data-phase', 'done'); live.textContent = phaseEl.textContent = 'Klaar. Hieronder staat de uitkomst.'; renderResult(job); var sc = computeScore((job.resultaat || {}).claims); rollScore(sc.pct, sc.pct === null ? 'Niet te bepalen: geen claim kreeg een duidelijk oordeel.' : 'Gemiddelde van ' + sc.n + (sc.n === 1 ? ' claim' : ' claims') + (sc.unk ? '. ' + sc.unk + ' onbekend telt niet mee' : '') + '.'); btn.disabled = false; btn.textContent = 'Check nog een claim'; }
         (function poll() {
           if (Date.now() - started > 6 * 60 * 1000) return fail('timeout');
           fetch('/api/factcheck?id=' + encodeURIComponent(res.j.id)).then(function (r) { return r.json(); }).then(function (j) {
