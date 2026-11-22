@@ -73,7 +73,7 @@ export async function start({ request, env, ctx }) {
   if (!(await turnstileOk(env, d.token, ip))) return json({ ok: false, error: 'turnstile' }, 403);
 
   const ipKey = `lim:ip:${await sha(ip + day())}`;
-  if (!(await bump(env, ipKey, parseInt(env.FACTCHECK_PER_IP_DAY || '3', 10)))) return json({ ok: false, error: 'limit_ip' }, 429);
+  if (!(await bump(env, ipKey, parseInt(env.FACTCHECK_PER_IP_DAY || '10', 10)))) return json({ ok: false, error: 'limit_ip' }, 429);
   if (!(await bump(env, `lim:site:${day()}`, parseInt(env.FACTCHECK_SITE_DAY || '30', 10)))) return json({ ok: false, error: 'limit_site' }, 429);
 
   const id = crypto.randomUUID();
